@@ -2,12 +2,13 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-28 08:49:57
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-28 11:23:36
+ * @LastEditTime: 2024-03-28 16:40:03
  * @Description:
  */
 import axios, { AxiosResponse } from "axios";
 import Router from "@/router";
 import LocalStorageKeyConstant from "@/constant/LocalStorageKeyConstant";
+import { ElMessage } from "element-plus";
 
 // 设置默认的请求超时时间
 axios.defaults.timeout = 60000;
@@ -33,6 +34,9 @@ function handerAxiosError(error: any) {
             msg: "请求超时"
         });
     }
+
+    ElMessage.error(errorMessage);
+    console.error(errorMessage);
 
     return Promise.reject({
         code: errorCode,

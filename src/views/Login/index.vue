@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-27 17:58:23
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-28 15:00:58
+ * @LastEditTime: 2024-03-28 15:20:44
  * @Description: 
 -->
 <template>
@@ -26,7 +26,7 @@
 import { ref, reactive } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import type { FormInstance } from "element-plus";
-import CommonRegexConstant from "@/constant/RegexConstant";
+import CommonRegexConstant from "@/constant/CommonRegexConstant";
 import LocalStorageKeyConstant from "@/constant/LocalStorageKeyConstant";
 import { login } from "@/service/auth";
 const router = useRouter();
@@ -106,4 +106,3 @@ const loginHandel = async (formEl: FormInstance | undefined) => {
     width: 240px;
 }
 </style>
-@/constant/RegexConstant

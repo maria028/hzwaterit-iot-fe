@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-27 16:05:18
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-28 14:59:31
+ * @LastEditTime: 2024-03-28 15:07:07
  * @Description: Layout 
 -->
 <template>
@@ -106,11 +106,11 @@
 import { ref, reactive, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import logo from "@/assets/logo.png";
-import { MenuBO } from "@/types/Auth";
 import LocalStorageKeyConstant from "@/constant/LocalStorageKeyConstant";
 import { dictTree, logout } from "@/service/auth";
 import Result from "@/types/Result";
 import Dict from "@/types/Dict";
+import { MenuBO } from "@/types/Auth";
 const router = useRouter();
 
 // title
@@ -273,4 +273,3 @@ const gotoPersonalCenter = () => {
     margin-top: 20px;
 }
 </style>
-@/types/Dict@/types/Auth
