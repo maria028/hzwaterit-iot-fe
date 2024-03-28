@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-27 16:05:18
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-28 15:07:07
+ * @LastEditTime: 2024-03-28 16:56:54
  * @Description: Layout 
 -->
 <template>
@@ -108,8 +108,7 @@ import { useRouter } from "vue-router";
 import logo from "@/assets/logo.png";
 import LocalStorageKeyConstant from "@/constant/LocalStorageKeyConstant";
 import { dictTree, logout } from "@/service/auth";
-import Result from "@/types/Result";
-import Dict from "@/types/Dict";
+import { Dict, Result } from "@/types/Common";
 import { MenuBO } from "@/types/Auth";
 const router = useRouter();
 

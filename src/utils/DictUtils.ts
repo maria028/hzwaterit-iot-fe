@@ -2,12 +2,12 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-28 15:12:47
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-28 15:13:04
+ * @LastEditTime: 2024-03-28 16:53:29
  * @Description:
  */
 
 import LocalStorageKeyConstant from "@/constant/LocalStorageKeyConstant";
-import DictBO from "@/types/DictBO";
+import { DictBO } from "@/types/Common";
 
 export default class DictUtils {
     /**

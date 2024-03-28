@@ -2,10 +2,10 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-28 15:40:07
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-28 15:41:31
+ * @LastEditTime: 2024-03-28 16:56:40
  * @Description:
  */
-import Result from "@/types/Result";
+import { Result } from "@/types/Common";
 import Router from "@/router";
 import { ElMessage } from "element-plus";
 
