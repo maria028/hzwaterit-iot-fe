@@ -9,7 +9,7 @@
         "sourceMap": true,
         "resolveJsonModule": true,
         "esModuleInterop": true,
-        "types": ["element-plus/global"],
+        "types": ["element-plus/global", "node"],
         "lib": ["esnext", "dom"],
         "baseUrl": ".",
         "paths": {
