@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <el-card>
         <el-tabs v-model="activeName" :before-leave="beforLeaveTab">
             <el-tab-pane label="个人信息" name="profile">
                 <el-form :model="profileModel" label-width="auto">
@@ -107,7 +107,7 @@
                 </el-form>
             </el-tab-pane>
         </el-tabs>
-    </div>
+    </el-card>
 </template>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";

@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-27 17:58:23
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-28 15:20:44
+ * @LastEditTime: 2024-03-28 17:16:13
  * @Description: 
 -->
 <template>
@@ -79,7 +79,7 @@ const loginHandel = async (formEl: FormInstance | undefined) => {
 };
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .login {
     position: absolute;
     left: 0px;

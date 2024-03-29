@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-27 16:05:18
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-28 16:56:54
+ * @LastEditTime: 2024-03-29 16:59:42
  * @Description: Layout 
 -->
 <template>
@@ -34,14 +34,7 @@
         </div>
         <div>
             <div class="menu">
-                <el-menu
-                    :default-active="activedMenu"
-                    router
-                    unique-opened
-                    mode="vertical"
-                    background-color="#545c64"
-                    text-color="#ffffff"
-                    active-text-color="#ffd04b">
+                <el-menu :default-active="activedMenu" router unique-opened mode="vertical">
                     <el-menu-item index="/index">
                         <i class="el-icon-s-home"></i>
                         <span slot="title">首页</span>
@@ -87,7 +80,7 @@
             </div>
             <div class="main">
                 <div class="breadcrumb">
-                    <el-breadcrumb separator-class="el-icon-arrow-right" style="padding-top: 7px">
+                    <el-breadcrumb separator-class="el-icon-arrow-right">
                         <el-breadcrumb-item>首页</el-breadcrumb-item>
                         <el-breadcrumb-item v-for="(breadcrumbItem, index) in breadcrumbItems" :key="index">{{
                             breadcrumbItem
@@ -205,20 +198,22 @@ const gotoPersonalCenter = () => {
 };
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .header {
     position: fixed;
     left: 0px;
     top: 0px;
     width: 100%;
     height: 50px;
-    background-color: #545c64;
+    background-color: var(--el-color-primary);
 }
 
 .header-left {
     float: left;
     width: 200px;
     height: 50px;
+    display: flex;
+    align-items: center;
 }
 
 .header-right {
@@ -227,15 +222,13 @@ const gotoPersonalCenter = () => {
 
 .logo {
     float: left;
-    width: 50px;
-    height: 50px;
-    margin-left: 10px;
-    margin-top: 5px;
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
 }
 
 .logo-content {
-    margin-top: 15px;
-    margin-left: 70px;
+    margin-left: 20px;
     color: #ffffff;
 }
 
@@ -251,24 +244,28 @@ const gotoPersonalCenter = () => {
     top: 50px;
     bottom: 0px;
     width: 200px;
-    background-color: #545c64;
     overflow: auto;
 }
 
 .main {
     position: fixed;
-    left: 220px;
+    left: 200px;
     right: 0px;
-    top: 60px;
+    top: 50px;
     bottom: 0px;
     overflow: auto;
+    background: #f1f2f6;
+    padding: 0 16px;
 }
 
 .breadcrumb {
-    height: 30px;
+    height: 40px;
+    display: flex;
+    align-items: center;
 }
 
 .content {
-    margin-top: 20px;
+    margin-top: 0px;
+    height: calc(100vh - 100px);
 }
 </style>

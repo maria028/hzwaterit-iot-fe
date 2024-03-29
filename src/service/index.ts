@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-28 08:49:57
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-28 16:40:03
+ * @LastEditTime: 2024-03-29 10:59:29
  * @Description:
  */
 import axios, { AxiosResponse } from "axios";
@@ -16,6 +16,7 @@ axios.defaults.timeout = 60000;
 // 设置默认的请求基础URL
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL_API as string;
 
+// 登录失效
 function handerUnauthorized() {
     Router.replace({
         path: "/login",
@@ -23,6 +24,7 @@ function handerUnauthorized() {
             redirect: Router.currentRoute.value.fullPath
         }
     });
+    ElMessage.error("请重新登录！");
 }
 function handerAxiosError(error: any) {
     const errorCode = error.code;
@@ -34,9 +36,6 @@ function handerAxiosError(error: any) {
             msg: "请求超时"
         });
     }
-
-    ElMessage.error(errorMessage);
-    console.error(errorMessage);
 
     return Promise.reject({
         code: errorCode,
@@ -71,6 +70,7 @@ axios.interceptors.response.use(
                 } else if (code == 200) {
                     return Promise.resolve(result);
                 } else {
+                    ElMessage.error(result.msg);
                     return Promise.reject(result);
                 }
             }
