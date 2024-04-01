@@ -26,15 +26,17 @@
             </el-tabs>
         </template>
         <template #tableRight>
-            <el-button v-permission="'POST/role-employee'" type="primary" @click="handleBatchRelation" :disabled="buttonStatus" v-if="relationStatusCode == '0'"
+            <el-button v-permission="'POST/position-employee'" type="primary" @click="handleBatchRelation" :disabled="buttonStatus" v-if="relationStatusCode == '0'"
                 >批量关联</el-button
             >
-            <el-button v-permission="'DELETE/role-employee'" type="danger" @click="handleBatchDelete" :disabled="buttonStatus" v-if="relationStatusCode == '1'">批量删除</el-button>
+            <el-button v-permission="'DELETE/position-employee'" type="danger" @click="handleBatchDelete" :disabled="buttonStatus" v-if="relationStatusCode == '1'"
+                >批量删除</el-button
+            >
         </template>
         <template #columns>
             <el-table-column type="selection" width="40px" />
             <el-table-column type="index" label="序号" min-width="80" />
-            <el-table-column v-if="relationStatusCode == '1'" label="角色" prop="roleName" min-width="100px" />
+            <el-table-column v-if="relationStatusCode == '1'" label="职位" prop="positionName" min-width="100px" />
             <el-table-column label="员工姓名" prop="employeeName" min-width="100px" />
             <el-table-column label="手机号码" prop="phoneNumber" min-width="120px" />
         </template>
@@ -42,9 +44,9 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, nextTick } from "vue"
-import { RoleEmployeeBO } from "@/types/System"
+import { PositionEmployeeBO } from "@/types/System"
 import { Result } from "@/types/Common"
-import { getRoleEmployee, bindRoleEmployee, deleteRoleEmployee } from "@/service/system/roleEmployee"
+import { getPositionEmployee, bindPositionEmployee, deletePositionEmployee } from "@/service/system/positionEmployee"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { useRouter, useRoute } from "vue-router"
 const route = useRoute()
@@ -56,14 +58,14 @@ const loading = ref(false)
 const queryModel = ref({
     pageNum: 1,
     pageSize: 10,
-    roleId: 0,
+    positionId: 0,
     relationStatusCode: "1",
     employeeName: null,
     phoneNumber: null
 })
 
-// roleId
-const roleId = ref(0)
+// positionId
+const positionId = ref(0)
 
 // 关联状态
 const relationStatusCode = ref("1")
@@ -71,7 +73,7 @@ const relationStatusCode = ref("1")
 // 总行数
 const rows = ref(0)
 // 表格数据
-const tableData = ref<RoleEmployeeBO[]>([])
+const tableData = ref<PositionEmployeeBO[]>([])
 
 // 按钮状态. 默认禁用
 const buttonStatus = ref(true)
@@ -82,8 +84,8 @@ const selectedIds = ref<number[]>([])
 const selectedEmployeeIds = ref<number[]>([])
 
 onMounted(() => {
-    roleId.value = Number(route.query.roleId)
-    if (isNaN(roleId.value)) {
+    positionId.value = Number(route.query.positionId)
+    if (isNaN(positionId.value)) {
         ElMessage.error("参数错误")
         goBack()
         return
@@ -93,9 +95,9 @@ onMounted(() => {
 // 搜索
 const getTableData = () => {
     loading.value = true
-    queryModel.value.roleId = roleId.value
+    queryModel.value.positionId = positionId.value
     queryModel.value.relationStatusCode = relationStatusCode.value
-    getRoleEmployee(queryModel.value).then((response: Result<RoleEmployeeBO[]> | any) => {
+    getPositionEmployee(queryModel.value).then((response: Result<PositionEmployeeBO[]> | any) => {
         const result = response
         rows.value = result.rows
         tableData.value = result.data
@@ -108,7 +110,7 @@ const reset = () => {
     queryModel.value = {
         pageNum: 1,
         pageSize: 10,
-        roleId: 0,
+        positionId: 0,
         relationStatusCode: "1",
         employeeName: null,
         phoneNumber: null
@@ -117,7 +119,7 @@ const reset = () => {
 }
 
 // 表格多选
-const handleSelectionChange = (selectedRows: RoleEmployeeBO[]) => {
+const handleSelectionChange = (selectedRows: PositionEmployeeBO[]) => {
     selectedIds.value = []
     selectedEmployeeIds.value = []
 
@@ -151,8 +153,8 @@ const handleBatchRelation = () => {
         type: "warning"
     })
         .then(() => {
-            bindRoleEmployee({
-                roleId: roleId.value,
+            bindPositionEmployee({
+                positionId: positionId.value,
                 employeeIds: selectedEmployeeIds.value
             }).then(() => {
                 ElMessage.success("操作成功！")
@@ -173,7 +175,7 @@ const handleBatchDelete = () => {
         type: "warning"
     })
         .then(() => {
-            deleteRoleEmployee({
+            deletePositionEmployee({
                 data: selectedIds.value
             }).then(() => {
                 ElMessage.success("操作成功！")
@@ -189,7 +191,7 @@ const handleBatchDelete = () => {
 // 返回父级
 const goBack = () => {
     router.replace({
-        path: "/role"
+        path: "/position"
     })
 }
 </script>
