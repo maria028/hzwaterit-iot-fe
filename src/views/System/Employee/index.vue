@@ -58,7 +58,7 @@
                     <el-table-column label="邮箱" prop="email" min-width="180" />
                     <el-table-column label="创建时间" prop="createGmt" min-width="180" />
                     <el-table-column label="修改时间" prop="modifiedGmt" min-width="180" />
-                    <el-table-column label="操作" fixed="right" min-width="200">
+                    <el-table-column label="操作" fixed="right" min-width="350">
                         <template #default="scope">
                             <el-button type="primary" text @click="handleEdit(scope.row.id)" v-permission="'PUT/employee'">修改</el-button>
                             <el-button
