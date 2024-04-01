@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 11:42:36
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-29 17:30:36
+ * @LastEditTime: 2024-04-01 09:04:01
  * @Description: 查询表格通用组件
 -->
 <template>
@@ -25,7 +25,7 @@
             </el-row>
         </div>
         <div :style="{ height: tableHeight }">
-            <el-table v-bind="$attrs" stripe border height="100%">
+            <el-table v-bind="$attrs" v-loading="loading" stripe border height="100%">
                 <template #default>
                     <slot name="columns"></slot>
                 </template>
@@ -46,7 +46,7 @@
 
 <script lang="ts" setup>
 import { useAttrs, onMounted, ref, nextTick } from "vue";
-defineProps(["tableName", "pageSize", "currentPage"]);
+defineProps(["loading", "tableName", "pageSize", "currentPage"]);
 const emit = defineEmits(["update:pageSize", "update:currentPage"]);
 const attrs = useAttrs();
 const paginationRef = ref();
@@ -67,8 +67,6 @@ const search = () => {
 };
 const setTableHeight = async () => {
     await nextTick();
-    console.log(searchBarRef.value.offsetHeight);
-    console.log(tableMenuRef.value.offsetHeight);
     let searchBarHeight = searchBarRef.value.offsetHeight;
     let tableMenuHeight = tableMenuRef.value.offsetHeight;
     // 32分割线 + 32分页 + 16分页margin + 40Card  padding

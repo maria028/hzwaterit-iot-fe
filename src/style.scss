@@ -98,3 +98,10 @@ button:focus-visible {
         border-radius: 2px;
     }
 }
+// 弹框行内表单
+.dialog-form-inline {
+    .el-form-item {
+        width: 100%;
+        position: relative;
+    }
+}

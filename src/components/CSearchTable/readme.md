@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 11:41:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-29 11:46:15
+ * @LastEditTime: 2024-03-29 17:40:15
  * @Description: 
 -->
 
@@ -37,11 +37,14 @@ install(Vue: App) {
 
 ```
     <CSearchTable
-      :data="data"
-      :pagination="pagination"
-      @search="getData"
-      @clear="clear"
-    >
+      tableName="员工列表"
+      :data="tableData"
+      @search="getTableData"
+      @clear="reset"
+      :loading="loading"
+      :total="rows"
+      v-model:currentPage="queryModel.pageNum"
+      v-model:pageSize="queryModel.pageSize">
       <template #search>
         <CSearchBarItem label="xxx">
           <el-input  />
@@ -54,11 +57,11 @@ install(Vue: App) {
 
       </template>
       <template #columns>
-
+          <el-table-column type="index" label="序号" min-width="80" />
       </template>
     </CSearchTable>
 ```
 
 ### 未来可优化的地方
 
-- 监听搜索框的展开和收起，赋予 Table 动态高度，使其能在一页中显示不滚动；
+- 

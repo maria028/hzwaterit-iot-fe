@@ -2,27 +2,27 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-28 11:41:00
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-29 08:49:22
+ * @LastEditTime: 2024-04-01 14:54:20
  * @Description:
  */
-import type { RouteRecordRaw } from "vue-router";
+import type { RouteRecordRaw } from "vue-router"
 
 const SystemRouter: RouteRecordRaw[] = [
     {
         path: "/employee",
         name: "Employee",
         component: () => import(/* webpackChunkName: "system-router" */ "@/views/System/Employee/index.vue")
+    },
+    {
+        path: "/department",
+        name: "Department",
+        component: () => import(/* webpackChunkName: "system-router" */ "@/views/System/Department/index.vue")
+    },
+    {
+        path: "/department-employee",
+        name: "DepartmentEmployee",
+        component: () => import(/* webpackChunkName: "system-router" */ "@/views/System/DepartmentEmployee/index.vue")
     }
-    // {
-    //     path: "/department",
-    //     name: "Department",
-    //     component: () => import(/* webpackChunkName: "system-router" */ "@/views/system/Department.vue")
-    // },
-    // {
-    //     path: "/department-employee",
-    //     name: "DepartmentEmployee",
-    //     component: () => import(/* webpackChunkName: "system-router" */ "@/views/system/DepartmentEmployee.vue")
-    // },
     // {
     //     path: "/role-employee",
     //     name: "RoleEmployee",
@@ -68,6 +68,6 @@ const SystemRouter: RouteRecordRaw[] = [
     //     name: "OperationLog",
     //     component: () => import(/* webpackChunkName: "system-router" */ "@/views/system/OperationLog.vue")
     // }
-];
+]
 
-export default SystemRouter;
+export default SystemRouter
