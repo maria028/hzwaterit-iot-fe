@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-28 11:41:00
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-01 17:29:59
+ * @LastEditTime: 2024-04-01 18:09:59
  * @Description:
  */
 import type { RouteRecordRaw } from "vue-router"
@@ -47,12 +47,12 @@ const SystemRouter: RouteRecordRaw[] = [
         path: "/resource",
         name: "Resource",
         component: () => import(/* webpackChunkName: "system-router" */ "@/views/System/Resource/index.vue")
+    },
+    {
+        path: "/property",
+        name: "Property",
+        component: () => import(/* webpackChunkName: "system-router" */ "@/views/System/Property/index.vue")
     }
-    // {
-    //     path: "/property",
-    //     name: "Property",
-    //     component: () => import(/* webpackChunkName: "system-router" */ "@/views/system/Property.vue")
-    // },
     // {
     //     path: "/dict",
     //     name: "Dict",
