@@ -2,12 +2,12 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-02 11:25:13
+ * @LastEditTime: 2024-04-02 14:24:15
  * @Description: 
 -->
 <template>
     <CSearchTable
-        tableName="角色列表"
+        :tableName="parentCode ? `${parent.name}-字典详情` : '字典'"
         :data="tableData"
         @search="getTableData"
         @clear="reset"
@@ -16,52 +16,48 @@
         v-model:currentPage="queryModel.pageNum"
         v-model:pageSize="queryModel.pageSize"
     >
-        <template #search>
-            <CSearchBarItem label="编码">
-                <el-input v-model="queryModel.code" clearable maxlength="30" placeholder="请输入编码" />
-            </CSearchBarItem>
-            <CSearchBarItem label="编码">
-                <el-input v-model="queryModel.name" clearable maxlength="30" placeholder="请输入名称" />
-            </CSearchBarItem>
-        </template>
         <template #tableLeft> </template>
         <template #tableRight>
-            <el-button v-permission="'POST/role'" type="primary" @click="handleAdd">新增</el-button>
+            <el-space>
+                <!-- 编码  queryModel.code -->
+                <el-input v-model="queryModel.name" placeholder="请输入名称" maxlength="30" clearable>
+                    <template #append>
+                        <el-button @click="getTableData">
+                            <el-icon><Search /></el-icon>
+                        </el-button>
+                    </template>
+                </el-input>
+                <el-button v-permission="'POST/dict'" type="primary" @click="handleAdd">新增</el-button>
+            </el-space>
         </template>
         <template #columns>
-            <el-table-column type="index" label="序号" min-width="80" />
-            <el-table-column label="编码" prop="code" min-width="100" />
-            <el-table-column label="名称" prop="name" min-width="100" />
-            <el-table-column label="创建时间" prop="createGmt" min-width="120" />
-            <el-table-column label="修改时间" prop="modifiedGmt" min-width="120" />
-
-            <el-table-column label="操作" fixed="right" min-width="200">
+            <el-table-column type="index" label="序号" />
+            <el-table-column label="编码" prop="code" show-overflow-tooltip />
+            <el-table-column label="名称" prop="name" show-overflow-tooltip />
+            <el-table-column label="创建时间" prop="createGmt" show-overflow-tooltip />
+            <el-table-column label="修改时间" prop="modifiedGmt" show-overflow-tooltip />
+            <el-table-column label="操作" fixed="right">
                 <template #default="scope">
-                    <el-button v-permission="'PUT/role'" type="primary" text @click="handleEdit(scope.row.id)">修改</el-button>
-                    <el-button v-permission="'PUT/role-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 1)">上移</el-button>
-                    <el-button v-permission="'PUT/role-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 2)">下移</el-button>
-                    <el-button v-permission="'DELETE/role/{id}'" type="danger" text @click="handleDelete(scope.row.id)" :disabled="scope.row.id <= 3">删除</el-button>
-                    <el-button v-permission="'GET/role-employee'" type="primary" text @click="handleRelationEmployee(scope.row.id)">关联员工</el-button>
+                    <el-button v-if="parentCode == ''" type="primary" text @click="onRowClick(scope.row)">子集</el-button>
+                    <el-button v-permission="'PUT/dict'" type="primary" text @click="handleEdit(scope.row.id)">修改</el-button>
+                    <el-button v-permission="'PUT/dict-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 1)" v-if="parentCode != ''">上移</el-button>
+                    <el-button v-permission="'PUT/dict-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 2)" v-if="parentCode != ''">下移</el-button>
+                    <el-button v-permission="'DELETE/dict/{id}'" type="danger" text @click="handleDelete(scope.row.id)">删除</el-button>
                 </template>
             </el-table-column>
         </template>
     </CSearchTable>
-    <el-dialog :title="dialogTitle" v-model="dialogVisible" :before-close="dialogClose" append-to-body>
+    <el-dialog :title="dialogTitle" v-model="dialogVisible" :before-close="dialogClose" append-to-body width="450">
         <el-form :model="dialogData" ref="dialogFormRef" label-width="auto" :rules="dialogRules">
             <el-row :gutter="32">
-                <el-col :span="12">
+                <el-col :span="24">
                     <el-form-item label="编码" prop="code">
                         <el-input v-model="dialogData.code" placeholder="请输入编码" maxlength="30" />
                     </el-form-item>
                 </el-col>
-                <el-col :span="12">
+                <el-col :span="24">
                     <el-form-item label="名称" prop="name">
                         <el-input v-model="dialogData.name" placeholder="请输入名称" maxlength="30" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="权限" prop="resourceIds">
-                        <el-tree :data="treeData" :props="treeProps" node-key="id" show-checkbox ref="treeRef" />
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -73,31 +69,22 @@
     </el-dialog>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, nextTick } from "vue"
-import { ResourceTreeBO, RoleBO, RoleDTO } from "@/types/System"
-import { Dict, Result } from "@/types/Common"
-import { getResourceTreeData } from "@/service/system/resource"
+import { ref, onMounted, watch } from "vue"
+import { DictBO, DictDTO } from "@/types/System"
+import { Result } from "@/types/Common"
 import { ElMessage, ElMessageBox } from "element-plus"
-import { useRouter } from "vue-router"
-import { addRole, deleteRoleById, getRole, getRoleById, setRoleSort, updateRole } from "@/service/system/role"
-const router = useRouter()
+import { getDict, getDictById, deleteDictById, setDictSort, addDict, updateDict } from "@/service/system/dict"
+const props = defineProps(["parent"])
+const emit = defineEmits(["parentChange"])
 
-const treeRef = ref()
 const dialogFormRef = ref()
-
-// 部门树数据
-const treeData = ref<ResourceTreeBO[]>([])
-// 树属性
-const treeProps = ref({
-    children: "children",
-    label: "name"
-})
 
 const loading = ref(false)
 // 查询条件
 const queryModel = ref({
     pageNum: 1,
     pageSize: 10,
+    parentCode: "",
     code: null,
     name: null
 })
@@ -105,7 +92,29 @@ const queryModel = ref({
 // 总行数
 const rows = ref(0)
 // 表格数据
-const tableData = ref<RoleBO[]>([])
+const tableData = ref<DictBO[]>([])
+
+// 父级编码
+const parentCode = ref("")
+
+if (props.parent) {
+    parentCode.value = props.parent.code
+    queryModel.value.parentCode = props.parent.code
+}
+
+const onRowClick = (row: DictBO) => {
+    emit("parentChange", row)
+}
+
+// 监听 parentCode 的变化
+watch(
+    () => props.parent,
+    (newValue, oldValue) => {
+        parentCode.value = newValue.code
+        queryModel.value.parentCode = newValue.code
+        getTableData()
+    }
+)
 
 // 对话框标题
 const dialogTitle = ref("")
@@ -113,34 +122,41 @@ const dialogTitle = ref("")
 const dialogVisible = ref(false)
 
 // 对话框数据
-const dialogData = ref<RoleDTO>({
+const dialogData = ref<DictDTO>({
     id: 0,
-    code: "",
+    parentCode: "",
     name: "",
-    resourceIds: []
+    code: ""
 })
+
+// 参数校验
+const validateCode = (rule: object, value: string, callback: (e?: string) => void) => {
+    if (dialogData.value.parentCode == "") {
+        if (value == "") {
+            callback("请输入编码")
+        } else {
+            callback()
+        }
+    } else {
+        callback()
+    }
+}
 // 对话框校验
 const dialogRules = {
-    code: [{ required: true, message: "请输入编号", trigger: "blur" }],
+    code: [
+        { required: true, message: "请输入编码", trigger: "blur" },
+        { validator: validateCode, trigger: "blur" }
+    ],
     name: [{ required: true, message: "请输入名称", trigger: "blur" }]
 }
 
-onMounted(() => {
-    getResourceTree()
-})
-
-//  获取资源树
-const getResourceTree = () => {
-    getResourceTreeData().then((response: Result<ResourceTreeBO[]> | any) => {
-        treeData.value = response.data
-    })
-}
+onMounted(() => {})
 
 // 搜索
 const getTableData = () => {
     loading.value = true
-    getRole(queryModel.value)
-        .then((response: Result<RoleBO[]> | any) => {
+    getDict(queryModel.value)
+        .then((response: Result<DictBO[]> | any) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data
@@ -155,6 +171,7 @@ const reset = () => {
     queryModel.value = {
         pageNum: 1,
         pageSize: 10,
+        parentCode: "",
         code: null,
         name: null
     }
@@ -169,9 +186,8 @@ const handleAdd = () => {
 const handleEdit = (id: number) => {
     dialogTitle.value = "修改"
     dialogVisible.value = true
-    getRoleById(id).then((response: Result<RoleDTO> | any) => {
+    getDictById(id).then((response: Result<DictDTO> | any) => {
         dialogData.value = response.data
-        treeRef.value.setCheckedKeys(dialogData.value.resourceIds)
     })
 }
 
@@ -183,7 +199,7 @@ const handleDelete = (id: number) => {
         type: "warning"
     })
         .then(() => {
-            deleteRoleById(id).then(() => {
+            deleteDictById(id).then(() => {
                 ElMessage.success("操作成功！")
                 getTableData()
             })
@@ -195,7 +211,7 @@ const handleDelete = (id: number) => {
 
 // 修改排序
 const handlerUpdateSort = (id: number, moveTypeCode: number) => {
-    setRoleSort({
+    setDictSort({
         id: id,
         moveTypeCode: moveTypeCode
     }).then(() => {
@@ -219,22 +235,13 @@ const dialogCancel = () => {
 const dialogConfirm = () => {
     dialogFormRef.value.validate((valid: boolean) => {
         if (valid) {
-            dialogData.value.resourceIds = treeRef.value.getCheckedKeys()
-            const request = dialogData.value.id == 0 ? addRole(dialogData.value) : updateRole(dialogData.value)
+            dialogData.value.parentCode = parentCode.value
+            const request = dialogData.value.id == 0 ? addDict(dialogData.value) : updateDict(dialogData.value)
             request.then(() => {
                 ElMessage.success("操作成功！")
                 dialogClose()
                 getTableData()
             })
-        }
-    })
-}
-//  关联员工
-const handleRelationEmployee = (id: number) => {
-    router.replace({
-        path: "/role-employee",
-        query: {
-            roleId: id + ""
         }
     })
 }

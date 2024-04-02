@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-01 18:18:23
+ * @LastEditTime: 2024-04-02 11:25:02
  * @Description: 
 -->
 <template>
@@ -111,12 +111,15 @@ onMounted(() => {})
 // 搜索
 const getTableData = () => {
     loading.value = true
-    getProperty(queryModel.value).then((response: Result<PropertyBO[]> | any) => {
-        const result = response
-        rows.value = result.rows
-        tableData.value = result.data
-        loading.value = false
-    })
+    getProperty(queryModel.value)
+        .then((response: Result<PropertyBO[]> | any) => {
+            const result = response
+            rows.value = result.rows
+            tableData.value = result.data
+        })
+        .finally(() => {
+            loading.value = false
+        })
 }
 
 //  重置

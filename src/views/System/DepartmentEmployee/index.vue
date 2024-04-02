@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 14:19:36
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-01 15:26:29
+ * @LastEditTime: 2024-04-02 11:23:50
  * @Description: 
 -->
 <template>
@@ -104,12 +104,15 @@ const getTableData = () => {
     loading.value = true
     queryModel.value.departmentId = departmentId.value
     queryModel.value.relationStatusCode = relationStatusCode.value
-    getDepartmentEmployee(queryModel.value).then((response: Result<DepartmentEmployeeBO[]> | any) => {
-        const result = response
-        rows.value = result.rows
-        tableData.value = result.data
-        loading.value = false
-    })
+    getDepartmentEmployee(queryModel.value)
+        .then((response: Result<DepartmentEmployeeBO[]> | any) => {
+            const result = response
+            rows.value = result.rows
+            tableData.value = result.data
+        })
+        .finally(() => {
+            loading.value = false
+        })
 }
 
 //  重置

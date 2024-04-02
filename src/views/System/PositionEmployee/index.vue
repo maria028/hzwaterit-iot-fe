@@ -97,12 +97,15 @@ const getTableData = () => {
     loading.value = true
     queryModel.value.positionId = positionId.value
     queryModel.value.relationStatusCode = relationStatusCode.value
-    getPositionEmployee(queryModel.value).then((response: Result<PositionEmployeeBO[]> | any) => {
-        const result = response
-        rows.value = result.rows
-        tableData.value = result.data
-        loading.value = false
-    })
+    getPositionEmployee(queryModel.value)
+        .then((response: Result<PositionEmployeeBO[]> | any) => {
+            const result = response
+            rows.value = result.rows
+            tableData.value = result.data
+        })
+        .finally(() => {
+            loading.value = false
+        })
 }
 
 //  重置

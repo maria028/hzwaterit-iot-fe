@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 10:11:50
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-01 15:20:21
+ * @LastEditTime: 2024-04-02 11:23:46
  * @Description: 
 -->
 <template>
@@ -139,12 +139,15 @@ const getDepartmentTree = () => {
 const getTableData = () => {
     loading.value = true
     queryModel.value.parentId = currentNodeKey.value
-    getDepartment(queryModel.value).then((response: Result<DepartmentBO[]> | any) => {
-        const result = response
-        rows.value = result.rows
-        tableData.value = result.data
-        loading.value = false
-    })
+    getDepartment(queryModel.value)
+        .then((response: Result<DepartmentBO[]> | any) => {
+            const result = response
+            rows.value = result.rows
+            tableData.value = result.data
+        })
+        .finally(() => {
+            loading.value = false
+        })
 }
 //  重置
 const reset = () => {

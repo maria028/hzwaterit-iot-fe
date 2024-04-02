@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 17:30:13
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-01 18:02:40
+ * @LastEditTime: 2024-04-02 11:25:09
  * @Description: 
 -->
 <template>
@@ -217,12 +217,15 @@ const getResourceTree = () => {
 const getTableData = () => {
     loading.value = true
     queryModel.value.parentId = currentNodeKey.value
-    getResource(queryModel.value).then((response: Result<ResourceBO[]> | any) => {
-        const result = response
-        rows.value = result.rows
-        tableData.value = result.data
-        loading.value = false
-    })
+    getResource(queryModel.value)
+        .then((response: Result<ResourceBO[]> | any) => {
+            const result = response
+            rows.value = result.rows
+            tableData.value = result.data
+        })
+        .finally(() => {
+            loading.value = false
+        })
 }
 
 //  重置

@@ -282,12 +282,15 @@ const listRole = () => {
 const getTableData = () => {
     loading.value = true
     queryModel.value.departmentId = currentNodeKey.value
-    getEmployee(queryModel.value).then((response: Result<EmployeeBO[]> | any) => {
-        const result = response
-        rows.value = result.rows
-        tableData.value = result.data
-        loading.value = false
-    })
+    getEmployee(queryModel.value)
+        .then((response: Result<EmployeeBO[]> | any) => {
+            const result = response
+            rows.value = result.rows
+            tableData.value = result.data
+        })
+        .finally(() => {
+            loading.value = false
+        })
 }
 
 //  重置

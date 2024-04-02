@@ -95,12 +95,15 @@ const getTableData = () => {
     loading.value = true
     queryModel.value.roleId = roleId.value
     queryModel.value.relationStatusCode = relationStatusCode.value
-    getRoleEmployee(queryModel.value).then((response: Result<RoleEmployeeBO[]> | any) => {
-        const result = response
-        rows.value = result.rows
-        tableData.value = result.data
-        loading.value = false
-    })
+    getRoleEmployee(queryModel.value)
+        .then((response: Result<RoleEmployeeBO[]> | any) => {
+            const result = response
+            rows.value = result.rows
+            tableData.value = result.data
+        })
+        .finally(() => {
+            loading.value = false
+        })
 }
 
 //  重置
