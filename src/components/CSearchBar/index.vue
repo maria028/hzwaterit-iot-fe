@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 11:06:59
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-01 10:57:08
+ * @LastEditTime: 2024-04-07 10:02:05
  * @Description: 查询框
 
 -->
@@ -41,7 +41,8 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, nextTick, useAttrs } from "vue"
-const emit = defineEmits(["heightChange"])
+const emit = defineEmits(["heightChange", "search", "clear"])
+
 const attrs = useAttrs()
 const searchRowElement = ref<HTMLElement | null>(null)
 const searchColElements = ref<any>(null)
@@ -92,15 +93,12 @@ function initShowAllSearch() {
 }
 // 搜索按钮点击
 function searchHandel() {
-    if (attrs.onSearch) {
-        attrs.onSearch()
-    }
+    emit("heightChange")
+    emit("search")
 }
 // 重置按钮点击
 function clearHandel() {
-    if (attrs.onClear) {
-        attrs.onClear()
-    }
+    emit("clear")
 }
 onMounted(async () => {
     await nextTick() // DOM 更新

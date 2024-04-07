@@ -2,13 +2,13 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 11:42:36
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-02 11:02:23
+ * @LastEditTime: 2024-04-07 10:14:47
  * @Description: 查询表格通用组件
 -->
 <template>
     <el-card :body-style="{ height: '100%', position: 'relative' }" style="height: 100%; position: relative">
         <div v-if="hasSearchSlot" ref="searchBarRef">
-            <CSearchBar v-bind="$attrs" @heightChange="setTableHeight">
+            <CSearchBar v-bind="$attrs" @heightChange="setTableHeight" @search="searchHandel" @clear="clearHandel">
                 <slot name="search"></slot>
             </CSearchBar>
         </div>
@@ -37,6 +37,8 @@
                 v-bind="$attrs"
                 ref="paginationRef"
                 layout="total,sizes, prev, pager, next, jumper, ->"
+                :current-page="currentPage"
+                :page-size="pageSize"
                 :page-sizes="[10, 20, 30, 50, 100]"
                 @size-change="handleSizeChange"
                 @currentChange="handleCurrentChange"
@@ -59,7 +61,7 @@ const tableMenuRef = ref()
 const tableHeight = ref("100%")
 onMounted(async () => {
     // onMounted后执行首次查询
-    search()
+    searchHandel()
 
     setTableHeight()
 
@@ -70,6 +72,18 @@ onMounted(async () => {
 const search = () => {
     if (attrs) {
         attrs.onSearch()
+    }
+}
+
+const searchHandel = () => {
+    emit("update:currentPage", 1)
+    search()
+}
+
+const clearHandel = () => {
+    emit("update:currentPage", 1)
+    if (attrs) {
+        attrs.onClear()
     }
 }
 // 计算表格高度
