@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-27 16:05:18
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-29 16:59:42
+ * @LastEditTime: 2024-04-08 16:10:11
  * @Description: Layout 
 -->
 <template>
@@ -40,27 +40,18 @@
                         <span slot="title">首页</span>
                     </el-menu-item>
                     <template v-for="firstLevelMenu in menus">
-                        <el-sub-menu
-                            v-if="firstLevelMenu.url == ''"
-                            :key="firstLevelMenu.id"
-                            :index="firstLevelMenu.id.toString()">
+                        <el-sub-menu v-if="firstLevelMenu.url == ''" :key="firstLevelMenu.id" :index="firstLevelMenu.id.toString()">
                             <template #title>
                                 <i :class="firstLevelMenu.icon"></i>
                                 <span>{{ firstLevelMenu.name }}</span>
                             </template>
                             <template v-for="secondLevelMenu in firstLevelMenu.children">
-                                <el-sub-menu
-                                    v-if="secondLevelMenu.url == ''"
-                                    :key="secondLevelMenu.id"
-                                    :index="secondLevelMenu.id.toString()">
+                                <el-sub-menu v-if="secondLevelMenu.url == ''" :key="secondLevelMenu.id" :index="secondLevelMenu.id.toString()">
                                     <template #title>
                                         <i :class="secondLevelMenu.icon"></i>
                                         <span>{{ secondLevelMenu.name }}</span>
                                     </template>
-                                    <el-menu-item
-                                        v-for="thirdLevelMenu in secondLevelMenu.children"
-                                        :key="thirdLevelMenu.id"
-                                        :index="thirdLevelMenu.url.toString()">
+                                    <el-menu-item v-for="thirdLevelMenu in secondLevelMenu.children" :key="thirdLevelMenu.id" :index="thirdLevelMenu.url.toString()">
                                         <i :class="thirdLevelMenu.icon"></i>
                                         <span slot="title">{{ thirdLevelMenu.name }}</span>
                                     </el-menu-item>
@@ -82,9 +73,7 @@
                 <div class="breadcrumb">
                     <el-breadcrumb separator-class="el-icon-arrow-right">
                         <el-breadcrumb-item>首页</el-breadcrumb-item>
-                        <el-breadcrumb-item v-for="(breadcrumbItem, index) in breadcrumbItems" :key="index">{{
-                            breadcrumbItem
-                        }}</el-breadcrumb-item>
+                        <el-breadcrumb-item v-for="(breadcrumbItem, index) in breadcrumbItems" :key="index">{{ breadcrumbItem }}</el-breadcrumb-item>
                     </el-breadcrumb>
                 </div>
                 <div class="content">
@@ -96,106 +85,106 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, watch } from "vue";
-import { useRouter } from "vue-router";
-import logo from "@/assets/logo.png";
-import LocalStorageKeyConstant from "@/constant/LocalStorageKeyConstant";
-import { dictTree, logout } from "@/service/auth";
-import { Dict, Result } from "@/types/Common";
-import { MenuBO } from "@/types/Auth";
-const router = useRouter();
+import { ref, reactive, onMounted, watch } from "vue"
+import { useRouter } from "vue-router"
+import logo from "@/assets/img/logo.png"
+import LocalStorageKeyConstant from "@/constant/LocalStorageKeyConstant"
+import { dictTree, logout } from "@/service/auth"
+import { Dict, Result } from "@/types/Common"
+import { MenuBO } from "@/types/Auth"
+const router = useRouter()
 
 // title
-const title = ref<string>(import.meta.env.VITE_TITLE || "");
+const title = ref<string>(import.meta.env.VITE_TITLE || "")
 // 当前选中菜单
-const activedMenu = ref<string>("/index");
-const menus = ref<MenuBO[]>([]);
+const activedMenu = ref<string>("/index")
+const menus = ref<MenuBO[]>([])
 // path 与面包屑对应关系
-const breadcrumbItemMap = new Map();
+const breadcrumbItemMap = new Map()
 // 面包屑
-const breadcrumbItems = ref<string[]>();
+const breadcrumbItems = ref<string[]>()
 // 帐号信息
 const account = reactive({
     name: "",
     lastName: "",
     avatarImgUrl: ""
-});
+})
 // onMounted
 onMounted(() => {
-    console.log(`the component is now mounted.`);
+    console.log(`the component is now mounted.`)
     //#region 默认 path 与面包屑对应关系
-    breadcrumbItemMap.set("/profile", "个人中心");
+    breadcrumbItemMap.set("/profile", "个人中心")
     //#endregion
 
-    menus.value = JSON.parse(localStorage.getItem(LocalStorageKeyConstant.MENU) as string);
-    account.name = localStorage.getItem(LocalStorageKeyConstant.ACCOUNT_NAME) as string;
+    menus.value = JSON.parse(localStorage.getItem(LocalStorageKeyConstant.MENU) as string)
+    account.name = localStorage.getItem(LocalStorageKeyConstant.ACCOUNT_NAME) as string
     if (account.name) {
-        account.lastName = account.name.substr(0, 1);
+        account.lastName = account.name.substr(0, 1)
     }
-    account.avatarImgUrl = localStorage.getItem(LocalStorageKeyConstant.ACCOUNT_AVATAR_IMG_URL) as string;
-    activedMenu.value = router.currentRoute.value.path;
+    account.avatarImgUrl = localStorage.getItem(LocalStorageKeyConstant.ACCOUNT_AVATAR_IMG_URL) as string
+    activedMenu.value = router.currentRoute.value.path
 
-    setBreadcrumbItemMap("", menus.value);
-    setBreadcrumbItems(activedMenu.value);
+    setBreadcrumbItemMap("", menus.value)
+    setBreadcrumbItems(activedMenu.value)
 
     //#region 子页面 path 与面包屑对应关系
-    breadcrumbItemMap.set("/position-employee", breadcrumbItemMap.get("/position") + ",关联员工");
-    breadcrumbItemMap.set("/department-employee", breadcrumbItemMap.get("/department") + ",关联员工");
-    breadcrumbItemMap.set("/role-employee", breadcrumbItemMap.get("/role") + ",关联员工");
+    breadcrumbItemMap.set("/position-employee", breadcrumbItemMap.get("/position") + ",关联员工")
+    breadcrumbItemMap.set("/department-employee", breadcrumbItemMap.get("/department") + ",关联员工")
+    breadcrumbItemMap.set("/role-employee", breadcrumbItemMap.get("/role") + ",关联员工")
     //#endregion
 
     dictTree().then((response: Result<Dict[]> | any) => {
-        const result = response;
-        localStorage.setItem(LocalStorageKeyConstant.DICT, JSON.stringify(result.data));
-    });
-});
+        const result = response
+        localStorage.setItem(LocalStorageKeyConstant.DICT, JSON.stringify(result.data))
+    })
+})
 // 设置 path 与面包屑对应关系
 const setBreadcrumbItemMap = (names: string, menus: MenuBO[]) => {
-    if (!menus) return;
+    if (!menus) return
     for (const menu of menus) {
-        const currentNames = names == "" ? menu.name : names + "," + menu.name;
-        const children = menu.children;
+        const currentNames = names == "" ? menu.name : names + "," + menu.name
+        const children = menu.children
         if (children.length == 0) {
-            breadcrumbItemMap.set(menu.url, currentNames);
+            breadcrumbItemMap.set(menu.url, currentNames)
         } else {
-            setBreadcrumbItemMap(currentNames, children);
+            setBreadcrumbItemMap(currentNames, children)
         }
     }
-};
+}
 // 设置面包屑
 const setBreadcrumbItems = (path: string) => {
     if (path == "/index") {
-        breadcrumbItems.value = [];
+        breadcrumbItems.value = []
     } else {
-        const names = breadcrumbItemMap.get(path);
+        const names = breadcrumbItemMap.get(path)
         if (names) {
-            breadcrumbItems.value = names.split(",");
+            breadcrumbItems.value = names.split(",")
         }
     }
-};
+}
 // 监听路由
 watch(
     () => router.currentRoute.value,
     () => {
-        setBreadcrumbItems(router.currentRoute.value.path);
+        setBreadcrumbItems(router.currentRoute.value.path)
     },
     { immediate: true }
-);
+)
 
 const logoutHandel = () => {
     logout().then(() => {
-        localStorage.removeItem(LocalStorageKeyConstant.TOKEN);
+        localStorage.removeItem(LocalStorageKeyConstant.TOKEN)
         router.replace({
             path: "/login"
-        });
-    });
-};
+        })
+    })
+}
 // 个人中心
 const gotoPersonalCenter = () => {
     router.replace({
         path: "/profile"
-    });
-};
+    })
+}
 </script>
 
 <style scoped lang="scss">
@@ -228,8 +217,10 @@ const gotoPersonalCenter = () => {
 }
 
 .logo-content {
-    margin-left: 20px;
+    margin-left: 10px;
     color: #ffffff;
+    font-family: DingTalk-JinBuTi;
+    font-size: 20px;
 }
 
 .avatar {
