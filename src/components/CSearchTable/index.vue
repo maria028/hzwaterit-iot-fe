@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 11:42:36
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-07 10:14:47
+ * @LastEditTime: 2024-04-08 14:14:38
  * @Description: 查询表格通用组件
 -->
 <template>
@@ -51,7 +51,7 @@
 import { useAttrs, useSlots, onMounted, ref, nextTick } from "vue"
 defineProps(["loading", "tableName", "pageSize", "currentPage"])
 const emit = defineEmits(["update:pageSize", "update:currentPage"])
-const attrs = useAttrs()
+const { onSearch, onClear } = useAttrs() as { onSearch: () => void; onClear: () => void }
 const slots = useSlots()
 const hasSearchSlot = ref(false)
 const paginationRef = ref()
@@ -70,9 +70,7 @@ onMounted(async () => {
     }
 })
 const search = () => {
-    if (attrs) {
-        attrs.onSearch()
-    }
+    onSearch()
 }
 
 const searchHandel = () => {
@@ -82,9 +80,7 @@ const searchHandel = () => {
 
 const clearHandel = () => {
     emit("update:currentPage", 1)
-    if (attrs) {
-        attrs.onClear()
-    }
+    onClear()
 }
 // 计算表格高度
 const setTableHeight = async () => {
