@@ -2,41 +2,69 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 09:17:42
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-29 11:04:21
+ * @LastEditTime: 2024-04-09 16:57:02
  * @Description:
  */
-import request from "../index";
+import request from "../index"
 
-// 获取员工
-export const getEmployee = (params: any) => {
-    return request.get("/employee", params);
-};
+/**
+ * @description: 获取员工
+ * @param {any} params
+ * @return {*}
+ */
+export const getEmployee = (params: any): any => {
+    return request.get("/employee", params)
+}
 
-// 员工详情
-export const getEmployeeById = (id: string | number) => {
-    return request.get("/employee/" + id);
-};
+/**
+ * @description: 员工详情
+ * @param {string} id
+ * @return {*}
+ */
+export const getEmployeeById = (id: string | number): any => {
+    return request.get("/employee/" + id)
+}
 
-// 员工新增
-export const addEmployee = (data: any) => {
-    return request.post("/employee", data);
-};
-// 员工编辑
-export const updateEmployee = (data: any) => {
-    return request.put("/employee", data);
-};
+/**
+ * @description: 员工新增
+ * @param {any} data
+ * @return {*}
+ */
+export const addEmployee = (data: any): any => {
+    return request.post("/employee", data)
+}
+/**
+ * @description: 员工编辑
+ * @param {any} data
+ * @return {*}
+ */
+export const updateEmployee = (data: any): any => {
+    return request.put("/employee", data)
+}
 
-// 修改帐号状态
-export const updateEmployeeAccountStatus = (data: { id: string | number; accountStatusCode: string | number }) => {
-    return request.put("/employee-account-status", data);
-};
+/**
+ * @description: 修改帐号状态
+ * @param {object} data
+ * @return {*}
+ */
+export const updateEmployeeAccountStatus = (data: { id: string | number; accountStatusCode: string | number }): any => {
+    return request.put("/employee-account-status", data)
+}
 
-// 修改状态
-export const updateEmployeeStatus = (data: { id: string | number; statusCode: string | number }) => {
-    return request.put("/employee-status", data);
-};
+/**
+ * @description: 修改状态
+ * @param {object} data
+ * @return {*}
+ */
+export const updateEmployeeStatus = (data: { id: string | number; statusCode: string | number }): any => {
+    return request.put("/employee-status", data)
+}
 
-// 重置密码
-export const resetEmployeePassword = (data: { id: string | number }) => {
-    return request.put("/employee-password", data);
-};
+/**
+ * @description: 重置密码
+ * @param {object} data
+ * @return {*}
+ */
+export const resetEmployeePassword = (data: { id: string | number }): any => {
+    return request.put("/employee-password", data)
+}

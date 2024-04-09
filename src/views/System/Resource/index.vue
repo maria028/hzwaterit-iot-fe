@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 17:30:13
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-02 11:25:09
+ * @LastEditTime: 2024-04-09 17:36:51
  * @Description: 
 -->
 <template>
@@ -204,7 +204,7 @@ onMounted(() => {
 
 // 获取资源树
 const getResourceTree = () => {
-    getResourceTreeData().then(async (response: Result<ResourceTreeBO[]> | any) => {
+    getResourceTreeData().then(async (response: Result<ResourceTreeBO[]>) => {
         const result = response
         treeData.value = [{ id: 0, name: "资源树", children: [...result.data] }]
         getTableData()
@@ -218,7 +218,7 @@ const getTableData = () => {
     loading.value = true
     queryModel.value.parentId = currentNodeKey.value
     getResource(queryModel.value)
-        .then((response: Result<ResourceBO[]> | any) => {
+        .then((response: Result<ResourceBO[]>) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data
@@ -252,7 +252,7 @@ const handleAdd = () => {
 const handleEdit = (id: number) => {
     dialogTitle.value = "修改"
     dialogVisible.value = true
-    getResourceById(id).then((response: Result<ResourceDTO> | any) => {
+    getResourceById(id).then((response: Result<ResourceDTO>) => {
         dialogData.value = response.data
         dialogData.value.typeCode = dialogData.value.typeCode + ""
         dialogData.value.requestMethod = dialogData.value.requestMethod + ""

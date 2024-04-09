@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-02 14:24:15
+ * @LastEditTime: 2024-04-09 17:34:12
  * @Description: 
 -->
 <template>
@@ -156,7 +156,7 @@ onMounted(() => {})
 const getTableData = () => {
     loading.value = true
     getDict(queryModel.value)
-        .then((response: Result<DictBO[]> | any) => {
+        .then((response: Result<DictBO[]>) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data
@@ -186,7 +186,7 @@ const handleAdd = () => {
 const handleEdit = (id: number) => {
     dialogTitle.value = "修改"
     dialogVisible.value = true
-    getDictById(id).then((response: Result<DictDTO> | any) => {
+    getDictById(id).then((response: Result<DictDTO>) => {
         dialogData.value = response.data
     })
 }

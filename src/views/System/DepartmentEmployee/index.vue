@@ -2,13 +2,13 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 14:19:36
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-02 11:23:50
+ * @LastEditTime: 2024-04-09 17:32:12
  * @Description: 
 -->
 <template>
     <el-page-header @back="goBack"> </el-page-header>
     <CSearchTable
-        tableName="关联员工"
+        tableName=""
         :data="tableData"
         @search="getTableData"
         @clear="reset"
@@ -105,7 +105,7 @@ const getTableData = () => {
     queryModel.value.departmentId = departmentId.value
     queryModel.value.relationStatusCode = relationStatusCode.value
     getDepartmentEmployee(queryModel.value)
-        .then((response: Result<DepartmentEmployeeBO[]> | any) => {
+        .then((response: Result<DepartmentEmployeeBO[]>) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data

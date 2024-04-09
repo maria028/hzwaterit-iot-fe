@@ -2,33 +2,57 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-02 09:13:42
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-02 09:18:28
+ * @LastEditTime: 2024-04-09 16:46:18
  * @Description:
  */
 import request from "../index"
-// 获取字典
-export const getDict = (params: any) => {
+/**
+ * @description: 获取字典
+ * @param {any} params
+ * @return {*}
+ */
+export const getDict = (params: any): any => {
     return request.get("/dict", params)
 }
 
-// 字典
-export const getDictById = (id: string | number) => {
+/**
+ * @description: 字典详情
+ * @param {string} id
+ * @return {*}
+ */
+export const getDictById = (id: string | number): any => {
     return request.get("/dict/" + id)
 }
 
-// 字典新增
-export const addDict = (data: any) => {
+/**
+ * @description: 字典新增
+ * @param {any} data
+ * @return {*}
+ */
+export const addDict = (data: any): any => {
     return request.post("/dict", data)
 }
-// 字典编辑
-export const updateDict = (data: any) => {
+/**
+ * @description: 字典编辑
+ * @param {any} data
+ * @return {*}
+ */
+export const updateDict = (data: any): any => {
     return request.put("/dict", data)
 }
-// 字典删除
-export const deleteDictById = (id: string | number) => {
+/**
+ * @description: 字典删除
+ * @param {string} id
+ * @return {*}
+ */
+export const deleteDictById = (id: string | number): any => {
     return request.delete("/dict/" + id)
 }
-//  字典排序
-export const setDictSort = (data: { id: string | number; moveTypeCode: any }) => {
+/**
+ * @description: 字典排序
+ * @param {object} data
+ * @return {*}
+ */
+export const setDictSort = (data: { id: string | number; moveTypeCode: any }): any => {
     return request.put("/dict-sort", data)
 }

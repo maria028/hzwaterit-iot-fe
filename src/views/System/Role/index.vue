@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-02 11:25:13
+ * @LastEditTime: 2024-04-09 17:36:55
  * @Description: 
 -->
 <template>
@@ -75,7 +75,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, nextTick } from "vue"
 import { ResourceTreeBO, RoleBO, RoleDTO } from "@/types/System"
-import { Dict, Result } from "@/types/Common"
+import { Result } from "@/types/Common"
 import { getResourceTreeData } from "@/service/system/resource"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { useRouter } from "vue-router"
@@ -131,7 +131,7 @@ onMounted(() => {
 
 //  获取资源树
 const getResourceTree = () => {
-    getResourceTreeData().then((response: Result<ResourceTreeBO[]> | any) => {
+    getResourceTreeData().then((response: Result<ResourceTreeBO[]>) => {
         treeData.value = response.data
     })
 }
@@ -140,7 +140,7 @@ const getResourceTree = () => {
 const getTableData = () => {
     loading.value = true
     getRole(queryModel.value)
-        .then((response: Result<RoleBO[]> | any) => {
+        .then((response: Result<RoleBO[]>) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data
@@ -169,7 +169,7 @@ const handleAdd = () => {
 const handleEdit = (id: number) => {
     dialogTitle.value = "修改"
     dialogVisible.value = true
-    getRoleById(id).then((response: Result<RoleDTO> | any) => {
+    getRoleById(id).then((response: Result<RoleDTO>) => {
         dialogData.value = response.data
         treeRef.value.setCheckedKeys(dialogData.value.resourceIds)
     })

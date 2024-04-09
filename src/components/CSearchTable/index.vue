@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 11:42:36
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-08 14:14:38
+ * @LastEditTime: 2024-04-09 15:54:36
  * @Description: 查询表格通用组件
 -->
 <template>
@@ -16,7 +16,7 @@
         <div ref="tableMenuRef">
             <el-row v-if="$slots.tableLeft || $slots.tableRight" justify="space-between" style="margin-bottom: 16px">
                 <el-col :span="12" style="text-align: left">
-                    <span class="label-title">{{ tableName }}</span>
+                    <span v-if="tableName" class="label-title">{{ tableName }}</span>
                     <slot name="tableLeft"></slot>
                 </el-col>
                 <el-col :span="12" style="text-align: right">

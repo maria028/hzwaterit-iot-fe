@@ -39,26 +39,26 @@
                     <el-button v-permission="'POST/employee'" type="primary" @click="handleAdd">新增</el-button>
                 </template>
                 <template #columns>
-                    <el-table-column type="index" label="序号" min-width="80" />
-                    <el-table-column label="头像">
+                    <el-table-column type="index" label="序号" width="80" />
+                    <el-table-column label="头像" width="80">
                         <template #default="scope">
                             <el-avatar :size="30" v-if="scope.row.avatarImgUrl" :src="scope.row.avatarImgUrl" />
                             <el-avatar :size="30" v-else>{{ scope.row.name.substr(0, 1) }}</el-avatar>
                         </template>
                     </el-table-column>
-                    <el-table-column label="姓名" prop="name" min-width="100" />
-                    <el-table-column label="手机号码" prop="phoneNumber" min-width="120" />
-                    <el-table-column label="帐号状态" prop="accountStatus" min-width="100" />
-                    <el-table-column label="状态" prop="status" min-width="80" />
-                    <el-table-column label="部门" prop="departmentNames" min-width="160" />
-                    <el-table-column label="职位" prop="positionNames" min-width="160" />
-                    <el-table-column label="角色" prop="roleName" min-width="160" />
-                    <el-table-column label="性别" prop="gender" min-width="80" />
-                    <el-table-column label="工号" prop="jobNumber" min-width="160" />
-                    <el-table-column label="邮箱" prop="email" min-width="180" />
-                    <el-table-column label="创建时间" prop="createGmt" min-width="180" />
-                    <el-table-column label="修改时间" prop="modifiedGmt" min-width="180" />
-                    <el-table-column label="操作" fixed="right" min-width="350">
+                    <el-table-column label="姓名" prop="name" width="100" />
+                    <el-table-column label="手机号码" prop="phoneNumber" width="120" />
+                    <el-table-column label="帐号状态" prop="accountStatus" width="100" />
+                    <el-table-column label="状态" prop="status" width="100" />
+                    <el-table-column label="部门" prop="departmentNames" width="100" />
+                    <el-table-column label="职位" prop="positionNames" width="100" />
+                    <el-table-column label="角色" prop="roleName" width="100" />
+                    <el-table-column label="性别" prop="gender" width="80" />
+                    <el-table-column label="工号" prop="jobNumber" width="100" />
+                    <el-table-column label="邮箱" prop="email" width="200" />
+                    <el-table-column label="创建时间" prop="createGmt" width="200" />
+                    <el-table-column label="修改时间" prop="modifiedGmt" width="200" />
+                    <el-table-column label="操作" fixed="right" width="220">
                         <template #default="scope">
                             <el-button type="primary" text @click="handleEdit(scope.row.id)" v-permission="'PUT/employee'">修改</el-button>
                             <el-button
@@ -176,7 +176,7 @@ import { ref, onMounted, nextTick } from "vue"
 import { DepartmentTreeBO, EmployeeBO, EmployeeDTO, PositionBO, RoleBO } from "@/types/System"
 import DictCodeConstant from "@/constant/DictCodeConstant"
 import DictUtils from "@/utils/DictUtils"
-import { Dict, DictBO, Result } from "@/types/Common"
+import { DictBO, Result } from "@/types/Common"
 import CommonRegexConstant from "@/constant/CommonRegexConstant"
 import { addEmployee, getEmployee, getEmployeeById, updateEmployeeAccountStatus, updateEmployeeStatus, updateEmployee, resetEmployeePassword } from "@/service/system/employee"
 import { getDepartmentTreeData } from "@/service/system/department"
@@ -258,7 +258,7 @@ onMounted(() => {
 })
 // 获取部门树
 const getDepartmentTree = () => {
-    getDepartmentTreeData().then(async (response: Result<Dict[]> | any) => {
+    getDepartmentTreeData().then(async (response: Result<DepartmentTreeBO[]>) => {
         const result = response
         treeData.value = [{ id: 0, name: "部门树", children: [...result.data] }]
         await nextTick()
@@ -267,13 +267,13 @@ const getDepartmentTree = () => {
 }
 // 获取职位列表
 const listPosition = () => {
-    getPosition({ pagination: 0 }).then((response: Result<PositionBO[]> | any) => {
+    getPosition({ pagination: 0 }).then((response: Result<PositionBO[]>) => {
         positions.value = response.data
     })
 }
 // 获取角色列表
 const listRole = () => {
-    getRole({ pagination: 0 }).then((response: Result<RoleBO[]> | any) => {
+    getRole({ pagination: 0 }).then((response: Result<RoleBO[]>) => {
         roles.value = response.data
     })
 }
@@ -283,7 +283,7 @@ const getTableData = () => {
     loading.value = true
     queryModel.value.departmentId = currentNodeKey.value
     getEmployee(queryModel.value)
-        .then((response: Result<EmployeeBO[]> | any) => {
+        .then((response: Result<EmployeeBO[]>) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data
@@ -319,7 +319,7 @@ const handleAdd = () => {
 const handleEdit = (id: number) => {
     dialogTitle.value = "修改"
     dialogVisible.value = true
-    getEmployeeById(id).then((response: Result<EmployeeDTO> | any) => {
+    getEmployeeById(id).then((response: Result<EmployeeDTO>) => {
         dialogData.value = response.data
         dialogData.value.accountStatusCode = dialogData.value.accountStatusCode + ""
         dialogData.value.statusCode = dialogData.value.statusCode + ""

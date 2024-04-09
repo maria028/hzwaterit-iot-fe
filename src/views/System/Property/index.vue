@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-02 11:25:02
+ * @LastEditTime: 2024-04-09 17:36:48
  * @Description: 
 -->
 <template>
@@ -112,7 +112,7 @@ onMounted(() => {})
 const getTableData = () => {
     loading.value = true
     getProperty(queryModel.value)
-        .then((response: Result<PropertyBO[]> | any) => {
+        .then((response: Result<PropertyBO[]>) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data
@@ -140,7 +140,7 @@ const handleAdd = () => {
 const handleEdit = (id: number) => {
     dialogTitle.value = "修改"
     dialogVisible.value = true
-    getPropertyById(id).then((response: Result<PropertyDTO> | any) => {
+    getPropertyById(id).then((response: Result<PropertyDTO>) => {
         dialogData.value = response.data
     })
 }

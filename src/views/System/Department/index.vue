@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 10:11:50
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-02 11:23:46
+ * @LastEditTime: 2024-04-09 17:31:40
  * @Description: 
 -->
 <template>
@@ -33,12 +33,11 @@
                     <el-button v-permission="'POST/department'" type="primary" @click="handleAdd">新增</el-button>
                 </template>
                 <template #columns>
-                    <el-table-column type="index" label="序号" min-width="80" />
-                    <el-table-column label="名称" prop="name" min-width="100" />
-                    <el-table-column label="创建时间" prop="createGmt" min-width="120" />
-                    <el-table-column label="修改时间" prop="modifiedGmt" min-width="120" />
-
-                    <el-table-column label="操作" fixed="right" min-width="200">
+                    <el-table-column type="index" label="序号" width="80" />
+                    <el-table-column label="名称" prop="name" width="200" />
+                    <el-table-column label="创建时间" prop="createGmt" width="200" />
+                    <el-table-column label="修改时间" prop="modifiedGmt" width="200" />
+                    <el-table-column label="操作" fixed="right" min-width="300">
                         <template #default="scope">
                             <el-button v-permission="'PUT/department'" type="primary" text @click="handleEdit(scope.row.id)"> 修改 </el-button>
                             <el-button v-permission="'PUT/department-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 1)"> 上移 </el-button>
@@ -70,7 +69,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, nextTick } from "vue"
 import { DepartmentTreeBO, DepartmentBO, DepartmentDTO } from "@/types/System"
-import { Dict, Result } from "@/types/Common"
+import { Result } from "@/types/Common"
 import { getDepartment, getDepartmentTreeData, getDepartmentById, deleteDepartmentById, setDepartmentSort, addDepartment, updateDepartment } from "@/service/system/department"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { useRouter } from "vue-router"
@@ -125,7 +124,7 @@ onMounted(() => {
 
 // 获取部门树
 const getDepartmentTree = () => {
-    getDepartmentTreeData().then(async (response: Result<Dict[]> | any) => {
+    getDepartmentTreeData().then(async (response: Result<DepartmentTreeBO[]>) => {
         const result = response
         treeData.value = [{ id: 0, name: "部门树", children: [...result.data] }]
         getTableData()
@@ -140,7 +139,7 @@ const getTableData = () => {
     loading.value = true
     queryModel.value.parentId = currentNodeKey.value
     getDepartment(queryModel.value)
-        .then((response: Result<DepartmentBO[]> | any) => {
+        .then((response: Result<DepartmentBO[]>) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data
@@ -173,7 +172,7 @@ const handleAdd = () => {
 const handleEdit = (id: number) => {
     dialogTitle.value = "修改"
     dialogVisible.value = true
-    getDepartmentById(id).then((response: Result<DepartmentDTO> | any) => {
+    getDepartmentById(id).then((response: Result<DepartmentDTO>) => {
         dialogData.value = response.data
     })
 }

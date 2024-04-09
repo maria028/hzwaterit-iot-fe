@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-02 11:24:51
+ * @LastEditTime: 2024-04-09 17:36:42
  * @Description: 
 -->
 <template>
@@ -103,7 +103,7 @@ onMounted(() => {})
 const getTableData = () => {
     loading.value = true
     getPosition(queryModel.value)
-        .then((response: Result<PositionBO[]> | any) => {
+        .then((response: Result<PositionBO[]>) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data
@@ -131,7 +131,7 @@ const handleAdd = () => {
 const handleEdit = (id: number) => {
     dialogTitle.value = "修改"
     dialogVisible.value = true
-    getPositionById(id).then((response: Result<PositionDTO> | any) => {
+    getPositionById(id).then((response: Result<PositionDTO>) => {
         dialogData.value = response.data
     })
 }

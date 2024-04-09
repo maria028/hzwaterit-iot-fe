@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-27 16:05:18
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-08 16:10:11
+ * @LastEditTime: 2024-04-09 17:36:12
  * @Description: Layout 
 -->
 <template>
@@ -90,7 +90,7 @@ import { useRouter } from "vue-router"
 import logo from "@/assets/img/logo.png"
 import LocalStorageKeyConstant from "@/constant/LocalStorageKeyConstant"
 import { dictTree, logout } from "@/service/auth"
-import { Dict, Result } from "@/types/Common"
+import { DictBO, Result } from "@/types/Common"
 import { MenuBO } from "@/types/Auth"
 const router = useRouter()
 
@@ -133,7 +133,7 @@ onMounted(() => {
     breadcrumbItemMap.set("/role-employee", breadcrumbItemMap.get("/role") + ",关联员工")
     //#endregion
 
-    dictTree().then((response: Result<Dict[]> | any) => {
+    dictTree().then((response: Result<DictBO[]>) => {
         const result = response
         localStorage.setItem(LocalStorageKeyConstant.DICT, JSON.stringify(result.data))
     })

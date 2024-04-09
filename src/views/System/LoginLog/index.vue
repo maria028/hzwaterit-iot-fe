@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-07 09:12:59
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-07 11:07:02
+ * @LastEditTime: 2024-04-09 17:35:55
  * @Description: 登录日志
 -->
 <template>
@@ -92,7 +92,7 @@ onMounted(() => {})
 const getTableData = () => {
     loading.value = true
     getLoginLog(queryModel.value)
-        .then((response: Result<LoginLogBO[]> | any) => {
+        .then((response: Result<LoginLogBO[]>) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data

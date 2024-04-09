@@ -98,7 +98,7 @@ const getTableData = () => {
     queryModel.value.positionId = positionId.value
     queryModel.value.relationStatusCode = relationStatusCode.value
     getPositionEmployee(queryModel.value)
-        .then((response: Result<PositionEmployeeBO[]> | any) => {
+        .then((response: Result<PositionEmployeeBO[]>) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data

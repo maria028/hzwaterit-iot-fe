@@ -39,25 +39,24 @@ body {
         background-color: #f9f9f9;
     }
 }
-
-/* // label-title  竖线 */
+// 表格标题
 .label-title {
-    position: relative;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 1.5715;
-    padding-left: 8px;
+    font-size: 20px;
+    font-family: DingTalk-JinBuTi;
+    font-weight: normal;
+    color: #191919;
+    line-height: 24px;
     display: flex;
     align-items: center;
-
     &::before {
         content: "";
-        width: 4px;
-        height: 80%;
-        background: var(--el-color-primary);
-        position: absolute;
-        left: 0;
-        border-radius: 2px;
+        width: 20px !important;
+        height: 20px !important;
+        position: relative;
+        bottom: 4px;
+        background: url("@/assets/img/icon/label.png") no-repeat center/cover !important;
+        margin-right: 8px !important;
+        bottom: 0 !important;
     }
 }
 // 弹框行内表单

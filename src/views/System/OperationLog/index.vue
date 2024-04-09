@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-07 10:31:25
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-07 11:07:13
+ * @LastEditTime: 2024-04-09 17:36:21
  * @Description: 操作日志
 -->
 <template>
@@ -168,7 +168,7 @@ const getTableData = () => {
     }
     loading.value = true
     getOperationLog(queryModel.value)
-        .then((response: Result<OperationLogBO[]> | any) => {
+        .then((response: Result<OperationLogBO[]>) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data
@@ -252,7 +252,7 @@ const handleDetails = (id: number) => {
     dialogTitle.value = "详情"
     dialogVisible.value = true
 
-    getOperationLogById(id).then((response: Result<OperationLogBO> | any) => {
+    getOperationLogById(id).then((response: Result<OperationLogBO>) => {
         dialogData.value = response.data
     })
 }
