@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 10:11:50
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-09 17:31:40
+ * @LastEditTime: 2024-04-11 09:12:06
  * @Description: 
 -->
 <template>
@@ -90,12 +90,13 @@ const currentNodeKey = ref(0)
 const loading = ref(false)
 
 // 查询条件
-const queryModel = ref({
+const initQueryModel = {
     pageNum: 1,
     pageSize: 10,
     parentId: 0,
-    name: ""
-})
+    name: null
+}
+const queryModel = ref(initQueryModel)
 
 // 总行数
 const rows = ref(0)
@@ -150,12 +151,7 @@ const getTableData = () => {
 }
 //  重置
 const reset = () => {
-    queryModel.value = {
-        pageNum: 1,
-        pageSize: 10,
-        parentId: 0,
-        name: ""
-    }
+    queryModel.value = initQueryModel
     getTableData()
 }
 // 树节点点击

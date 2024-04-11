@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 14:19:36
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-09 17:32:12
+ * @LastEditTime: 2024-04-11 09:12:46
  * @Description: 
 -->
 <template>
@@ -62,14 +62,15 @@ const router = useRouter()
 const loading = ref(false)
 
 // 查询条件
-const queryModel = ref({
+const initQueryModel = {
     pageNum: 1,
     pageSize: 10,
     departmentId: 0,
     relationStatusCode: "1",
     employeeName: null,
     phoneNumber: null
-})
+}
+const queryModel = ref(initQueryModel)
 
 // departmentId
 const departmentId = ref(0)
@@ -117,14 +118,7 @@ const getTableData = () => {
 
 //  重置
 const reset = () => {
-    queryModel.value = {
-        pageNum: 1,
-        pageSize: 10,
-        departmentId: 0,
-        relationStatusCode: "1",
-        employeeName: null,
-        phoneNumber: null
-    }
+    queryModel.value = initQueryModel
     getTableData()
 }
 

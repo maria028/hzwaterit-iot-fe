@@ -53,14 +53,15 @@ const router = useRouter()
 const loading = ref(false)
 
 // 查询条件
-const queryModel = ref({
+const initQueryModel = {
     pageNum: 1,
     pageSize: 10,
     roleId: 0,
     relationStatusCode: "1",
     employeeName: null,
     phoneNumber: null
-})
+}
+const queryModel = ref(initQueryModel)
 
 // roleId
 const roleId = ref(0)
@@ -108,14 +109,7 @@ const getTableData = () => {
 
 //  重置
 const reset = () => {
-    queryModel.value = {
-        pageNum: 1,
-        pageSize: 10,
-        roleId: 0,
-        relationStatusCode: "1",
-        employeeName: null,
-        phoneNumber: null
-    }
+    queryModel.value = initQueryModel
     getTableData()
 }
 

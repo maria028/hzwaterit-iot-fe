@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-07 09:12:59
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-09 17:35:55
+ * @LastEditTime: 2024-04-11 09:08:03
  * @Description: 登录日志
 -->
 <template>
@@ -25,7 +25,7 @@
                 <el-input v-model="queryModel.loginUserPhoneNumber" clearable maxlength="11" placeholder="请输入用户手机号码" />
             </CSearchBarItem>
             <CSearchBarItem label="登陆日期">
-                <el-date-picker v-model="queryModel.createGmt" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd HH:mm:ss" />
+                <el-date-picker v-model="queryModel.createGmt" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期" value-format="YYYY-MM-DD HH:mm:ss" />
             </CSearchBarItem>
             <CSearchBarItem label="状态">
                 <el-select v-model="queryModel.statusCode" placeholder="请选择" clearable>
@@ -63,17 +63,18 @@ import DictUtils from "@/utils/DictUtils"
 import { getLoginLog, deleteLoginLog, clearLoginLog } from "@/service/system/loginLog"
 
 const loading = ref(false)
-// 查询条件
-const queryModel = ref({
+const initQueryModel = {
     pageNum: 1,
     pageSize: 10,
-    loginUserName: "",
-    loginUserPhoneNumber: "",
-    statusCode: "",
-    createGmt: "",
+    loginUserName: null,
+    loginUserPhoneNumber: null,
+    statusCode: null,
+    createGmt: null,
     startCreateGmt: null,
     endCreateGmt: null
-})
+}
+// 查询条件
+const queryModel = ref(initQueryModel)
 
 // 总行数
 const rows = ref(0)
@@ -90,6 +91,11 @@ onMounted(() => {})
 
 // 搜索
 const getTableData = () => {
+    if (queryModel.value.createGmt) {
+        queryModel.value.startCreateGmt = queryModel.value.createGmt[0]
+        queryModel.value.endCreateGmt = queryModel.value.createGmt[1]
+        queryModel.value.createGmt = null
+    }
     loading.value = true
     getLoginLog(queryModel.value)
         .then((response: Result<LoginLogBO[]>) => {
@@ -104,16 +110,7 @@ const getTableData = () => {
 
 //  重置
 const reset = () => {
-    queryModel.value = {
-        pageNum: 1,
-        pageSize: 10,
-        loginUserName: "",
-        loginUserPhoneNumber: "",
-        statusCode: "",
-        createGmt: "",
-        startCreateGmt: null,
-        endCreateGmt: null
-    }
+    queryModel.value = initQueryModel
     getTableData()
 }
 

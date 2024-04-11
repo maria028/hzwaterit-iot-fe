@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-07 10:31:25
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-09 17:36:21
+ * @LastEditTime: 2024-04-10 14:40:49
  * @Description: 操作日志
 -->
 <template>
@@ -38,7 +38,7 @@
                 <el-input v-model="queryModel.requestUrl" clearable maxlength="30" placeholder="请输入请求地址" />
             </CSearchBarItem>
             <CSearchBarItem label="操作日期">
-                <el-date-picker v-model="createGmt" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期" value-format="YYYY-MM-DD HH:mm:ss" />
+                <el-date-picker v-model="queryModel.createGmt" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期" value-format="YYYY-MM-DD HH:mm:ss" />
             </CSearchBarItem>
         </template>
         <template #tableLeft> </template>
@@ -103,25 +103,26 @@ import DictUtils from "@/utils/DictUtils"
 import { getOperationLog, deleteOperationLog, clearOperationLog, getOperationLogById } from "@/service/system/operationLog"
 
 const loading = ref(false)
-// 查询条件
-const queryModel = ref({
+const initQueryModel = {
     pageNum: 1,
     pageSize: 10,
-    operatorName: "",
-    operatorPhoneNumber: "",
-    statusCode: "",
-    requestMethod: "",
-    requestUrl: "",
+    operatorName: null,
+    operatorPhoneNumber: null,
+    statusCode: null,
+    requestMethod: null,
+    requestUrl: null,
+    createGmt: null,
     startCreateGmt: null,
     endCreateGmt: null
-})
+}
+// 查询条件
+const queryModel = ref(initQueryModel)
 
 // 总行数
 const rows = ref(0)
 // 表格数据
 const tableData = ref<OperationLogBO[]>([])
-// 操作日期
-const createGmt = ref([])
+
 // 字典
 const operationStatusDicts: DictBO[] = DictUtils.list(DictCodeConstant.OPERATION_STATUS)
 const requestMethodDicts: DictBO[] = DictUtils.list(DictCodeConstant.REQUEST_METHOD)
@@ -162,9 +163,10 @@ onMounted(() => {})
 
 // 搜索
 const getTableData = () => {
-    if (createGmt.value.length > 0) {
-        queryModel.value.startCreateGmt = createGmt.value[0]
-        queryModel.value.endCreateGmt = createGmt.value[1]
+    if (queryModel.value.createGmt) {
+        queryModel.value.startCreateGmt = queryModel.value.createGmt[0]
+        queryModel.value.endCreateGmt = queryModel.value.createGmt[1]
+        queryModel.value.createGmt = null
     }
     loading.value = true
     getOperationLog(queryModel.value)
@@ -180,17 +182,7 @@ const getTableData = () => {
 
 //  重置
 const reset = () => {
-    queryModel.value = {
-        pageNum: 1,
-        pageSize: 10,
-        operatorName: "",
-        operatorPhoneNumber: "",
-        statusCode: "",
-        requestMethod: "",
-        requestUrl: "",
-        startCreateGmt: null,
-        endCreateGmt: null
-    }
+    queryModel.value = initQueryModel
     getTableData()
 }
 

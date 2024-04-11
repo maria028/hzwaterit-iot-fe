@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-09 17:34:12
+ * @LastEditTime: 2024-04-11 09:13:29
  * @Description: 
 -->
 <template>
@@ -81,13 +81,14 @@ const dialogFormRef = ref()
 
 const loading = ref(false)
 // 查询条件
-const queryModel = ref({
+const initQueryModel = {
     pageNum: 1,
     pageSize: 10,
     parentCode: "",
     code: null,
     name: null
-})
+}
+const queryModel = ref(initQueryModel)
 
 // 总行数
 const rows = ref(0)
@@ -168,13 +169,7 @@ const getTableData = () => {
 
 //  重置
 const reset = () => {
-    queryModel.value = {
-        pageNum: 1,
-        pageSize: 10,
-        parentCode: "",
-        code: null,
-        name: null
-    }
+    queryModel.value = initQueryModel
     getTableData()
 }
 // 新增
