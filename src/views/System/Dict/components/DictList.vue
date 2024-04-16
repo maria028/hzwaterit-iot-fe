@@ -70,8 +70,8 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, watch } from "vue"
-import { DictBO, DictDTO } from "@/types/System"
-import { Result } from "@/types/Common"
+import { DictBO, DictDTO } from "@/types/system"
+import { Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { getDict, getDictById, deleteDictById, setDictSort, addDict, updateDict } from "@/service/system/dict"
 const props = defineProps(["parent"])
@@ -241,3 +241,4 @@ const dialogConfirm = () => {
     })
 }
 </script>
+@/types/common@/types/system

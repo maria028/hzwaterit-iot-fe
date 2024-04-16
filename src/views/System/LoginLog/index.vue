@@ -55,11 +55,11 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue"
-import { LoginLogBO } from "@/types/System"
+import { LoginLogBO } from "@/types/system"
 import { ElMessage, ElMessageBox } from "element-plus"
-import { DictBO, Result } from "@/types/Common"
-import DictCodeConstant from "@/constant/DictCodeConstant"
-import DictUtils from "@/utils/DictUtils"
+import { DictBO, Result } from "@/types/common"
+import dictCodeConstant from "@/constant/dictCodeConstant"
+import dictUtils from "@/utils/dictUtils"
 import { getLoginLog, deleteLoginLog, clearLoginLog } from "@/service/system/loginLog"
 
 const loading = ref(false)
@@ -81,7 +81,7 @@ const rows = ref(0)
 // 表格数据
 const tableData = ref<LoginLogBO[]>([])
 // 登陆状态字典
-const loginStatusDicts: DictBO[] = DictUtils.list(DictCodeConstant.LOGIN_STATUS)
+const loginStatusDicts: DictBO[] = dictUtils.list(dictCodeConstant.LOGIN_STATUS)
 // 按钮状态. 默认禁用
 const buttonStatus = ref(true)
 // 多选选中 ids
@@ -167,3 +167,4 @@ const handleEmpty = () => {
         })
 }
 </script>
+@/utils/dictUtils@/constant/dictCodeConstant@/types/common@/types/system

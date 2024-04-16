@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 11:42:36
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-09 15:54:36
+ * @LastEditTime: 2024-04-11 09:54:43
  * @Description: 查询表格通用组件
 -->
 <template>

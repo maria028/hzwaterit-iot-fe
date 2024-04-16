@@ -7,7 +7,7 @@
  */
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import Router from "@/router"
-import LocalStorageKeyConstant from "@/constant/LocalStorageKeyConstant"
+import localStorageKeyConstant from "@/constant/localStorageKeyConstant"
 import { ElMessage } from "element-plus"
 
 // 设置默认的请求超时时间
@@ -47,7 +47,7 @@ function handerAxiosError(error: any) {
 axios.interceptors.request.use(
     (config) => {
         // 在这里可以对发送的请求做一些预处理，比如添加token等
-        config.headers[import.meta.env.VITE_KEY_TOKEN] = localStorage.getItem(LocalStorageKeyConstant.TOKEN) || ""
+        config.headers[import.meta.env.VITE_KEY_TOKEN] = localStorage.getItem(localStorageKeyConstant.TOKEN) || ""
         return config
     },
     (error) => {

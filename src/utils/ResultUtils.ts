@@ -2,14 +2,14 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-28 15:40:07
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-28 16:56:40
+ * @LastEditTime: 2024-04-16 09:28:52
  * @Description:
  */
-import { Result } from "@/types/Common";
+import { Result } from "@/types/common";
 import Router from "@/router";
 import { ElMessage } from "element-plus";
 
-export default class ResultUtils {
+export default class resultUtils {
     /**
      * 获取 result.data
      * @param result result

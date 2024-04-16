@@ -42,8 +42,8 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, nextTick } from "vue"
-import { RoleEmployeeBO } from "@/types/System"
-import { Result } from "@/types/Common"
+import { RoleEmployeeBO } from "@/types/system"
+import { Result } from "@/types/common"
 import { getRoleEmployee, bindRoleEmployee, deleteRoleEmployee } from "@/service/system/roleEmployee"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { useRouter, useRoute } from "vue-router"
@@ -190,3 +190,4 @@ const goBack = () => {
     })
 }
 </script>
+@/types/common@/types/system

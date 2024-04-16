@@ -26,8 +26,8 @@
 import { ref, reactive } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import type { FormInstance } from "element-plus";
-import CommonRegexConstant from "@/constant/CommonRegexConstant";
-import LocalStorageKeyConstant from "@/constant/LocalStorageKeyConstant";
+import commonRegexConstant from "@/constant/commonRegexConstant";
+import localStorageKeyConstant from "@/constant/localStorageKeyConstant";
 import { login } from "@/service/auth";
 const router = useRouter();
 const route = useRoute();
@@ -44,7 +44,7 @@ const loginForm = ref<FormInstance>();
 const rules = {
     phoneNumber: [
         { required: true, message: "请输入手机号码", trigger: "blur" },
-        { pattern: CommonRegexConstant.PHONE_NUMBER, message: "手机号码格式错误", trigger: "blur" }
+        { pattern: commonRegexConstant.PHONE_NUMBER, message: "手机号码格式错误", trigger: "blur" }
     ],
     password: [{ required: true, message: "请输入密码", trigger: "blur" }]
 };
@@ -56,14 +56,14 @@ const loginHandel = async (formEl: FormInstance | undefined) => {
             login(loginModel).then((result: any) => {
                 if (result) {
                     const authBo = result.data;
-                    localStorage.setItem(LocalStorageKeyConstant.TOKEN, authBo.token);
-                    localStorage.setItem(LocalStorageKeyConstant.MENU, JSON.stringify(authBo.menus));
+                    localStorage.setItem(localStorageKeyConstant.TOKEN, authBo.token);
+                    localStorage.setItem(localStorageKeyConstant.MENU, JSON.stringify(authBo.menus));
                     localStorage.setItem(
-                        LocalStorageKeyConstant.AUTHORIZED_RESOURCES,
+                        localStorageKeyConstant.AUTHORIZED_RESOURCES,
                         JSON.stringify(authBo.authorizedResources)
                     );
-                    localStorage.setItem(LocalStorageKeyConstant.ACCOUNT_NAME, authBo.name);
-                    localStorage.setItem(LocalStorageKeyConstant.ACCOUNT_AVATAR_IMG_URL, authBo.avatarImgUrl);
+                    localStorage.setItem(localStorageKeyConstant.ACCOUNT_NAME, authBo.name);
+                    localStorage.setItem(localStorageKeyConstant.ACCOUNT_AVATAR_IMG_URL, authBo.avatarImgUrl);
 
                     buttonLoading.value = false;
 
@@ -106,3 +106,4 @@ const loginHandel = async (formEl: FormInstance | undefined) => {
     width: 240px;
 }
 </style>
+@/constant/commonRegexConstant@/constant/localStorageKeyConstant

@@ -2,10 +2,10 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-28 10:08:16
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-09 16:37:44
+ * @LastEditTime: 2024-04-16 09:31:09
  * @Description:
  */
-export default class LocalStorageKeyConstant {
+export default class localStorageKeyConstant {
     /**
      * token
      */

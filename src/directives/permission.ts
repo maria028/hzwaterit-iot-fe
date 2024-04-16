@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-04-09 16:38:29
  * @Description:
  */
-import LocalStorageKeyConstant from "@/constant/LocalStorageKeyConstant"
+import localStorageKeyConstant from "@/constant/localStorageKeyConstant"
 import { Directive, DirectiveBinding, App } from "vue"
 
 /**
@@ -15,7 +15,7 @@ import { Directive, DirectiveBinding, App } from "vue"
  */
 const hasAuthority = (value: string): any => {
     let result = false
-    const authorizedResources: string[] = JSON.parse(localStorage.getItem(LocalStorageKeyConstant.AUTHORIZED_RESOURCES) as string)
+    const authorizedResources: string[] = JSON.parse(localStorage.getItem(localStorageKeyConstant.AUTHORIZED_RESOURCES) as string)
 
     for (const authorizedResource of authorizedResources) {
         if (authorizedResource == value) {

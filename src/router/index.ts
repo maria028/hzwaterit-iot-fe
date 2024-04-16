@@ -2,13 +2,13 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-27 16:00:52
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-09 14:24:25
+ * @LastEditTime: 2024-04-16 09:31:49
  * @Description:routes
  */
 import { createRouter, createWebHistory } from "vue-router"
 import type { RouteRecordRaw } from "vue-router"
-import SystemRouter from "./SystemRouter"
-import DeviceRouter from "./DeviceRouter"
+import systemRouter from "./systemRouter"
+import deviceRouter from "./deviceRouter"
 
 const routes: RouteRecordRaw[] = [
     {
@@ -20,15 +20,15 @@ const routes: RouteRecordRaw[] = [
             {
                 path: "/index",
                 name: "Index",
-                component: () => import("@/views/Index.vue")
+                component: () => import("@/views/index.vue")
             },
             {
                 path: "/profile",
                 name: "Profile",
                 component: () => import("@/views/Profile/index.vue")
             },
-            ...SystemRouter,
-            ...DeviceRouter
+            ...systemRouter,
+            ...deviceRouter
         ]
     },
     {

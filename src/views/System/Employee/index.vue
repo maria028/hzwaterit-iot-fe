@@ -173,11 +173,11 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, nextTick } from "vue"
-import { DepartmentTreeBO, EmployeeBO, EmployeeDTO, PositionBO, RoleBO } from "@/types/System"
-import DictCodeConstant from "@/constant/DictCodeConstant"
-import DictUtils from "@/utils/DictUtils"
-import { DictBO, Result } from "@/types/Common"
-import CommonRegexConstant from "@/constant/CommonRegexConstant"
+import { DepartmentTreeBO, EmployeeBO, EmployeeDTO, PositionBO, RoleBO } from "@/types/system"
+import dictCodeConstant from "@/constant/dictCodeConstant"
+import dictUtils from "@/utils/dictUtils"
+import { DictBO, Result } from "@/types/common"
+import commonRegexConstant from "@/constant/commonRegexConstant"
 import { addEmployee, getEmployee, getEmployeeById, updateEmployeeAccountStatus, updateEmployeeStatus, updateEmployee, resetEmployeePassword } from "@/service/system/employee"
 import { getDepartmentTreeData } from "@/service/system/department"
 import { getPosition } from "@/service/system/position"
@@ -216,11 +216,11 @@ const rows = ref(0)
 const tableData = ref<EmployeeBO[]>([])
 
 // 员工状态字典
-const employeeStatusDicts: DictBO[] = DictUtils.list(DictCodeConstant.EMPLOYEE_STATUS)
+const employeeStatusDicts: DictBO[] = dictUtils.list(dictCodeConstant.EMPLOYEE_STATUS)
 // 员工帐号状态字典
-const accountStatusDicts: DictBO[] = DictUtils.list(DictCodeConstant.ACCOUNT_STATUS)
+const accountStatusDicts: DictBO[] = dictUtils.list(dictCodeConstant.ACCOUNT_STATUS)
 // 性别字典
-const genderDicts: DictBO[] = DictUtils.list(DictCodeConstant.GENDER)
+const genderDicts: DictBO[] = dictUtils.list(dictCodeConstant.GENDER)
 
 // 对话框标题
 const dialogTitle = ref("")
@@ -247,9 +247,9 @@ const dialogRules = {
     name: [{ required: true, message: "请输入名称", trigger: "blur" }],
     phoneNumber: [
         { required: true, message: "请输入手机号码", trigger: "blur" },
-        { pattern: CommonRegexConstant.PHONE_NUMBER, message: "手机号码格式错误", trigger: "blur" }
+        { pattern: commonRegexConstant.PHONE_NUMBER, message: "手机号码格式错误", trigger: "blur" }
     ],
-    email: [{ pattern: CommonRegexConstant.EMAIL, message: "邮箱格式错误", trigger: "blur" }],
+    email: [{ pattern: commonRegexConstant.EMAIL, message: "邮箱格式错误", trigger: "blur" }],
     positionIds: [{ required: true, message: "请选择职位", trigger: "blur" }]
 }
 onMounted(() => {
@@ -391,3 +391,4 @@ const handleResetPassword = (id: number) => {
         })
 }
 </script>
+@/utils/dictUtils@/constant/commonRegexConstant@/constant/dictCodeConstant@/types/common@/types/system

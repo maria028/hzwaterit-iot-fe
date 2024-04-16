@@ -69,8 +69,8 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue"
-import { PropertyBO, PropertyDTO } from "@/types/System"
-import { Result } from "@/types/Common"
+import { PropertyBO, PropertyDTO } from "@/types/system"
+import { Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { addProperty, deletePropertyById, getProperty, getPropertyById, updateProperty } from "@/service/system/property"
 const dialogFormRef = ref()
@@ -185,3 +185,4 @@ const dialogConfirm = () => {
     })
 }
 </script>
+@/types/common@/types/system

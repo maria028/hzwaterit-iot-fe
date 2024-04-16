@@ -126,10 +126,10 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, nextTick } from "vue"
-import { ResourceBO, ResourceDTO, ResourceTreeBO } from "@/types/System"
-import DictCodeConstant from "@/constant/DictCodeConstant"
-import DictUtils from "@/utils/DictUtils"
-import { DictBO, Result } from "@/types/Common"
+import { ResourceBO, ResourceDTO, ResourceTreeBO } from "@/types/system"
+import dictCodeConstant from "@/constant/dictCodeConstant"
+import dictUtils from "@/utils/dictUtils"
+import { DictBO, Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
 import {
     addResource,
@@ -171,11 +171,11 @@ const rows = ref(0)
 const tableData = ref<ResourceBO[]>([])
 
 // 资源状态字典
-const resourceStatusDicts: DictBO[] = DictUtils.list(DictCodeConstant.RESOURCE_STATUS)
+const resourceStatusDicts: DictBO[] = dictUtils.list(dictCodeConstant.RESOURCE_STATUS)
 // 资源类型字典
-const resourceTypeDicts: DictBO[] = DictUtils.list(DictCodeConstant.RESOURCE_TYPE)
+const resourceTypeDicts: DictBO[] = dictUtils.list(dictCodeConstant.RESOURCE_TYPE)
 // 请求方式字典
-const requestMethodDicts: DictBO[] = DictUtils.list(DictCodeConstant.REQUEST_METHOD)
+const requestMethodDicts: DictBO[] = dictUtils.list(dictCodeConstant.REQUEST_METHOD)
 
 // 对话框标题
 const dialogTitle = ref("")
@@ -320,3 +320,4 @@ const dialogConfirm = () => {
     })
 }
 </script>
+@/utils/dictUtils@/constant/dictCodeConstant@/types/common@/types/system

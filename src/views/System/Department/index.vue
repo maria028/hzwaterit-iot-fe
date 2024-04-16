@@ -68,8 +68,8 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, nextTick } from "vue"
-import { DepartmentTreeBO, DepartmentBO, DepartmentDTO } from "@/types/System"
-import { Result } from "@/types/Common"
+import { DepartmentTreeBO, DepartmentBO, DepartmentDTO } from "@/types/system"
+import { Result } from "@/types/common"
 import { getDepartment, getDepartmentTreeData, getDepartmentById, deleteDepartmentById, setDepartmentSort, addDepartment, updateDepartment } from "@/service/system/department"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { useRouter } from "vue-router"
@@ -234,3 +234,4 @@ const handleRelationEmployee = (id: number) => {
     })
 }
 </script>
+@/types/common@/types/system

@@ -2,10 +2,10 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-28 09:06:48
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-09 16:37:13
+ * @LastEditTime: 2024-04-16 09:30:09
  * @Description: 正则常量
  */
-export default class CommonRegexConstant {
+export default class commonRegexConstant {
     /**
      * 手机号码
      */

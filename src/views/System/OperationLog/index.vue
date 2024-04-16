@@ -95,11 +95,11 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue"
-import { OperationLogBO } from "@/types/System"
+import { OperationLogBO } from "@/types/system"
 import { ElMessage, ElMessageBox } from "element-plus"
-import { DictBO, Result } from "@/types/Common"
-import DictCodeConstant from "@/constant/DictCodeConstant"
-import DictUtils from "@/utils/DictUtils"
+import { DictBO, Result } from "@/types/common"
+import dictCodeConstant from "@/constant/dictCodeConstant"
+import dictUtils from "@/utils/dictUtils"
 import { getOperationLog, deleteOperationLog, clearOperationLog, getOperationLogById } from "@/service/system/operationLog"
 
 const loading = ref(false)
@@ -124,8 +124,8 @@ const rows = ref(0)
 const tableData = ref<OperationLogBO[]>([])
 
 // 字典
-const operationStatusDicts: DictBO[] = DictUtils.list(DictCodeConstant.OPERATION_STATUS)
-const requestMethodDicts: DictBO[] = DictUtils.list(DictCodeConstant.REQUEST_METHOD)
+const operationStatusDicts: DictBO[] = dictUtils.list(dictCodeConstant.OPERATION_STATUS)
+const requestMethodDicts: DictBO[] = dictUtils.list(dictCodeConstant.REQUEST_METHOD)
 // 按钮状态. 默认禁用
 const buttonStatus = ref(true)
 // 多选选中 ids
@@ -254,3 +254,4 @@ const dialogClose = () => {
     dialogVisible.value = false
 }
 </script>
+@/utils/dictUtils@/constant/dictCodeConstant@/types/common@/types/system

@@ -88,10 +88,10 @@
 import { ref, reactive, onMounted, watch } from "vue"
 import { useRouter } from "vue-router"
 import logo from "@/assets/img/logo.png"
-import LocalStorageKeyConstant from "@/constant/LocalStorageKeyConstant"
+import localStorageKeyConstant from "@/constant/localStorageKeyConstant"
 import { dictTree, logout } from "@/service/auth"
-import { DictBO, Result } from "@/types/Common"
-import { MenuBO } from "@/types/Auth"
+import { DictBO, Result } from "@/types/common"
+import { MenuBO } from "@/types/auth"
 const router = useRouter()
 
 // title
@@ -116,12 +116,12 @@ onMounted(() => {
     breadcrumbItemMap.set("/profile", "个人中心")
     //#endregion
 
-    menus.value = JSON.parse(localStorage.getItem(LocalStorageKeyConstant.MENU) as string)
-    account.name = localStorage.getItem(LocalStorageKeyConstant.ACCOUNT_NAME) as string
+    menus.value = JSON.parse(localStorage.getItem(localStorageKeyConstant.MENU) as string)
+    account.name = localStorage.getItem(localStorageKeyConstant.ACCOUNT_NAME) as string
     if (account.name) {
         account.lastName = account.name.substr(0, 1)
     }
-    account.avatarImgUrl = localStorage.getItem(LocalStorageKeyConstant.ACCOUNT_AVATAR_IMG_URL) as string
+    account.avatarImgUrl = localStorage.getItem(localStorageKeyConstant.ACCOUNT_AVATAR_IMG_URL) as string
     activedMenu.value = router.currentRoute.value.path
 
     setBreadcrumbItemMap("", menus.value)
@@ -135,7 +135,7 @@ onMounted(() => {
 
     dictTree().then((response: Result<DictBO[]>) => {
         const result = response
-        localStorage.setItem(LocalStorageKeyConstant.DICT, JSON.stringify(result.data))
+        localStorage.setItem(localStorageKeyConstant.DICT, JSON.stringify(result.data))
     })
 })
 // 设置 path 与面包屑对应关系
@@ -173,7 +173,7 @@ watch(
 
 const logoutHandel = () => {
     logout().then(() => {
-        localStorage.removeItem(LocalStorageKeyConstant.TOKEN)
+        localStorage.removeItem(localStorageKeyConstant.TOKEN)
         router.replace({
             path: "/login"
         })
@@ -260,3 +260,4 @@ const gotoPersonalCenter = () => {
     height: calc(100vh - 100px);
 }
 </style>
+@/constant/localStorageKeyConstant@/types/auth@/types/common

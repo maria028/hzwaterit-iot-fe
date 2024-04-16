@@ -59,8 +59,8 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue"
-import { PositionBO, PositionDTO } from "@/types/System"
-import { Result } from "@/types/Common"
+import { PositionBO, PositionDTO } from "@/types/system"
+import { Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { useRouter } from "vue-router"
 import { addPosition, deletePositionById, getPosition, getPositionById, setPositionSort, updatePosition } from "@/service/system/position"
@@ -196,3 +196,4 @@ const handleRelationEmployee = (id: number) => {
     })
 }
 </script>
+@/types/common@/types/system

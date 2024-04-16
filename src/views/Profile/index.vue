@@ -77,14 +77,14 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue"
 import { useRouter } from "vue-router"
-import DictCodeConstant from "@/constant/DictCodeConstant"
-import DictUtils from "@/utils/DictUtils"
-import { DictBO, Result, ProfileBO } from "@/types/Common"
-import CommonRegexConstant from "@/constant/CommonRegexConstant"
-import LocalStorageKeyConstant from "@/constant/LocalStorageKeyConstant"
+import dictCodeConstant from "@/constant/dictCodeConstant"
+import dictUtils from "@/utils/dictUtils"
+import { DictBO, Result, ProfileBO } from "@/types/common"
+import commonRegexConstant from "@/constant/commonRegexConstant"
+import localStorageKeyConstant from "@/constant/localStorageKeyConstant"
 import { getAccountProfile, setAccountAvatar, setAccount, logout, setAccountPassword } from "@/service/auth"
 import { ElMessage } from "element-plus"
-import ResultUtils from "@/utils/ResultUtils"
+import resultUtils from "@/utils/resultUtils"
 
 const router = useRouter()
 const profileForm = ref()
@@ -97,7 +97,7 @@ const dialogTitle = ref("")
 // 对话框是否可见
 const dialogVisible = ref(false)
 // 性别字典
-const genderDicts: DictBO[] = DictUtils.list(DictCodeConstant.GENDER)
+const genderDicts: DictBO[] = dictUtils.list(dictCodeConstant.GENDER)
 
 // 个人信息
 let profileModel = ref(<ProfileBO>{
@@ -123,9 +123,9 @@ const profileFormRules = {
     name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
     phoneNumber: [
         { required: true, message: "请输入手机号码", trigger: "blur" },
-        { pattern: CommonRegexConstant.PHONE_NUMBER, message: "手机号码格式错误", trigger: "blur" }
+        { pattern: commonRegexConstant.PHONE_NUMBER, message: "手机号码格式错误", trigger: "blur" }
     ],
-    email: [{ pattern: CommonRegexConstant.EMAIL, message: "邮箱格式错误", trigger: "blur" }]
+    email: [{ pattern: commonRegexConstant.EMAIL, message: "邮箱格式错误", trigger: "blur" }]
 }
 // 修改密码表单参数校验
 const passwordFormRules = {
@@ -143,7 +143,7 @@ const passwordFormRules = {
 const upload = {
     action: import.meta.env.VITE_BASE_URL_API + "/upload",
     headers: {
-        token: localStorage.getItem(LocalStorageKeyConstant.TOKEN) || ""
+        token: localStorage.getItem(localStorageKeyConstant.TOKEN) || ""
     },
     data: {
         prefix: "avatar"
@@ -178,7 +178,7 @@ const handlerBeforeUpload = (file: File) => {
 }
 // 上传成功
 const handleUploadSuccess = (result: Result<string>) => {
-    const avatarImgUrl = ResultUtils.getData(result)
+    const avatarImgUrl = resultUtils.getData(result)
     if (avatarImgUrl) {
         profileModel.value.avatarImgUrl = avatarImgUrl
         setAccountAvatar({ avatarImgUrl: avatarImgUrl }).then(() => {
@@ -226,7 +226,7 @@ const updatePasswordConfirm = async () => {
             setAccountPassword(passwordModel.value).then(() => {
                 logout().then(() => {
                     ElMessage.success("操作成功" + ", 请重新登陆")
-                    localStorage.removeItem(LocalStorageKeyConstant.TOKEN)
+                    localStorage.removeItem(localStorageKeyConstant.TOKEN)
                     router.replace({
                         path: "/login"
                     })
@@ -245,3 +245,4 @@ const beforLeaveTab = (activeName: any, oldActiveName: any) => {
     }
 }
 </script>
+@/utils/dictUtils@/utils/resultUtils@/constant/commonRegexConstant@/constant/dictCodeConstant@/constant/localStorageKeyConstant@/types/common

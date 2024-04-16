@@ -74,8 +74,8 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, nextTick } from "vue"
-import { ResourceTreeBO, RoleBO, RoleDTO } from "@/types/System"
-import { Result } from "@/types/Common"
+import { ResourceTreeBO, RoleBO, RoleDTO } from "@/types/system"
+import { Result } from "@/types/common"
 import { getResourceTreeData } from "@/service/system/resource"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { useRouter } from "vue-router"
@@ -235,3 +235,4 @@ const handleRelationEmployee = (id: number) => {
     })
 }
 </script>
+@/types/common@/types/system
