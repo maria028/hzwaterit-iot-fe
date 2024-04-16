@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>形状</title>
+    <g id="物联网平台" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="营收管理" transform="translate(-40.000000, -340.000000)" fill-rule="nonzero">
+            <g id="侧边导航" transform="translate(0.000000, 80.000000)">
+                <g id="数据分析" transform="translate(24.000000, 248.000000)">
+                    <g id="编组" transform="translate(16.000000, 12.000000)">
+                        <path d="M18.00002,7 L21.00002,7 C21.55232,7 22.00002,7.44772 22.00002,8 L22.00002,20 C22.00002,20.5523 21.55232,21 21.00002,21 L3,21 C2.44772,21 2,20.5523 2,20 L2,4 C2,3.44772 2.44772,3 3,3 L18.00002,3 L18.00002,7 Z M4,9 L4,19 L20.00002,19 L20.00002,9 L4,9 Z M4,5 L4,7 L16.00002,7 L16.00002,5 L4,5 Z" id="形状" fill="#98A1B3"></path>
+                        <polygon id="路径" fill="#1A90FF" points="12.00002 13 18.00002 13 18.00002 15 12.00002 15"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

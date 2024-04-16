@@ -2,11 +2,11 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 08:50:38
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-16 09:33:44
+ * @LastEditTime: 2024-04-16 14:40:24
  * @Description:system
  */
 /**
- * @description: 部门对象-表格数据
+ * @description: 部门对象-
  * @return {*}
  */
 export interface DepartmentBO {
@@ -17,7 +17,7 @@ export interface DepartmentBO {
 }
 
 /**
- * @description:  部门对象-表单数据
+ * @description:  部门对象-
  * @return {*}
  */
 export interface DepartmentDTO {
@@ -27,7 +27,7 @@ export interface DepartmentDTO {
 }
 
 /**
- * @description: 部门-员工关联对象 表格数据
+ * @description: 部门-员工关联对象
  * @return {*}
  */
 export interface DepartmentEmployeeBO {
@@ -39,7 +39,7 @@ export interface DepartmentEmployeeBO {
 }
 
 /**
- * @description: 部门-员工关联对象 表单数据
+ * @description: 部门-员工关联对象
  * @return {*}
  */
 export interface DepartmentTreeBO {
@@ -49,7 +49,7 @@ export interface DepartmentTreeBO {
 }
 
 /**
- * @description: 字典对象 表格数据
+ * @description: 字典对象
  * @return {*}
  */
 export interface DictBO {
@@ -61,7 +61,7 @@ export interface DictBO {
 }
 
 /**
- * @description: 字典对象 表单数据
+ * @description: 字典对象
  * @return {*}
  */
 export interface DictDTO {
@@ -72,7 +72,7 @@ export interface DictDTO {
 }
 
 /**
- * @description: 员工对象 表格数据
+ * @description: 员工对象
  * @return {*}
  */
 export interface EmployeeBO {
@@ -99,7 +99,7 @@ export interface EmployeeBO {
 }
 
 /**
- * @description: 员工对象 表单数据
+ * @description: 员工对象
  * @return {*}
  */
 export interface EmployeeDTO {
@@ -117,7 +117,7 @@ export interface EmployeeDTO {
 }
 
 /**
- * @description: 登录日志对象 表格数据
+ * @description: 登录日志对象
  * @return {*}
  */
 export interface LoginLogBO {
@@ -134,7 +134,7 @@ export interface LoginLogBO {
 }
 
 /**
- * @description: 操作日志对象 表格数据
+ * @description: 操作日志对象
  * @return {*}
  */
 export interface OperationLogBO {
@@ -159,7 +159,7 @@ export interface OperationLogBO {
     createGmt: string //操作时间
 }
 /**
- * @description: 职位对象 表格数据
+ * @description: 职位对象
  * @return {*}
  */
 export interface PositionBO {
@@ -170,7 +170,7 @@ export interface PositionBO {
 }
 
 /**
- * @description: 职位对象 表单数据
+ * @description: 职位对象
  * @return {*}
  */
 export interface PositionDTO {
@@ -179,7 +179,7 @@ export interface PositionDTO {
 }
 
 /**
- * @description: 职位-员工关联对象 表格数据
+ * @description: 职位-员工关联对象
  * @return {*}
  */
 export interface PositionEmployeeBO {
@@ -190,7 +190,7 @@ export interface PositionEmployeeBO {
     phoneNumber: string //手机号码
 }
 /**
- * @description:  职位-员工关联对象 表格数据
+ * @description:  职位-员工关联对象
  * @return {*}
  */
 export interface PropertyBO {
@@ -202,7 +202,7 @@ export interface PropertyBO {
     modifiedGmt: string //修改时间
 }
 /**
- * @description: 属性对象 表格数据
+ * @description: 属性对象
  * @return {*}
  */
 export interface PropertyDTO {
@@ -213,7 +213,7 @@ export interface PropertyDTO {
 }
 
 /**
- * @description: 资源对象 表格数据
+ * @description: 资源对象
  * @return {*}
  */
 export interface ResourceBO {
@@ -230,7 +230,7 @@ export interface ResourceBO {
 }
 
 /**
- * @description: 资源对象 表单数据
+ * @description: 资源对象
  * @return {*}
  */
 export interface ResourceDTO {
@@ -244,7 +244,7 @@ export interface ResourceDTO {
     icon: string //图标地址
 }
 /**
- * @description: 资源数对象 表格数据
+ * @description: 资源数对象
  * @return {*}
  */
 export interface ResourceTreeBO {
@@ -254,7 +254,7 @@ export interface ResourceTreeBO {
 }
 
 /**
- * @description: 角色对象 表格数据
+ * @description: 角色对象
  * @return {*}
  */
 export interface RoleBO {
@@ -267,7 +267,7 @@ export interface RoleBO {
 }
 
 /**
- * @description: 角色对象 表单数据
+ * @description: 角色对象
  * @return {*}
  */
 export interface RoleDTO {
@@ -278,7 +278,7 @@ export interface RoleDTO {
 }
 
 /**
- * @description: 角色-员工关联对象 表格数据
+ * @description: 角色-员工关联对象
  * @return {*}
  */
 export interface RoleEmployeeBO {
@@ -287,4 +287,13 @@ export interface RoleEmployeeBO {
     employeeId: number //员工 id
     employeeName: string //员工姓名
     phoneNumber: string //手机号码
+}
+
+/**
+ * @description: 本地图标
+ * @return {*}
+ */
+export interface IconBO {
+    code: string // 文件名
+    path: string //路径
 }

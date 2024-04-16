@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 17:30:13
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-11 09:15:43
+ * @LastEditTime: 2024-04-16 15:23:02
  * @Description: 
 -->
 <template>
@@ -46,7 +46,11 @@
                     <el-table-column label="请求方式" prop="requestMethod" min-width="90px" />
                     <el-table-column label="地址" prop="url" min-width="180px" />
                     <el-table-column label="状态" prop="status" min-width="60px" />
-                    <el-table-column label="图标" prop="icon" min-width="150px" />
+                    <el-table-column label="图标" prop="icon" min-width="150px">
+                        <template #default="scope">
+                            <el-image v-if="scope.row.icon" :src="scope.row.icon" />
+                        </template>
+                    </el-table-column>
                     <el-table-column label="创建时间" prop="createGmt" min-width="180" />
                     <el-table-column label="修改时间" prop="modifiedGmt" min-width="180" />
                     <el-table-column label="操作" fixed="right" min-width="380">
@@ -113,7 +117,19 @@
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="图标" prop="icon">
-                        <el-input v-model="dialogData.icon" placeholder="请输入图标" maxlength="30" />
+                        <el-input
+                            v-model="dialogData.icon"
+                            placeholder="请选择图标"
+                            style="cursor: pointer"
+                            :suffix-icon="iconSelectVisible ? 'ArrowUp' : 'ArrowDown'"
+                            clearable
+                            @click="iconSelectVisible = true"
+                            @clear="dialogData.icon = ''"
+                        >
+                            <template #prepend>
+                                <el-image v-if="dialogData.icon" :src="dialogData.icon" />
+                            </template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -123,14 +139,16 @@
             <el-button type="primary" @click="dialogConfirm">确定</el-button>
         </template>
     </el-dialog>
+    <IconSelect v-model:visible="iconSelectVisible" @confirmIcon="confirmIconHandel" />
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, nextTick } from "vue"
-import { ResourceBO, ResourceDTO, ResourceTreeBO } from "@/types/system"
+import { ref, onMounted, nextTick, watch } from "vue"
+import { IconBO, ResourceBO, ResourceDTO, ResourceTreeBO } from "@/types/system"
 import dictCodeConstant from "@/constant/dictCodeConstant"
 import dictUtils from "@/utils/dictUtils"
 import { DictBO, Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
+import IconSelect from "./components/IconSelect/index.vue"
 import {
     addResource,
     deleteResourceById,
@@ -141,7 +159,6 @@ import {
     updateResource,
     updateResourceStatus
 } from "@/service/system/resource"
-
 const treeRef = ref()
 const dialogFormRef = ref()
 
@@ -198,6 +215,9 @@ const dialogData = ref<ResourceDTO>({
 const dialogRules = {
     name: [{ required: true, message: "请输入名称", trigger: "blur" }]
 }
+
+// 图标选择弹框显示
+const iconSelectVisible = ref(false)
 
 onMounted(() => {
     getResourceTree()
@@ -319,5 +339,8 @@ const dialogConfirm = () => {
         }
     })
 }
+// 选择图标
+const confirmIconHandel = (icon: IconBO) => {
+    dialogData.value.icon = icon.path
+}
 </script>
-@/utils/dictUtils@/constant/dictCodeConstant@/types/common@/types/system

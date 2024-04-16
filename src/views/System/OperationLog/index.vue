@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-07 10:31:25
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-10 14:40:49
+ * @LastEditTime: 2024-04-16 14:43:49
  * @Description: 操作日志
 -->
 <template>
@@ -254,4 +254,3 @@ const dialogClose = () => {
     dialogVisible.value = false
 }
 </script>
-@/utils/dictUtils@/constant/dictCodeConstant@/types/common@/types/system

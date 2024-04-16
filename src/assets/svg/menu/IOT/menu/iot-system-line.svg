@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>监测点档案</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Apple-TV" transform="translate(-601.000000, -538.000000)">
+            <g id="编组-6" transform="translate(370.000000, 115.000000)">
+                <g id="未选中iocn" transform="translate(219.000000, 411.000000)">
+                    <g id="监测点档案" transform="translate(12.000000, 12.000000)">
+                        <polygon id="Fill-1" fill="#BECFE0" opacity="0" points="0 24 24 24 24 0 0 0"></polygon>
+                        <g id="编组" transform="translate(3.000000, 2.000000)" fill-rule="nonzero">
+                            <path d="M0,0.9918 C0,0.44405 0.44495,0 0.9934,0 L17.0066,0 C17.5552,0 18,0.45531 18,0.9918 L18,19.0082 C18,19.556 17.5551,20 17.0066,20 L0.9934,20 C0.44476,20 0,19.5447 0,19.0082 L0,0.9918 Z M16,9 L16,2 L2,2 L2,9 L16,9 Z M16,11 L2,11 L2,18 L16,18 L16,11 Z" id="形状" fill="#98A1B3"></path>
+                            <polygon id="路径" fill="#1A90FF" opacity="0.699999988" points="6 4 12 4 12 6 6 6"></polygon>
+                            <polygon id="路径" fill="#1A90FF" opacity="0.699999988" points="6 13 12 13 12 15 6 15"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

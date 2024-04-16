@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>首页</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Apple-TV" transform="translate(-601.000000, -266.000000)">
+            <g id="编组-6" transform="translate(370.000000, 115.000000)">
+                <g id="选中icon" transform="translate(219.000000, 139.000000)">
+                    <g id="首页" transform="translate(12.000000, 12.000000)">
+                        <polygon id="Fill-1" fill="#333333" opacity="0" points="0 24 24 24 24 0 0 0"></polygon>
+                        <path d="M16,19 C16.5522847,19 17,18.5522847 17,18 C17,17.4477153 16.5522847,17 16,17 C15.4477153,17 15,17.4477153 15,18 C15,18.5522847 15.4477153,19 16,19 Z" id="椭圆形" fill="#1A90FF"></path>
+                        <g id="编组" transform="translate(3.000000, 2.000000)" fill="#98A1B3" fill-rule="nonzero">
+                            <path d="M16,5 L18,5 C18.5523,5 19,5.44772 19,6 L19,19 C19,19.5523 18.5523,20 18,20 L8,20 C7.4477,20 7,19.5523 7,19 L7,18 L1,18 C0.44772,18 0,17.5523 0,17 L0,1 C0,0.44772 0.44772,0 1,0 L15,0 C15.5523,0 16,0.44772 16,1 L16,5 Z M14,5 L14,2 L2,2 L2,16 L7,16 L7,6 C7,5.44772 7.4477,5 8,5 L14,5 Z M9,7 L9,18 L17,18 L17,7 L9,7 Z" id="形状"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>设备档案</title>
+    <defs>
+        <linearGradient x1="39.4239325%" y1="34.5121798%" x2="70.7106395%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#1AA8FF" offset="0%"></stop>
+            <stop stop-color="#0079E8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="19.7540368%" y1="4.73434918%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0.502595061" offset="0%"></stop>
+            <stop stop-color="#B3CCFE" stop-opacity="0.20083042" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="65.30224%" y1="68.4679913%" x2="16.9921875%" y2="0%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.703671329" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Apple-TV" transform="translate(-393.000000, -334.000000)">
+            <g id="编组-6" transform="translate(370.000000, 115.000000)">
+                <g id="设备档案" transform="translate(23.000000, 219.000000)">
+                    <polygon id="Fill-1" fill="#333333" opacity="0" points="0 24 24 24 24 0 0 0"></polygon>
+                    <g id="编组" transform="translate(2.000000, 1.000000)">
+                        <path d="M0.78307,1.82598 L9,0 L17.2169,1.82598 C17.6745,1.92766 18,2.33347 18,2.80217 L18,12.7889 C18,14.795 16.9974,16.6684 15.3282,17.7812 L9,22 L2.6718,17.7812 C1.00261,16.6684 0,14.795 0,12.7889 L0,2.80217 C0,2.33347 0.32553,1.92766 0.78307,1.82598 Z" id="形状" fill="url(#linearGradient-1)" fill-rule="nonzero"></path>
+                        <path d="M7.56555056,7.32798545 L13.5,6 L19.4344278,7.32798545 C19.7649167,7.40193455 20,7.69706909 20,8.03794182 L20,15.3010182 C20,16.76 19.2759,18.1224727 18.0703667,18.9317818 L13.5,22 L8.92963333,18.9317818 C7.72410722,18.1224727 7,16.76 7,15.3010182 L7,8.03794182 C7,7.69706909 7.235105,7.40193455 7.56555056,7.32798545 Z" id="形状" stroke="url(#linearGradient-3)" stroke-width="0.541666667" fill="url(#linearGradient-2)" fill-rule="nonzero"></path>
+                        <polygon id="路径" fill="#FFFFFF" points="13 13 13 10 15 10 15 13 18 13 18 15 15 15 15 18 13 18 13 15 10 15 10 13"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

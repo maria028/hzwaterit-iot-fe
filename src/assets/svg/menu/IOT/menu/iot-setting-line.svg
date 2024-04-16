@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>监测点档案</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Apple-TV" transform="translate(-601.000000, -606.000000)">
+            <g id="编组-6" transform="translate(370.000000, 115.000000)">
+                <g id="未选中iocn" transform="translate(219.000000, 479.000000)">
+                    <g id="监测点档案" transform="translate(12.000000, 12.000000)">
+                        <polygon id="Fill-1" fill="#BECFE0" opacity="0" points="0 24 24 24 24 0 0 0"></polygon>
+                        <g id="编组" transform="translate(3.000000, 2.000000)" fill-rule="nonzero">
+                            <path d="M2,12 L16,12 L16,2 L2,2 L2,12 Z M2,14 L2,18 L16,18 L16,14 L2,14 Z M1,0 L17,0 C17.5523,0 18,0.44772 18,1 L18,19 C18,19.5523 17.5523,20 17,20 L1,20 C0.44772,20 0,19.5523 0,19 L0,1 C0,0.44772 0.44772,0 1,0 Z" id="形状" fill="#98A1B3"></path>
+                            <polygon id="路径" fill="#1A90FF" points="12 15 14 15 14 17 12 17"></polygon>
+                            <polygon id="路径" fill="#1A90FF" points="2 12 16 12 16 14 2 14"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

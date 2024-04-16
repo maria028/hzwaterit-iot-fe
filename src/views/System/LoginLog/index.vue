@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-07 09:12:59
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-11 09:08:03
+ * @LastEditTime: 2024-04-16 14:43:47
  * @Description: 登录日志
 -->
 <template>
@@ -167,4 +167,3 @@ const handleEmpty = () => {
         })
 }
 </script>
-@/utils/dictUtils@/constant/dictCodeConstant@/types/common@/types/system

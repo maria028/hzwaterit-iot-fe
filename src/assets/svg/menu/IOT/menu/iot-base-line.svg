@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>首页</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Apple-TV" transform="translate(-601.000000, -470.000000)">
+            <g id="编组-6" transform="translate(370.000000, 115.000000)">
+                <g id="选中icon" transform="translate(219.000000, 343.000000)">
+                    <g id="首页" transform="translate(12.000000, 12.000000)">
+                        <polygon id="Fill-1" fill="#333333" opacity="0" points="0 24 24 24 24 0 0 0"></polygon>
+                        <g id="编组" transform="translate(2.000000, 3.000000)">
+                            <path d="M12,15 L12,17 L14,18 L14,19 L6,19 L5.99639,18.0036 L8,17 L8,15 L0.9918,15 C0.44405,15 0,14.5511 0,13.9925 L0,1.00748 C0,0.45107 0.45531,0 0.9918,0 L19.0082,0 C19.556,0 20,0.44892 20,1.00748 L20,13.9925 C20,14.5489 19.5447,15 19.0082,15 L12,15 Z M2,2 L2,13 L18,13 L18,2 L2,2 Z" id="形状" fill="#98A1B3" fill-rule="nonzero"></path>
+                            <polygon id="路径" fill="#1A90FF" points="3 10 17 10 17 12 3 12"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

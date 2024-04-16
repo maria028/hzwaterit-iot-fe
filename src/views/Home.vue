@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-27 16:05:18
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-09 17:36:12
+ * @LastEditTime: 2024-04-16 15:27:31
  * @Description: Layout 
 -->
 <template>
@@ -42,28 +42,28 @@
                     <template v-for="firstLevelMenu in menus">
                         <el-sub-menu v-if="firstLevelMenu.url == ''" :key="firstLevelMenu.id" :index="firstLevelMenu.id.toString()">
                             <template #title>
-                                <i :class="firstLevelMenu.icon"></i>
+                                <el-image v-if="firstLevelMenu.icon" :src="firstLevelMenu.icon"></el-image>
                                 <span>{{ firstLevelMenu.name }}</span>
                             </template>
                             <template v-for="secondLevelMenu in firstLevelMenu.children">
                                 <el-sub-menu v-if="secondLevelMenu.url == ''" :key="secondLevelMenu.id" :index="secondLevelMenu.id.toString()">
                                     <template #title>
-                                        <i :class="secondLevelMenu.icon"></i>
+                                        <el-image v-if="secondLevelMenu.icon" :src="secondLevelMenu.icon" />
                                         <span>{{ secondLevelMenu.name }}</span>
                                     </template>
                                     <el-menu-item v-for="thirdLevelMenu in secondLevelMenu.children" :key="thirdLevelMenu.id" :index="thirdLevelMenu.url.toString()">
-                                        <i :class="thirdLevelMenu.icon"></i>
+                                        <el-image v-if="thirdLevelMenu.icon" :src="thirdLevelMenu.icon" />
                                         <span slot="title">{{ thirdLevelMenu.name }}</span>
                                     </el-menu-item>
                                 </el-sub-menu>
-                                <el-menu-item v-else :key="secondLevelMenu.id" :index="secondLevelMenu.url.toString()">
-                                    <i :class="secondLevelMenu.icon"></i>
+                                <el-menu-item v-else :key="`#` + secondLevelMenu.id" :index="secondLevelMenu.url.toString()">
+                                    <el-image v-if="secondLevelMenu.icon" :src="secondLevelMenu.icon" />
                                     <span slot="title">{{ secondLevelMenu.name }}</span>
                                 </el-menu-item>
                             </template>
                         </el-sub-menu>
-                        <el-menu-item v-else :key="firstLevelMenu.id" :index="firstLevelMenu.url.toString()">
-                            <i :class="firstLevelMenu.icon"></i>
+                        <el-menu-item v-else :key="`#` + firstLevelMenu.id" :index="firstLevelMenu.url.toString()">
+                            <el-image v-if="firstLevelMenu.icon" :src="firstLevelMenu.icon" />
                             <span slot="title">{{ firstLevelMenu.name }}</span>
                         </el-menu-item>
                     </template>

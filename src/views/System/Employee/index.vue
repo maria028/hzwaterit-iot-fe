@@ -391,4 +391,3 @@ const handleResetPassword = (id: number) => {
         })
 }
 </script>
-@/utils/dictUtils@/constant/commonRegexConstant@/constant/dictCodeConstant@/types/common@/types/system

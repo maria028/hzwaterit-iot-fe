@@ -245,4 +245,3 @@ const beforLeaveTab = (activeName: any, oldActiveName: any) => {
     }
 }
 </script>
-@/utils/dictUtils@/utils/resultUtils@/constant/commonRegexConstant@/constant/dictCodeConstant@/constant/localStorageKeyConstant@/types/common

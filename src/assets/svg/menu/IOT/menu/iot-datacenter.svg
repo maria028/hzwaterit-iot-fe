@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>设备总览</title>
+    <defs>
+        <linearGradient x1="37.2029583%" y1="34.5121798%" x2="75.0598738%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#1AA8FF" offset="0%"></stop>
+            <stop stop-color="#0079E8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="4.18362972%" y1="9.62415714%" x2="50%" y2="94.5987654%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0.502595061" offset="0%"></stop>
+            <stop stop-color="#B3CCFE" stop-opacity="0.20083042" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="73.1797245%" y1="66.4729923%" x2="-1.03556053e-11%" y2="5.40123457%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.703671329" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="物联网平台" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="设备总览" transform="translate(-40.000000, -124.000000)">
+            <g id="侧边导航" transform="translate(0.000000, 80.000000)">
+                <g id="设备总览" transform="translate(24.000000, 32.000000)">
+                    <g transform="translate(16.000000, 12.000000)">
+                        <polygon id="Fill-1" fill="#333333" opacity="0" points="0 24 24 24 24 0 0 0"></polygon>
+                        <g id="编组" transform="translate(1.000000, 2.000000)" fill-rule="nonzero">
+                            <path d="M16,20 L1.125,20 L1.125,20 C0.503685,20 0,19.5025556 0,18.8888889 L0,1.11111111 C0,0.497466667 0.503685,0 1.125,0 L16.875,0 C17.4963375,0 18,0.497466667 18,1.11111111 L18,18 C18,19.1045695 17.1045695,20 16,20 Z" id="路径" fill="url(#linearGradient-1)"></path>
+                            <path d="M4,3.89551526 C4,3.40094053 4.409779,3 4.89262,3 L21.10738,3 C21.6004,3 22,3.39782684 22,3.89551526 L22,16.4202474 C22,16.9148579 21.59023,17.3157895 21.10738,17.3157895 L4.89262,17.3157895 C4.399645,17.3157895 4,16.9179895 4,16.4202474 L4,3.89551526 Z M6.7,18.2105263 L19.3,18.2105263 L19.3,20 L6.7,20 L6.7,18.2105263 Z" id="形状" stroke="url(#linearGradient-3)" stroke-width="0.5" fill="url(#linearGradient-2)"></path>
+                            <g transform="translate(9.000000, 6.000000)" fill="#FFFFFF" id="路径">
+                                <path d="M8,4.76767024 L3.23232323,4.76767024 L3.23232323,0 C1.38808889,0.374360352 0,2.0048687 0,3.9595878 C0,6.19102665 1.80895354,8 4.04040404,8 C5.99515152,8 7.62561616,6.61187598 8,4.76767024 Z"></path>
+                                <path d="M8,3.15150536 C7.67862626,1.5683668 6.43159596,0.321358225 4.84848485,0 L4.84848485,3.15150536 L8,3.15150536 Z"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

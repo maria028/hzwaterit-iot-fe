@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>首页</title>
+    <g id="物联网平台" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="数据查询" transform="translate(-40.000000, -124.000000)">
+            <g id="侧边导航" transform="translate(0.000000, 80.000000)">
+                <g id="设备总览" transform="translate(24.000000, 32.000000)">
+                    <g transform="translate(16.000000, 12.000000)" id="首页">
+                        <polygon id="Fill-1" fill="#333333" opacity="0" points="0 24 24 24 24 0 0 0"></polygon>
+                        <g id="编组" transform="translate(2.000000, 3.000000)">
+                            <path d="M0,1.00087 C0,0.44811 0.45531,0 0.9918,0 L19.0082,0 C19.556,0 20,0.44463 20,1.00087 L20,14.9991 C20,15.5519 19.5447,16 19.0082,16 L0.9918,16 C0.44405,16 0,15.5554 0,14.9991 L0,1.00087 Z M2,2 L2,14 L18,14 L18,2 L2,2 Z M3,17 L17,17 L17,19 L3,19 L3,17 Z" id="形状" fill="#98A1B3" fill-rule="nonzero"></path>
+                            <g id="编组-22" transform="translate(6.000000, 4.000000)" fill="#1A90FF">
+                                <path d="M8,4.76767024 C7.62561616,6.61187598 5.99515152,8 4.04040404,8 C1.80895354,8 0,6.19102665 0,3.9595878 C0,2.0048687 1.38808889,0.374360352 3.23232323,0 L3.23232323,4.76767024 L8,4.76767024 Z" id="路径"></path>
+                                <path d="M8,3.15150536 L4.84848485,3.15150536 L4.84848485,0 C6.43159596,0.321358225 7.67862626,1.5683668 8,3.15150536 Z" id="路径"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

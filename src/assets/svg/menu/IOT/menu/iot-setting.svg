@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>监测点档案</title>
+    <defs>
+        <linearGradient x1="37.2029583%" y1="34.5121798%" x2="75.0598738%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#1AA8FF" offset="0%"></stop>
+            <stop stop-color="#0079E8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="14.3298155%" y1="4.73434918%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0.502595061" offset="0%"></stop>
+            <stop stop-color="#B3CCFE" stop-opacity="0.20083042" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="68.0464983%" y1="68.4679913%" x2="11.0726644%" y2="0%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" stop-opacity="0.703671329" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Apple-TV" transform="translate(-393.000000, -606.000000)">
+            <g id="编组-6" transform="translate(370.000000, 115.000000)">
+                <g id="监测点档案" transform="translate(23.000000, 491.000000)">
+                    <polygon id="Fill-1" fill="#BECFE0" opacity="0" points="0 24 24 24 24 0 0 0"></polygon>
+                    <g id="编组" transform="translate(2.000000, 2.000000)" fill-rule="nonzero">
+                        <path d="M18,1 L18,19 C18,19.5523 17.5523,20 17,20 L1,20 C0.44772,20 0,19.5523 0,19 L0,1 C0,0.44772 0.44772,0 1,0 L17,0 C17.5523,0 18,0.44772 18,1 Z" id="形状" fill="url(#linearGradient-1)"></path>
+                        <path d="M20,3.85 L20,19.15 C20,19.619455 19.6269167,20 19.1666667,20 L5.83333333,20 C5.3731,20 5,19.619455 5,19.15 L5,3.85 C5,3.380562 5.3731,3 5.83333333,3 L19.1666667,3 C19.6269167,3 20,3.380562 20,3.85 Z" id="形状" stroke="url(#linearGradient-3)" stroke-width="0.5" fill="url(#linearGradient-2)"></path>
+                        <polygon id="路径" fill="#FFFFFF" points="6.825 14.9 6.825 18.3 18.725 18.3 18.725 14.9"></polygon>
+                        <polygon id="路径" fill="#2B8EFF" points="15.325 15.75 17.025 15.75 17.025 17.45 15.325 17.45"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
