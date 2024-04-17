@@ -190,4 +190,3 @@ const goBack = () => {
     })
 }
 </script>
-@/types/common@/types/system

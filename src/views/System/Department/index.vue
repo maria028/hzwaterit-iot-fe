@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 10:11:50
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-11 09:12:06
+ * @LastEditTime: 2024-04-17 10:41:56
  * @Description: 
 -->
 <template>
@@ -234,4 +234,3 @@ const handleRelationEmployee = (id: number) => {
     })
 }
 </script>
-@/types/common@/types/system

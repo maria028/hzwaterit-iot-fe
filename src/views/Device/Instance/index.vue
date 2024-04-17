@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-09 14:26:33
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-16 09:34:54
+ * @LastEditTime: 2024-04-17 10:51:41
  * @Description: 设备档案
 -->
 
@@ -34,10 +34,7 @@
             <el-table-column label="操作" fixed="right" min-width="160">
                 <template #default="scope">
                     <el-button v-permission="'PUT/position'" type="primary" text @click="handleEdit(scope.row.id)">修改</el-button>
-                    <el-button v-permission="'PUT/position-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 1)">上移</el-button>
-                    <el-button v-permission="'PUT/position-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 2)">下移</el-button>
                     <el-button v-permission="'DELETE/position/{id}'" type="danger" text @click="handleDelete(scope.row.id)">删除</el-button>
-                    <el-button v-permission="'GET/position-employee'" type="primary" text @click="handleRelationEmployee(scope.row.id)">关联员工</el-button>
                 </template>
             </el-table-column>
         </template>
@@ -64,10 +61,8 @@ import { PositionBO, PositionDTO } from "@/types/system"
 import { Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { useRouter } from "vue-router"
-import { addPosition, deletePositionById, getPosition, getPositionById, setPositionSort, updatePosition } from "@/service/system/position"
-const router = useRouter()
+import { addPosition, deletePositionById, getPosition, getPositionById, updatePosition } from "@/service/system/position"
 
-const treeRef = ref()
 const dialogFormRef = ref()
 
 const loading = ref(false)
@@ -152,17 +147,6 @@ const handleDelete = (id: number) => {
         })
 }
 
-// 修改排序
-const handlerUpdateSort = (id: number, moveTypeCode: number) => {
-    setPositionSort({
-        id: id,
-        moveTypeCode: moveTypeCode
-    }).then(() => {
-        ElMessage.success("操作成功！")
-        getTableData()
-    })
-}
-
 // 对话框关闭
 const dialogClose = () => {
     dialogVisible.value = false
@@ -187,14 +171,4 @@ const dialogConfirm = () => {
         }
     })
 }
-//  关联员工
-const handleRelationEmployee = (id: number) => {
-    router.replace({
-        path: "/position-employee",
-        query: {
-            positionId: id + ""
-        }
-    })
-}
 </script>
-@/types/common@/types/system

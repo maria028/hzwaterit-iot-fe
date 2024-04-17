@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-27 17:58:23
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-03-28 17:16:13
+ * @LastEditTime: 2024-04-17 10:43:09
  * @Description: 
 -->
 <template>
@@ -15,68 +15,63 @@
                 <el-input v-model="loginModel.password" placeholder="请输入密码" show-password />
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="loginHandel(loginForm)" class="login-button" :loading="buttonLoading"
-                    >登陆</el-button
-                >
+                <el-button type="primary" @click="loginHandel(loginForm)" class="login-button" :loading="buttonLoading">登陆</el-button>
             </el-form-item>
         </el-form>
     </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive } from "vue";
-import { useRouter, useRoute } from "vue-router";
-import type { FormInstance } from "element-plus";
-import commonRegexConstant from "@/constant/commonRegexConstant";
-import localStorageKeyConstant from "@/constant/localStorageKeyConstant";
-import { login } from "@/service/auth";
-const router = useRouter();
-const route = useRoute();
+import { ref, reactive } from "vue"
+import { useRouter, useRoute } from "vue-router"
+import type { FormInstance } from "element-plus"
+import commonRegexConstant from "@/constant/commonRegexConstant"
+import localStorageKeyConstant from "@/constant/localStorageKeyConstant"
+import { login } from "@/service/auth"
+const router = useRouter()
+const route = useRoute()
 
 // 按钮是否加载中
-const buttonLoading = ref(false);
+const buttonLoading = ref(false)
 // 请求参数
 const loginModel = reactive({
     phoneNumber: "",
     password: ""
-});
+})
 // 参数校验
-const loginForm = ref<FormInstance>();
+const loginForm = ref<FormInstance>()
 const rules = {
     phoneNumber: [
         { required: true, message: "请输入手机号码", trigger: "blur" },
         { pattern: commonRegexConstant.PHONE_NUMBER, message: "手机号码格式错误", trigger: "blur" }
     ],
     password: [{ required: true, message: "请输入密码", trigger: "blur" }]
-};
+}
 // 登陆
 const loginHandel = async (formEl: FormInstance | undefined) => {
-    if (!formEl) return;
+    if (!formEl) return
     await formEl.validate((valid, fields) => {
         if (valid) {
             login(loginModel).then((result: any) => {
                 if (result) {
-                    const authBo = result.data;
-                    localStorage.setItem(localStorageKeyConstant.TOKEN, authBo.token);
-                    localStorage.setItem(localStorageKeyConstant.MENU, JSON.stringify(authBo.menus));
-                    localStorage.setItem(
-                        localStorageKeyConstant.AUTHORIZED_RESOURCES,
-                        JSON.stringify(authBo.authorizedResources)
-                    );
-                    localStorage.setItem(localStorageKeyConstant.ACCOUNT_NAME, authBo.name);
-                    localStorage.setItem(localStorageKeyConstant.ACCOUNT_AVATAR_IMG_URL, authBo.avatarImgUrl);
+                    const authBo = result.data
+                    localStorage.setItem(localStorageKeyConstant.TOKEN, authBo.token)
+                    localStorage.setItem(localStorageKeyConstant.MENU, JSON.stringify(authBo.menus))
+                    localStorage.setItem(localStorageKeyConstant.AUTHORIZED_RESOURCES, JSON.stringify(authBo.authorizedResources))
+                    localStorage.setItem(localStorageKeyConstant.ACCOUNT_NAME, authBo.name)
+                    localStorage.setItem(localStorageKeyConstant.ACCOUNT_AVATAR_IMG_URL, authBo.avatarImgUrl)
 
-                    buttonLoading.value = false;
+                    buttonLoading.value = false
 
                     router.replace({
                         path: (route.query.redirect as string) || "/"
-                    });
+                    })
                 }
-            });
+            })
         } else {
-            console.log("error submit!", fields);
+            console.log("error submit!", fields)
         }
-    });
-};
+    })
+}
 </script>
 
 <style scoped lang="scss">
@@ -106,4 +101,3 @@ const loginHandel = async (formEl: FormInstance | undefined) => {
     width: 240px;
 }
 </style>
-@/constant/commonRegexConstant@/constant/localStorageKeyConstant

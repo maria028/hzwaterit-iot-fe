@@ -2,7 +2,16 @@
     <el-row :gutter="16" style="height: 100%">
         <el-col :span="4" style="height: 100%">
             <el-card>
-                <el-tree :data="treeData" :props="treeProps" node-key="id" highlight-current accordion ref="treeRef" default-expand-all @node-click="handlerNodeClick" />
+                <el-tree
+                    :data="treeData"
+                    :props="{ children: 'children', label: 'name' }"
+                    node-key="id"
+                    highlight-current
+                    accordion
+                    ref="treeRef"
+                    default-expand-all
+                    @node-click="handlerNodeClick"
+                />
             </el-card>
         </el-col>
         <el-col :span="20" style="height: 100%">
@@ -90,111 +99,30 @@
             </CSearchTable>
         </el-col>
     </el-row>
-    <el-dialog :title="dialogTitle" v-model="dialogVisible" :before-close="dialogClose" append-to-body>
-        <el-form ref="dialogFormRef" :model="dialogData" inline label-width="auto" :rules="dialogRules" class="dialog-form-inline">
-            <el-row :gutter="32">
-                <el-col :span="12">
-                    <el-form-item label="名称" prop="name">
-                        <el-input v-model="dialogData.name" placeholder="请输入名称" maxlength="30" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="手机号码" prop="phoneNumber">
-                        <el-input v-model="dialogData.phoneNumber" placeholder="请输入手机号码" maxlength="11" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="帐号状态" prop="accountStatusCode">
-                        <el-select v-model="dialogData.accountStatusCode" placeholder="请选择">
-                            <el-option
-                                v-for="accountStatusDict in accountStatusDicts"
-                                :key="accountStatusDict.code"
-                                :label="accountStatusDict.name"
-                                :value="accountStatusDict.code"
-                            />
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="状态" prop="statusCode">
-                        <el-select v-model="dialogData.statusCode" placeholder="请选择">
-                            <el-option
-                                v-for="employeeStatusDict in employeeStatusDicts"
-                                :key="employeeStatusDict.code"
-                                :label="employeeStatusDict.name"
-                                :value="employeeStatusDict.code"
-                            />
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="性别" prop="genderCode">
-                        <el-radio-group v-model="dialogData.genderCode">
-                            <el-radio v-for="genderDict in genderDicts" :value="genderDict.code" :label="genderDict.code">{{ genderDict.name }}</el-radio>
-                        </el-radio-group>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="工号" prop="jobNumber">
-                        <el-input v-model="dialogData.jobNumber" placeholder="请输入工号" maxlength="30" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="邮箱" prop="email">
-                        <el-input v-model="dialogData.email" placeholder="请输入邮箱" maxlength="30" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="部门" prop="departmentIds">
-                        <el-tree :data="treeData" :props="treeProps" node-key="id" show-checkbox check-strictly ref="checkTreeRef" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="职位" prop="positionIds">
-                        <el-select v-model="dialogData.positionIds" multiple placeholder="请选择">
-                            <el-option v-for="position in positions" :key="position.id" :label="position.name" :value="position.id" />
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="角色" prop="roleId">
-                        <el-select v-model="dialogData.roleId" placeholder="请选择">
-                            <el-option v-for="role in roles" :key="role.id" :label="role.name" :value="role.id" />
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-        </el-form>
-        <template #footer>
-            <el-button @click="dialogCancel">取消</el-button>
-            <el-button type="primary" @click="dialogConfirm">确定</el-button>
-        </template>
-    </el-dialog>
+    <EmployeeForm v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" @confirm="confirmEmployeeForm" />
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, nextTick } from "vue"
+import { ref, onMounted, nextTick, provide, computed } from "vue"
 import { DepartmentTreeBO, EmployeeBO, EmployeeDTO, PositionBO, RoleBO } from "@/types/system"
 import dictCodeConstant from "@/constant/dictCodeConstant"
 import dictUtils from "@/utils/dictUtils"
 import { DictBO, Result } from "@/types/common"
-import commonRegexConstant from "@/constant/commonRegexConstant"
 import { addEmployee, getEmployee, getEmployeeById, updateEmployeeAccountStatus, updateEmployeeStatus, updateEmployee, resetEmployeePassword } from "@/service/system/employee"
 import { getDepartmentTreeData } from "@/service/system/department"
 import { getPosition } from "@/service/system/position"
 import { getRole } from "@/service/system/role"
 import { ElMessage, ElMessageBox } from "element-plus"
+import EmployeeForm from "./components/EmployeeForm.vue"
 
 const treeRef = ref()
-const checkTreeRef = ref()
-const dialogFormRef = ref()
 
 // 部门树数据
 const treeData = ref<DepartmentTreeBO[]>([])
-// 树属性
-const treeProps = ref({
-    children: "children",
-    label: "name"
-})
+// 数据是异步的所以需要使用computed
+provide(
+    "treeData",
+    computed(() => treeData.value)
+)
 // 当前选中的节点
 const currentNodeKey = ref(0)
 const loading = ref(false)
@@ -217,13 +145,7 @@ const tableData = ref<EmployeeBO[]>([])
 
 // 员工状态字典
 const employeeStatusDicts: DictBO[] = dictUtils.list(dictCodeConstant.EMPLOYEE_STATUS)
-// 员工帐号状态字典
-const accountStatusDicts: DictBO[] = dictUtils.list(dictCodeConstant.ACCOUNT_STATUS)
-// 性别字典
-const genderDicts: DictBO[] = dictUtils.list(dictCodeConstant.GENDER)
 
-// 对话框标题
-const dialogTitle = ref("")
 // 对话框是否显示
 const dialogVisible = ref(false)
 
@@ -240,18 +162,18 @@ const dialogData = ref<EmployeeDTO>({
 })
 // 职位列表
 const positions = ref<PositionBO[]>([])
+provide(
+    "positions",
+    computed(() => positions.value)
+)
+
 // 角色列表
 const roles = ref<RoleBO[]>([])
-// 对话框校验
-const dialogRules = {
-    name: [{ required: true, message: "请输入名称", trigger: "blur" }],
-    phoneNumber: [
-        { required: true, message: "请输入手机号码", trigger: "blur" },
-        { pattern: commonRegexConstant.PHONE_NUMBER, message: "手机号码格式错误", trigger: "blur" }
-    ],
-    email: [{ pattern: commonRegexConstant.EMAIL, message: "邮箱格式错误", trigger: "blur" }],
-    positionIds: [{ required: true, message: "请选择职位", trigger: "blur" }]
-}
+provide(
+    "roles",
+    computed(() => roles.value)
+)
+
 onMounted(() => {
     getDepartmentTree()
     listPosition()
@@ -306,19 +228,17 @@ const handlerNodeClick = () => {
 }
 // 新增
 const handleAdd = () => {
-    dialogTitle.value = "新增"
     dialogVisible.value = true
 }
 // 修改
 const handleEdit = (id: number) => {
-    dialogTitle.value = "修改"
     dialogVisible.value = true
     getEmployeeById(id).then((response: Result<EmployeeDTO>) => {
         dialogData.value = response.data
+        //请求返回类型是Number，字典中是String
         dialogData.value.accountStatusCode = dialogData.value.accountStatusCode + ""
         dialogData.value.statusCode = dialogData.value.statusCode + ""
         dialogData.value.genderCode = dialogData.value.genderCode + ""
-        checkTreeRef.value.setCheckedKeys(dialogData.value.departmentIds)
     })
 }
 
@@ -345,35 +265,20 @@ const handlerUpdateStatus = (id: number, statusCode: number) => {
 }
 
 // 对话框关闭
-const dialogClose = () => {
+const closeEmployeeForm = () => {
     dialogVisible.value = false
     dialogData.value.id = 0
-    dialogFormRef.value.resetFields()
-    checkTreeRef.value.setCheckedKeys([])
-}
-// 对话框取消
-const dialogCancel = () => {
-    dialogClose()
 }
 // 对话框确定
-const dialogConfirm = () => {
-    dialogFormRef.value.validate((valid: boolean) => {
-        if (valid) {
-            const checkedKeys = checkTreeRef.value.getCheckedKeys()
-            if (checkedKeys.length == 0) {
-                ElMessage.error("请选择部门")
-                return
-            }
-            dialogData.value.departmentIds = checkedKeys
-            const request = dialogData.value.id == 0 ? addEmployee(dialogData.value) : updateEmployee(dialogData.value)
-            request.then(() => {
-                ElMessage.success("操作成功！")
-                dialogClose()
-                getTableData()
-            })
-        }
+const confirmEmployeeForm = (formData: EmployeeDTO) => {
+    const request = formData.id == 0 ? addEmployee(formData) : updateEmployee(formData)
+    request.then(() => {
+        ElMessage.success("操作成功！")
+        getTableData()
+        dialogVisible.value = false
     })
 }
+
 // 重置密码
 const handleResetPassword = (id: number) => {
     ElMessageBox.confirm("确定重置密码?", "提示", {

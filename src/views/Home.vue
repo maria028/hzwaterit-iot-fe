@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-27 16:05:18
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-16 15:27:31
+ * @LastEditTime: 2024-04-17 10:41:52
  * @Description: Layout 
 -->
 <template>
@@ -260,4 +260,3 @@ const gotoPersonalCenter = () => {
     height: calc(100vh - 100px);
 }
 </style>
-@/constant/localStorageKeyConstant@/types/auth@/types/common

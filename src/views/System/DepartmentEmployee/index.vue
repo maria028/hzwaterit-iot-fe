@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 14:19:36
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-11 09:12:46
+ * @LastEditTime: 2024-04-17 10:41:59
  * @Description: 
 -->
 <template>
@@ -199,4 +199,3 @@ const goBack = () => {
     })
 }
 </script>
-@/types/common@/types/system
