@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-17 10:42:11
+ * @LastEditTime: 2024-04-17 16:06:12
  * @Description: 
 -->
 <template>
@@ -41,21 +41,7 @@
             </el-table-column>
         </template>
     </CSearchTable>
-    <el-dialog :title="dialogTitle" v-model="dialogVisible" :before-close="dialogClose" append-to-body>
-        <el-form :model="dialogData" ref="dialogFormRef" label-width="auto" :rules="dialogRules">
-            <el-row :gutter="32">
-                <el-col :span="12">
-                    <el-form-item label="名称" prop="name">
-                        <el-input v-model="dialogData.name" placeholder="请输入名称" maxlength="30" />
-                    </el-form-item>
-                </el-col>
-            </el-row>
-        </el-form>
-        <template #footer>
-            <el-button @click="dialogCancel">取消</el-button>
-            <el-button type="primary" @click="dialogConfirm">确定</el-button>
-        </template>
-    </el-dialog>
+    <PositionForm v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" @confirm="confirmEmployeeForm" />
 </template>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue"
@@ -63,10 +49,10 @@ import { PositionBO, PositionDTO } from "@/types/system"
 import { Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { useRouter } from "vue-router"
+import PositionForm from "./components/PositionForm.vue"
 import { addPosition, deletePositionById, getPosition, getPositionById, setPositionSort, updatePosition } from "@/service/system/position"
 const router = useRouter()
 
-const treeRef = ref()
 const dialogFormRef = ref()
 
 const loading = ref(false)
@@ -163,29 +149,20 @@ const handlerUpdateSort = (id: number, moveTypeCode: number) => {
 }
 
 // 对话框关闭
-const dialogClose = () => {
+const closeEmployeeForm = () => {
     dialogVisible.value = false
     dialogData.value.id = 0
-    dialogFormRef.value.resetFields()
 }
-// 对话框取消
-const dialogCancel = () => {
-    dialogClose()
-}
-
 // 对话框确定
-const dialogConfirm = () => {
-    dialogFormRef.value.validate((valid: boolean) => {
-        if (valid) {
-            const request = dialogData.value.id == 0 ? addPosition(dialogData.value) : updatePosition(dialogData.value)
-            request.then(() => {
-                ElMessage.success("操作成功！")
-                dialogClose()
-                getTableData()
-            })
-        }
+const confirmEmployeeForm = (formData: PositionDTO) => {
+    const request = formData.id == 0 ? addPosition(formData) : updatePosition(formData)
+    request.then(() => {
+        ElMessage.success("操作成功！")
+        getTableData()
+        closeEmployeeForm()
     })
 }
+
 //  关联员工
 const handleRelationEmployee = (id: number) => {
     router.replace({

@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-07 10:31:25
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-16 14:43:49
+ * @LastEditTime: 2024-04-17 16:02:04
  * @Description: 操作日志
 -->
 <template>
@@ -70,28 +70,7 @@
             </el-table-column>
         </template>
     </CSearchTable>
-    <el-dialog :title="dialogTitle" v-model="dialogVisible" :before-close="dialogClose" append-to-body>
-        <el-form :model="dialogData" ref="dialogForm" label-width="auto">
-            <el-form-item label="操作人姓名">{{ dialogData.operatorName }}</el-form-item>
-            <el-form-item label="操作人手机号码">{{ dialogData.operatorPhoneNumber }}</el-form-item>
-            <el-form-item label="操作模块">{{ dialogData.module }}</el-form-item>
-            <el-form-item label="操作类型">{{ dialogData.type }}</el-form-item>
-            <el-form-item label="IP">{{ dialogData.ip }}</el-form-item>
-            <el-form-item label="地理位置">{{ dialogData.location }}</el-form-item>
-            <el-form-item label="操作系统">{{ dialogData.os }}</el-form-item>
-            <el-form-item label="浏览器">{{ dialogData.browser }}</el-form-item>
-            <el-form-item label="请求方式">{{ dialogData.requestMethod }}</el-form-item>
-            <el-form-item label="请求地址">{{ dialogData.requestUrl }}</el-form-item>
-            <el-form-item label="请求 content-type">{{ dialogData.requestContentType }}</el-form-item>
-            <el-form-item label="请求 user-agent">{{ dialogData.requestUserAgent }}</el-form-item>
-            <el-form-item label="请求参数">{{ dialogData.requestParam }}</el-form-item>
-            <el-form-item label="响应结果">{{ dialogData.responseResult }}</el-form-item>
-            <el-form-item label="耗时 (毫秒)">{{ dialogData.waitTime }}</el-form-item>
-            <el-form-item label="状态">{{ dialogData.status }}</el-form-item>
-            <el-form-item label="错误信息">{{ dialogData.errorMsg }}</el-form-item>
-            <el-form-item label="操作时间">{{ dialogData.createGmt }}</el-form-item>
-        </el-form>
-    </el-dialog>
+    <OperationLogDetail v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" />
 </template>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue"
@@ -100,6 +79,7 @@ import { ElMessage, ElMessageBox } from "element-plus"
 import { DictBO, Result } from "@/types/common"
 import dictCodeConstant from "@/constant/dictCodeConstant"
 import dictUtils from "@/utils/dictUtils"
+import OperationLogDetail from "./components/OperationLogDetail.vue"
 import { getOperationLog, deleteOperationLog, clearOperationLog, getOperationLogById } from "@/service/system/operationLog"
 
 const loading = ref(false)
@@ -249,8 +229,8 @@ const handleDetails = (id: number) => {
     })
 }
 
-//  对话框关闭
-const dialogClose = () => {
+// 对话框关闭
+const closeEmployeeForm = () => {
     dialogVisible.value = false
 }
 </script>

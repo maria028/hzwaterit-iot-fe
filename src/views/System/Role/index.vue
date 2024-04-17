@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-17 10:42:23
+ * @LastEditTime: 2024-04-17 16:06:25
  * @Description: 
 -->
 <template>
@@ -46,52 +46,19 @@
             </el-table-column>
         </template>
     </CSearchTable>
-    <el-dialog :title="dialogTitle" v-model="dialogVisible" :before-close="dialogClose" append-to-body>
-        <el-form :model="dialogData" ref="dialogFormRef" label-width="auto" :rules="dialogRules">
-            <el-row :gutter="32">
-                <el-col :span="12">
-                    <el-form-item label="编码" prop="code">
-                        <el-input v-model="dialogData.code" placeholder="请输入编码" maxlength="30" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="名称" prop="name">
-                        <el-input v-model="dialogData.name" placeholder="请输入名称" maxlength="30" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="权限" prop="resourceIds">
-                        <el-tree :data="treeData" :props="treeProps" node-key="id" show-checkbox ref="treeRef" />
-                    </el-form-item>
-                </el-col>
-            </el-row>
-        </el-form>
-        <template #footer>
-            <el-button @click="dialogCancel">取消</el-button>
-            <el-button type="primary" @click="dialogConfirm">确定</el-button>
-        </template>
-    </el-dialog>
+    <RoleForm v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" @confirm="confirmEmployeeForm" />
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, nextTick } from "vue"
+import { ref, onMounted } from "vue"
 import { ResourceTreeBO, RoleBO, RoleDTO } from "@/types/system"
 import { Result } from "@/types/common"
 import { getResourceTreeData } from "@/service/system/resource"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { useRouter } from "vue-router"
 import { addRole, deleteRoleById, getRole, getRoleById, setRoleSort, updateRole } from "@/service/system/role"
+import RoleForm from "./components/RoleForm.vue"
+
 const router = useRouter()
-
-const treeRef = ref()
-const dialogFormRef = ref()
-
-// 部门树数据
-const treeData = ref<ResourceTreeBO[]>([])
-// 树属性
-const treeProps = ref({
-    children: "children",
-    label: "name"
-})
 
 const loading = ref(false)
 // 查询条件
@@ -108,11 +75,8 @@ const rows = ref(0)
 // 表格数据
 const tableData = ref<RoleBO[]>([])
 
-// 对话框标题
-const dialogTitle = ref("")
 // 对话框是否显示
 const dialogVisible = ref(false)
-
 // 对话框数据
 const dialogData = ref<RoleDTO>({
     id: 0,
@@ -120,22 +84,6 @@ const dialogData = ref<RoleDTO>({
     name: "",
     resourceIds: []
 })
-// 对话框校验
-const dialogRules = {
-    code: [{ required: true, message: "请输入编号", trigger: "blur" }],
-    name: [{ required: true, message: "请输入名称", trigger: "blur" }]
-}
-
-onMounted(() => {
-    getResourceTree()
-})
-
-//  获取资源树
-const getResourceTree = () => {
-    getResourceTreeData().then((response: Result<ResourceTreeBO[]>) => {
-        treeData.value = response.data
-    })
-}
 
 // 搜索
 const getTableData = () => {
@@ -158,16 +106,13 @@ const reset = () => {
 }
 // 新增
 const handleAdd = () => {
-    dialogTitle.value = "新增"
     dialogVisible.value = true
 }
 // 修改
 const handleEdit = (id: number) => {
-    dialogTitle.value = "修改"
     dialogVisible.value = true
     getRoleById(id).then((response: Result<RoleDTO>) => {
         dialogData.value = response.data
-        treeRef.value.setCheckedKeys(dialogData.value.resourceIds)
     })
 }
 
@@ -201,30 +146,20 @@ const handlerUpdateSort = (id: number, moveTypeCode: number) => {
 }
 
 // 对话框关闭
-const dialogClose = () => {
+const closeEmployeeForm = () => {
     dialogVisible.value = false
     dialogData.value.id = 0
-    dialogFormRef.value.resetFields()
 }
-// 对话框取消
-const dialogCancel = () => {
-    dialogClose()
-}
-
 // 对话框确定
-const dialogConfirm = () => {
-    dialogFormRef.value.validate((valid: boolean) => {
-        if (valid) {
-            dialogData.value.resourceIds = treeRef.value.getCheckedKeys()
-            const request = dialogData.value.id == 0 ? addRole(dialogData.value) : updateRole(dialogData.value)
-            request.then(() => {
-                ElMessage.success("操作成功！")
-                dialogClose()
-                getTableData()
-            })
-        }
+const confirmEmployeeForm = (formData: RoleDTO) => {
+    const request = formData.id == 0 ? addRole(formData) : updateRole(formData)
+    request.then(() => {
+        ElMessage.success("操作成功！")
+        getTableData()
+        closeEmployeeForm()
     })
 }
+
 //  关联员工
 const handleRelationEmployee = (id: number) => {
     router.replace({

@@ -275,7 +275,7 @@ const confirmEmployeeForm = (formData: EmployeeDTO) => {
     request.then(() => {
         ElMessage.success("操作成功！")
         getTableData()
-        dialogVisible.value = false
+        closeEmployeeForm()
     })
 }
 

@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 17:30:13
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-16 15:23:02
+ * @LastEditTime: 2024-04-17 16:06:20
  * @Description: 
 -->
 <template>
@@ -71,84 +71,16 @@
             </CSearchTable>
         </el-col>
     </el-row>
-    <el-dialog :title="dialogTitle" v-model="dialogVisible" :before-close="dialogClose" append-to-body>
-        <el-form ref="dialogFormRef" :model="dialogData" inline label-width="auto" :rules="dialogRules" class="dialog-form-inline">
-            <el-row :gutter="32">
-                <el-col :span="12">
-                    <el-form-item label="名称" prop="name">
-                        <el-input v-model="dialogData.name" placeholder="请输入名称" maxlength="30" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="类型" prop="typeCode">
-                        <el-select v-model="dialogData.typeCode" placeholder="请选择">
-                            <el-option v-for="resourceTypeDict in resourceTypeDicts" :key="resourceTypeDict.code" :label="resourceTypeDict.name" :value="resourceTypeDict.code" />
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="请求方式" prop="requestMethod">
-                        <el-select v-model="dialogData.requestMethod" placeholder="请选择">
-                            <el-option
-                                v-for="requestMethodDict in requestMethodDicts"
-                                :key="requestMethodDict.code"
-                                :label="requestMethodDict.name"
-                                :value="requestMethodDict.code"
-                            />
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="地址" prop="url">
-                        <el-input v-model="dialogData.url" placeholder="请输入地址" maxlength="30" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="状态" prop="statusCode">
-                        <el-select v-model="dialogData.statusCode" placeholder="请选择">
-                            <el-option
-                                v-for="resourceStatusDict in resourceStatusDicts"
-                                :key="resourceStatusDict.code"
-                                :label="resourceStatusDict.name"
-                                :value="resourceStatusDict.code"
-                            />
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="图标" prop="icon">
-                        <el-input
-                            v-model="dialogData.icon"
-                            placeholder="请选择图标"
-                            style="cursor: pointer"
-                            :suffix-icon="iconSelectVisible ? 'ArrowUp' : 'ArrowDown'"
-                            clearable
-                            @click="iconSelectVisible = true"
-                            @clear="dialogData.icon = ''"
-                        >
-                            <template #prepend>
-                                <el-image v-if="dialogData.icon" :src="dialogData.icon" />
-                            </template>
-                        </el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-        </el-form>
-        <template #footer>
-            <el-button @click="dialogCancel">取消</el-button>
-            <el-button type="primary" @click="dialogConfirm">确定</el-button>
-        </template>
-    </el-dialog>
-    <IconSelect v-model:visible="iconSelectVisible" @confirmIcon="confirmIconHandel" />
+    <ResourceForm v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" @confirm="confirmEmployeeForm" />
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, nextTick, watch } from "vue"
+import { ref, onMounted, nextTick } from "vue"
 import { IconBO, ResourceBO, ResourceDTO, ResourceTreeBO } from "@/types/system"
 import dictCodeConstant from "@/constant/dictCodeConstant"
 import dictUtils from "@/utils/dictUtils"
 import { DictBO, Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
-import IconSelect from "./components/IconSelect/index.vue"
+import ResourceForm from "./components/ResourceForm.vue"
 import {
     addResource,
     deleteResourceById,
@@ -160,7 +92,6 @@ import {
     updateResourceStatus
 } from "@/service/system/resource"
 const treeRef = ref()
-const dialogFormRef = ref()
 
 // 树数据
 const treeData = ref<ResourceTreeBO[]>([])
@@ -189,13 +120,7 @@ const tableData = ref<ResourceBO[]>([])
 
 // 资源状态字典
 const resourceStatusDicts: DictBO[] = dictUtils.list(dictCodeConstant.RESOURCE_STATUS)
-// 资源类型字典
-const resourceTypeDicts: DictBO[] = dictUtils.list(dictCodeConstant.RESOURCE_TYPE)
-// 请求方式字典
-const requestMethodDicts: DictBO[] = dictUtils.list(dictCodeConstant.REQUEST_METHOD)
 
-// 对话框标题
-const dialogTitle = ref("")
 // 对话框是否显示
 const dialogVisible = ref(false)
 
@@ -215,9 +140,6 @@ const dialogData = ref<ResourceDTO>({
 const dialogRules = {
     name: [{ required: true, message: "请输入名称", trigger: "blur" }]
 }
-
-// 图标选择弹框显示
-const iconSelectVisible = ref(false)
 
 onMounted(() => {
     getResourceTree()
@@ -261,12 +183,10 @@ const handlerNodeClick = () => {
 }
 // 新增
 const handleAdd = () => {
-    dialogTitle.value = "新增"
     dialogVisible.value = true
 }
 // 修改
 const handleEdit = (id: number) => {
-    dialogTitle.value = "修改"
     dialogVisible.value = true
     getResourceById(id).then((response: Result<ResourceDTO>) => {
         dialogData.value = response.data
@@ -286,6 +206,7 @@ const handleDelete = (id: number) => {
             deleteResourceById(id).then(() => {
                 ElMessage.success("操作成功！")
                 getTableData()
+                getResourceTree()
             })
         })
         .catch(() => {
@@ -301,6 +222,7 @@ const handlerUpdateSort = (id: number, moveTypeCode: number) => {
     }).then(() => {
         ElMessage.success("操作成功！")
         getTableData()
+        getResourceTree()
     })
 }
 
@@ -316,31 +238,22 @@ const handlerUpdateStatus = (id: number, statusCode: number) => {
 }
 
 // 对话框关闭
-const dialogClose = () => {
+const closeEmployeeForm = () => {
     dialogVisible.value = false
     dialogData.value.id = 0
-    dialogFormRef.value.resetFields()
-}
-// 对话框取消
-const dialogCancel = () => {
-    dialogClose()
 }
 // 对话框确定
-const dialogConfirm = () => {
-    dialogFormRef.value.validate((valid: boolean) => {
-        if (valid) {
-            dialogData.value.parentId = currentNodeKey.value
-            const request = dialogData.value.id == 0 ? addResource(dialogData.value) : updateResource(dialogData.value)
-            request.then(() => {
-                ElMessage.success("操作成功！")
-                dialogClose()
-                getTableData()
-            })
-        }
+const confirmEmployeeForm = (formData: ResourceDTO) => {
+    if (formData.id == 0) {
+        formData.parentId = currentNodeKey.value
+    }
+    const request = formData.id == 0 ? addResource(formData) : updateResource(formData)
+    request.then(() => {
+        ElMessage.success("操作成功！")
+        getTableData()
+        getResourceTree()
+
+        closeEmployeeForm()
     })
-}
-// 选择图标
-const confirmIconHandel = (icon: IconBO) => {
-    dialogData.value.icon = icon.path
 }
 </script>

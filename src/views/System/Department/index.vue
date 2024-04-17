@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 10:11:50
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-17 10:41:56
+ * @LastEditTime: 2024-04-17 16:05:56
  * @Description: 
 -->
 <template>
@@ -50,21 +50,7 @@
             </CSearchTable>
         </el-col>
     </el-row>
-    <el-dialog :title="dialogTitle" v-model="dialogVisible" :before-close="dialogClose" append-to-body>
-        <el-form :model="dialogData" ref="dialogFormRef" label-width="auto" :rules="dialogRules">
-            <el-row :gutter="32">
-                <el-col :span="12">
-                    <el-form-item label="名称" prop="name">
-                        <el-input v-model="dialogData.name" placeholder="请输入名称" maxlength="30" style="width: 240px" />
-                    </el-form-item>
-                </el-col>
-            </el-row>
-        </el-form>
-        <template #footer>
-            <el-button @click="dialogCancel">取消</el-button>
-            <el-button type="primary" @click="dialogConfirm">确定</el-button>
-        </template>
-    </el-dialog>
+    <DepartmentForm v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" @confirm="confirmEmployeeForm" />
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, nextTick } from "vue"
@@ -73,10 +59,11 @@ import { Result } from "@/types/common"
 import { getDepartment, getDepartmentTreeData, getDepartmentById, deleteDepartmentById, setDepartmentSort, addDepartment, updateDepartment } from "@/service/system/department"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { useRouter } from "vue-router"
+import DepartmentForm from "./components/DepartmentForm.vue"
+
 const router = useRouter()
 
 const treeRef = ref()
-const dialogFormRef = ref()
 
 // 部门树数据
 const treeData = ref<DepartmentTreeBO[]>([])
@@ -103,8 +90,6 @@ const rows = ref(0)
 // 表格数据
 const tableData = ref<DepartmentBO[]>([])
 
-// 对话框标题
-const dialogTitle = ref("")
 // 对话框是否显示
 const dialogVisible = ref(false)
 
@@ -114,10 +99,6 @@ const dialogData = ref<DepartmentDTO>({
     parentId: 0,
     name: ""
 })
-// 对话框校验
-const dialogRules = {
-    name: [{ required: true, message: "请输入名称", trigger: "blur" }]
-}
 
 onMounted(() => {
     getDepartmentTree()
@@ -161,12 +142,10 @@ const handlerNodeClick = () => {
 }
 // 新增
 const handleAdd = () => {
-    dialogTitle.value = "新增"
     dialogVisible.value = true
 }
 // 修改
 const handleEdit = (id: number) => {
-    dialogTitle.value = "修改"
     dialogVisible.value = true
     getDepartmentById(id).then((response: Result<DepartmentDTO>) => {
         dialogData.value = response.data
@@ -183,6 +162,7 @@ const handleDelete = (id: number) => {
             deleteDepartmentById(id).then(() => {
                 ElMessage.success("操作成功！")
                 getTableData()
+                getDepartmentTree()
             })
         })
         .catch(() => {
@@ -197,33 +177,29 @@ const handlerUpdateSort = (id: number, moveTypeCode: number) => {
     }).then(() => {
         ElMessage.success("操作成功！")
         getTableData()
+        getDepartmentTree()
     })
 }
 
 // 对话框关闭
-const dialogClose = () => {
+const closeEmployeeForm = () => {
     dialogVisible.value = false
     dialogData.value.id = 0
-    dialogFormRef.value.resetFields()
-}
-// 对话框取消
-const dialogCancel = () => {
-    dialogClose()
 }
 // 对话框确定
-const dialogConfirm = () => {
-    dialogFormRef.value.validate((valid: boolean) => {
-        if (valid) {
-            dialogData.value.parentId = currentNodeKey.value
-            const request = dialogData.value.id == 0 ? addDepartment(dialogData.value) : updateDepartment(dialogData.value)
-            request.then(() => {
-                ElMessage.success("操作成功！")
-                dialogClose()
-                getTableData()
-            })
-        }
+const confirmEmployeeForm = (formData: DepartmentDTO) => {
+    if (formData.id == 0) {
+        formData.parentId = currentNodeKey.value
+    }
+    const request = formData.id == 0 ? addDepartment(formData) : updateDepartment(formData)
+    request.then(() => {
+        ElMessage.success("操作成功！")
+        getTableData()
+        getDepartmentTree()
+        closeEmployeeForm()
     })
 }
+
 //  关联员工
 const handleRelationEmployee = (id: number) => {
     router.replace({
