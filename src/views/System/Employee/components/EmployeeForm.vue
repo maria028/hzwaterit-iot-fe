@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-17 11:00:13
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-17 14:41:27
+ * @LastEditTime: 2024-04-18 15:11:04
  * @Description: 员工管理表单弹框
 -->
 <template>
@@ -62,7 +62,15 @@
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="部门" prop="departmentIds">
-                        <el-tree :data="treeData" :props="{ children: 'children', label: 'name' }" node-key="id" show-checkbox check-strictly ref="checkTreeRef" />
+                        <el-tree-select
+                            v-model="formData.departmentIds"
+                            :data="treeData"
+                            :props="{ children: 'children', label: 'name' }"
+                            multiple
+                            node-key="id"
+                            show-checkbox
+                            check-strictly
+                        />
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
@@ -108,7 +116,6 @@ const dialogTitle = computed(() => {
 })
 
 const dialogFormRef = ref()
-const checkTreeRef = ref()
 // 复制 dialogData 到一个可变的变量中
 const formData = ref<EmployeeDTO>(props.dialogData)
 
@@ -117,7 +124,6 @@ watch(
     () => props.dialogData,
     () => {
         formData.value = props.dialogData
-        checkTreeRef.value.setCheckedKeys(formData.value.departmentIds)
     }
 )
 
@@ -148,8 +154,6 @@ const dialogRules = {
 // 对话框关闭
 const dialogClose = () => {
     dialogFormRef.value.resetFields()
-    checkTreeRef.value.setCheckedKeys([])
-
     emit("close")
 }
 // 对话框取消
@@ -161,12 +165,10 @@ const dialogCancel = () => {
 const dialogConfirm = () => {
     dialogFormRef.value.validate((valid: boolean) => {
         if (valid) {
-            const checkedKeys = checkTreeRef.value.getCheckedKeys()
-            if (checkedKeys.length == 0) {
+            if (formData.value.departmentIds.length == 0) {
                 ElMessage.error("请选择部门")
                 return
             }
-            formData.value.departmentIds = checkedKeys
             emit("confirm", formData.value)
         }
     })

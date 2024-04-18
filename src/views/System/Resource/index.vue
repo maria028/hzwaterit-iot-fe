@@ -2,14 +2,14 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 17:30:13
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-17 16:06:20
+ * @LastEditTime: 2024-04-18 14:35:57
  * @Description: 
 -->
 <template>
     <el-row :gutter="16" style="height: 100%">
         <el-col :span="4" style="height: 100%">
             <el-card>
-                <el-tree :data="treeData" :props="treeProps" node-key="id" highlight-current accordion ref="treeRef" @node-click="handlerNodeClick" />
+                <CTree :data="treeData" defaultKey="0" @nodeClick="handlerNodeClick" />
             </el-card>
         </el-col>
         <el-col :span="20" style="height: 100%">
@@ -74,12 +74,13 @@
     <ResourceForm v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" @confirm="confirmEmployeeForm" />
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, nextTick } from "vue"
-import { IconBO, ResourceBO, ResourceDTO, ResourceTreeBO } from "@/types/system"
+import { ref, onMounted } from "vue"
+import { ResourceBO, ResourceDTO, ResourceTreeBO } from "@/types/system"
 import dictCodeConstant from "@/constant/dictCodeConstant"
 import dictUtils from "@/utils/dictUtils"
 import { DictBO, Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
+import CTree from "@/components/CTree/index.vue"
 import ResourceForm from "./components/ResourceForm.vue"
 import {
     addResource,
@@ -95,11 +96,7 @@ const treeRef = ref()
 
 // 树数据
 const treeData = ref<ResourceTreeBO[]>([])
-// 树属性
-const treeProps = ref({
-    children: "children",
-    label: "name"
-})
+
 // 当前选中的节点
 const currentNodeKey = ref(0)
 const loading = ref(false)
@@ -136,11 +133,6 @@ const dialogData = ref<ResourceDTO>({
     icon: ""
 })
 
-// 对话框校验
-const dialogRules = {
-    name: [{ required: true, message: "请输入名称", trigger: "blur" }]
-}
-
 onMounted(() => {
     getResourceTree()
 })
@@ -151,8 +143,6 @@ const getResourceTree = () => {
         const result = response
         treeData.value = [{ id: 0, name: "资源树", children: [...result.data] }]
         getTableData()
-        await nextTick()
-        treeRef.value.setCurrentKey(currentNodeKey.value)
     })
 }
 
@@ -177,8 +167,8 @@ const reset = () => {
     getTableData()
 }
 // 树节点点击
-const handlerNodeClick = () => {
-    currentNodeKey.value = treeRef.value.getCurrentKey()
+const handlerNodeClick = (key: any) => {
+    currentNodeKey.value = key
     getTableData()
 }
 // 新增

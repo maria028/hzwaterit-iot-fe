@@ -2,16 +2,7 @@
     <el-row :gutter="16" style="height: 100%">
         <el-col :span="4" style="height: 100%">
             <el-card>
-                <el-tree
-                    :data="treeData"
-                    :props="{ children: 'children', label: 'name' }"
-                    node-key="id"
-                    highlight-current
-                    accordion
-                    ref="treeRef"
-                    default-expand-all
-                    @node-click="handlerNodeClick"
-                />
+                <CTree :data="treeData" defaultKey="0" @nodeClick="handlerNodeClick" />
             </el-card>
         </el-col>
         <el-col :span="20" style="height: 100%">
@@ -102,7 +93,7 @@
     <EmployeeForm v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" @confirm="confirmEmployeeForm" />
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, nextTick, provide, computed } from "vue"
+import { ref, onMounted, provide, computed } from "vue"
 import { DepartmentTreeBO, EmployeeBO, EmployeeDTO, PositionBO, RoleBO } from "@/types/system"
 import dictCodeConstant from "@/constant/dictCodeConstant"
 import dictUtils from "@/utils/dictUtils"
@@ -113,8 +104,7 @@ import { getPosition } from "@/service/system/position"
 import { getRole } from "@/service/system/role"
 import { ElMessage, ElMessageBox } from "element-plus"
 import EmployeeForm from "./components/EmployeeForm.vue"
-
-const treeRef = ref()
+import CTree from "@/components/CTree/index.vue"
 
 // 部门树数据
 const treeData = ref<DepartmentTreeBO[]>([])
@@ -184,8 +174,6 @@ const getDepartmentTree = () => {
     getDepartmentTreeData().then(async (response: Result<DepartmentTreeBO[]>) => {
         const result = response
         treeData.value = [{ id: 0, name: "部门树", children: [...result.data] }]
-        await nextTick()
-        treeRef.value.setCurrentKey(currentNodeKey.value)
     })
 }
 // 获取职位列表
@@ -222,8 +210,8 @@ const reset = () => {
     getTableData()
 }
 // 树节点点击
-const handlerNodeClick = () => {
-    currentNodeKey.value = treeRef.value.getCurrentKey()
+const handlerNodeClick = (key: any) => {
+    currentNodeKey.value = key
     getTableData()
 }
 // 新增

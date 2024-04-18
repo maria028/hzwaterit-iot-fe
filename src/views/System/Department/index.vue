@@ -2,14 +2,14 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 10:11:50
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-17 16:05:56
+ * @LastEditTime: 2024-04-18 14:36:24
  * @Description: 
 -->
 <template>
     <el-row :gutter="16" style="height: 100%">
         <el-col :span="4" style="height: 100%">
             <el-card>
-                <el-tree :data="treeData" :props="treeProps" node-key="id" highlight-current accordion ref="treeRef" default-expand-all @node-click="handlerNodeClick" />
+                <CTree :data="treeData" defaultKey="0" @nodeClick="handlerNodeClick" />
             </el-card>
         </el-col>
         <el-col :span="20" style="height: 100%">
@@ -53,13 +53,14 @@
     <DepartmentForm v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" @confirm="confirmEmployeeForm" />
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, nextTick } from "vue"
+import { ref, onMounted } from "vue"
 import { DepartmentTreeBO, DepartmentBO, DepartmentDTO } from "@/types/system"
 import { Result } from "@/types/common"
 import { getDepartment, getDepartmentTreeData, getDepartmentById, deleteDepartmentById, setDepartmentSort, addDepartment, updateDepartment } from "@/service/system/department"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { useRouter } from "vue-router"
 import DepartmentForm from "./components/DepartmentForm.vue"
+import CTree from "@/components/CTree/index.vue"
 
 const router = useRouter()
 
@@ -67,11 +68,7 @@ const treeRef = ref()
 
 // 部门树数据
 const treeData = ref<DepartmentTreeBO[]>([])
-// 树属性
-const treeProps = ref({
-    children: "children",
-    label: "name"
-})
+
 // 当前选中的节点
 const currentNodeKey = ref(0)
 const loading = ref(false)
@@ -110,9 +107,6 @@ const getDepartmentTree = () => {
         const result = response
         treeData.value = [{ id: 0, name: "部门树", children: [...result.data] }]
         getTableData()
-
-        await nextTick()
-        treeRef.value.setCurrentKey(currentNodeKey.value)
     })
 }
 
@@ -136,8 +130,8 @@ const reset = () => {
     getTableData()
 }
 // 树节点点击
-const handlerNodeClick = () => {
-    currentNodeKey.value = treeRef.value.getCurrentKey()
+const handlerNodeClick = (key: any) => {
+    currentNodeKey.value = key
     getTableData()
 }
 // 新增
