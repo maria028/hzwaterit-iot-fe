@@ -2,8 +2,8 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-28 10:08:16
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-16 09:31:09
- * @Description:
+ * @LastEditTime: 2024-04-19 17:18:12
+ * @Description:localStorage常量
  */
 export default class localStorageKeyConstant {
     /**

@@ -2,8 +2,8 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-28 15:14:30
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-16 09:30:36
- * @Description:
+ * @LastEditTime: 2024-04-19 17:17:35
+ * @Description: 菜单常量
  */
 export default class dictCodeConstant {
     /**
