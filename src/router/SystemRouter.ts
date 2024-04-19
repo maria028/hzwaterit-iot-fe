@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-28 11:41:00
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-07 10:49:46
+ * @LastEditTime: 2024-04-19 09:09:18
  * @Description:
  */
 import type { RouteRecordRaw } from "vue-router"
@@ -27,11 +27,6 @@ const SystemRouter: RouteRecordRaw[] = [
         path: "/role",
         name: "Role",
         component: () => import(/* webpackChunkName: "system-router" */ "@/views/System/Role/index.vue")
-    },
-    {
-        path: "/role-employee",
-        name: "RoleEmployee",
-        component: () => import(/* webpackChunkName: "system-router" */ "@/views/System/RoleEmployee/index.vue")
     },
     {
         path: "/position",

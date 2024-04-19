@@ -2,12 +2,13 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-18 14:12:59
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-18 16:26:03
+ * @LastEditTime: 2024-04-18 17:47:55
  * @Description: 自定义树形控件，个性化样式
 -->
 <template>
     <div>
         <el-tree
+            v-bind="$attrs"
             class="mytree"
             :data="data"
             :props="{ children: 'children', label: 'name' }"
@@ -52,6 +53,7 @@ const handlerNodeClick = () => {
 <style lang="scss" scoped>
 :deep(.mytree) {
     // overflow-y: auto;
+    // --el-tree-node-content-height: 40px;
     &.el-tree > .el-tree-node:after {
         border-top: none;
     }
@@ -99,7 +101,9 @@ const handlerNodeClick = () => {
     }
 
     .el-tree-node:before {
-        border-left: 1px dashed var(--el-color-primary);
+        border-left: 2px solid var(--el-color-primary);
+        border-radius: 1px;
+        opacity: 0.5;
         bottom: 0px;
         height: 100%;
         top: -26px;
@@ -107,7 +111,9 @@ const handlerNodeClick = () => {
     }
 
     .el-tree-node:after {
-        border-top: 1px dashed var(--el-color-primary);
+        border-top: 2px solid var(--el-color-primary);
+        border-radius: 1px;
+        opacity: 0.5;
         height: 20px;
         top: 12px;
         width: 18px;

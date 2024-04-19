@@ -42,7 +42,6 @@ onMounted(() => {
     // todo  下面几个不需要这样手动加
     breadcrumbItemMap.set("/position-employee", breadcrumbItemMap.get("/position") + ",关联员工")
     breadcrumbItemMap.set("/department-employee", breadcrumbItemMap.get("/department") + ",关联员工")
-    breadcrumbItemMap.set("/role-employee", breadcrumbItemMap.get("/role") + ",关联员工")
     //#endregion
 })
 

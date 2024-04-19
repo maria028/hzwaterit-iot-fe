@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 08:50:38
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-16 14:40:24
+ * @LastEditTime: 2024-04-19 11:29:05
  * @Description:system
  */
 /**
@@ -260,7 +260,7 @@ export interface ResourceTreeBO {
 export interface RoleBO {
     id: number //id
     code: number //编码
-    name: number //名称
+    name: string //名称
     resourceIds?: number[] //已勾选资源 ids
     createGmt: string //创建时间
     modifiedGmt: string //修改时间

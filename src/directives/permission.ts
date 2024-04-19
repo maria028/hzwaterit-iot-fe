@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 09:24:00
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-09 16:38:29
+ * @LastEditTime: 2024-04-19 09:30:12
  * @Description:
  */
 import localStorageKeyConstant from "@/constant/localStorageKeyConstant"
@@ -13,7 +13,7 @@ import { Directive, DirectiveBinding, App } from "vue"
  * @param {string} value
  * @return {*}
  */
-const hasAuthority = (value: string): any => {
+export const hasPermission = (value: string): any => {
     let result = false
     const authorizedResources: string[] = JSON.parse(localStorage.getItem(localStorageKeyConstant.AUTHORIZED_RESOURCES) as string)
 
@@ -34,7 +34,7 @@ const permissionDirective: Directive = {
         // 获取权限信息
         const { value } = binding
         // 检查是否具有权限
-        if (hasAuthority(value)) {
+        if (hasPermission(value)) {
         } else {
             console.log(el)
             // 没有权限，移除dom

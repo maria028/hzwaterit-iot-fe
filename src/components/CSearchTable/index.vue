@@ -2,28 +2,38 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 11:42:36
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-11 09:54:43
+ * @LastEditTime: 2024-04-19 12:04:51
  * @Description: 查询表格通用组件
 -->
 <template>
     <el-card :body-style="{ height: '100%', position: 'relative' }" style="height: 100%; position: relative">
+        <!-- 复合搜索框 -->
         <div v-if="hasSearchSlot" ref="searchBarRef">
             <CSearchBar v-bind="$attrs" @heightChange="setTableHeight" @search="searchHandel" @clear="clearHandel">
                 <slot name="search"></slot>
             </CSearchBar>
         </div>
+        <!-- 分割线 随搜索框显示 -->
         <el-divider v-if="hasSearchSlot" />
+        <!-- 表格上方 单行显示  标题、按钮等 -->
         <div ref="tableMenuRef">
             <el-row v-if="$slots.tableLeft || $slots.tableRight" justify="space-between" style="margin-bottom: 16px">
+                <!-- 左侧 -->
                 <el-col :span="12" style="text-align: left">
                     <span v-if="tableName" class="label-title">{{ tableName }}</span>
                     <slot name="tableLeft"></slot>
                 </el-col>
+                <!-- 右侧 -->
                 <el-col :span="12" style="text-align: right">
                     <slot name="tableRight"></slot>
                 </el-col>
             </el-row>
         </div>
+        <!-- 表格上方 其他块dom内容  自定义 -->
+        <div ref="tableDesRef">
+            <slot name="tableDes"></slot>
+        </div>
+        <!-- table -->
         <div :style="{ height: tableHeight }">
             <el-table v-bind="$attrs" v-loading="loading" stripe height="100%">
                 <template #default>
@@ -31,7 +41,7 @@
                 </template>
             </el-table>
         </div>
-
+        <!-- 分页 随table显示 -->
         <div style="margin-top: 16px; display: flex; justify-content: end">
             <el-pagination
                 v-bind="$attrs"
@@ -57,6 +67,7 @@ const hasSearchSlot = ref(false)
 const paginationRef = ref()
 const searchBarRef = ref()
 const tableMenuRef = ref()
+const tableDesRef = ref()
 
 const tableHeight = ref("100%")
 onMounted(async () => {
@@ -92,6 +103,8 @@ const setTableHeight = async () => {
         height += 16 // 分割线
     }
     height += tableMenuRef.value.offsetHeight
+    height += tableDesRef.value.offsetHeight
+
     height += 32 + 16 + 40 // 32分页 + 16分页margin + 40Card  padding
     height += 16 // 留余
 

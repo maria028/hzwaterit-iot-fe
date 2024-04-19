@@ -2,8 +2,8 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-02 14:21:54
- * @Description: 
+ * @LastEditTime: 2024-04-19 08:56:20
+ * @Description: 字典  左侧父级，右侧子集
 -->
 <template>
     <el-row :gutter="16" style="height: 100%">

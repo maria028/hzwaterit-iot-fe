@@ -2,14 +2,14 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 10:11:50
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-18 14:36:24
- * @Description: 
+ * @LastEditTime: 2024-04-18 17:35:15
+ * @Description: 部门列表
 -->
 <template>
     <el-row :gutter="16" style="height: 100%">
         <el-col :span="4" style="height: 100%">
             <el-card>
-                <CTree :data="treeData" defaultKey="0" @nodeClick="handlerNodeClick" />
+                <CTree :data="treeData" defaultKey="0" default-expand-all @nodeClick="handlerNodeClick" />
             </el-card>
         </el-col>
         <el-col :span="20" style="height: 100%">
