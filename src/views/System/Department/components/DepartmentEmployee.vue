@@ -1,14 +1,13 @@
 <!--
  * @Author: pzy 1012839072@qq.com
- * @Date: 2024-04-01 14:19:36
+ * @Date: 2024-04-19 16:28:04
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-17 10:41:59
- * @Description: 
+ * @LastEditTime: 2024-04-19 16:40:26
+ * @Description: 部门关联员工
 -->
 <template>
-    <el-page-header @back="goBack"> </el-page-header>
     <CSearchTable
-        tableName=""
+        :tableName="departmentName ? `${departmentName}-关联员工` : '关联员工'"
         :data="tableData"
         @search="getTableData"
         @clear="reset"
@@ -18,27 +17,35 @@
         v-model:currentPage="queryModel.pageNum"
         v-model:pageSize="queryModel.pageSize"
     >
-        <template #search>
-            <CSearchBarItem label="员工姓名">
-                <el-input v-model="queryModel.employeeName" clearable maxlength="30" placeholder="请输入员工姓名" />
-            </CSearchBarItem>
-            <CSearchBarItem label="手机号码">
-                <el-input v-model="queryModel.phoneNumber" clearable maxlength="11" placeholder="请输入手机号码" />
-            </CSearchBarItem>
-        </template>
-        <template #tableMenuLeft>
+        <template #tableTop>
             <el-tabs v-model="relationStatusCode" @tab-click="handleTabClick">
                 <el-tab-pane label="已关联" name="1" />
                 <el-tab-pane label="未关联" name="0" />
             </el-tabs>
         </template>
         <template #tableMenuRight>
-            <el-button v-permission="'POST/department-employee'" type="primary" @click="handleBatchRelation" :disabled="buttonStatus" v-if="relationStatusCode == '0'"
-                >批量关联</el-button
-            >
-            <el-button v-permission="'DELETE/department-employee'" type="danger" @click="handleBatchDelete" :disabled="buttonStatus" v-if="relationStatusCode == '1'"
-                >批量删除</el-button
-            >
+            <el-space>
+                <CSelectInput
+                    v-model="queryModel"
+                    :option="[
+                        {
+                            label: '员工姓名',
+                            value: 'employeeName'
+                        },
+                        {
+                            label: '手机号码',
+                            value: 'phoneNumber'
+                        }
+                    ]"
+                    @search="getTableData"
+                />
+                <el-button v-permission="'POST/department-employee'" type="primary" @click="handleBatchRelation" :disabled="buttonStatus" v-if="relationStatusCode == '0'"
+                    >批量关联</el-button
+                >
+                <el-button v-permission="'DELETE/department-employee'" type="danger" @click="handleBatchDelete" :disabled="buttonStatus" v-if="relationStatusCode == '1'"
+                    >批量删除</el-button
+                >
+            </el-space>
         </template>
         <template #columns>
             <el-table-column type="selection" width="40px" />
@@ -50,15 +57,16 @@
     </CSearchTable>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, nextTick } from "vue"
+import { ref, nextTick, watch } from "vue"
 import { DepartmentEmployeeBO } from "@/types/system"
 import { Result } from "@/types/common"
 import { getDepartmentEmployee, bindDepartmentEmployee, deleteDepartmentEmployee } from "@/service/system/departmentEmployee"
 import { ElMessage, ElMessageBox } from "element-plus"
-import { useRouter, useRoute } from "vue-router"
-const route = useRoute()
-const router = useRouter()
+import CSelectInput from "@/components/CSelectInput/index.vue"
 
+const props = defineProps({
+    department: Object as () => { id: number; name: string }
+})
 const loading = ref(false)
 
 // 查询条件
@@ -74,6 +82,7 @@ const queryModel = ref(initQueryModel)
 
 // departmentId
 const departmentId = ref(0)
+const departmentName = ref("")
 
 // 关联状态
 const relationStatusCode = ref("1")
@@ -91,17 +100,9 @@ const selectedIds = ref<number[]>([])
 // 多选选中 employeeIds
 const selectedEmployeeIds = ref<number[]>([])
 
-onMounted(() => {
-    departmentId.value = Number(route.query.departmentId)
-    if (isNaN(departmentId.value)) {
-        ElMessage.error("参数错误")
-        goBack()
-        return
-    }
-    getTableData()
-})
 // 搜索
 const getTableData = () => {
+    if (!departmentId.value) return
     loading.value = true
     queryModel.value.departmentId = departmentId.value
     queryModel.value.relationStatusCode = relationStatusCode.value
@@ -116,6 +117,17 @@ const getTableData = () => {
         })
 }
 
+watch(
+    () => props.department,
+    () => {
+        departmentId.value = props.department?.id || 0
+        departmentName.value = props.department?.name || ""
+        getTableData()
+    },
+    {
+        immediate: true
+    }
+)
 //  重置
 const reset = () => {
     queryModel.value = initQueryModel
@@ -190,12 +202,5 @@ const handleBatchDelete = () => {
         .catch(() => {
             ElMessage.info("已取消")
         })
-}
-
-// 返回父级
-const goBack = () => {
-    router.replace({
-        path: "/department"
-    })
 }
 </script>

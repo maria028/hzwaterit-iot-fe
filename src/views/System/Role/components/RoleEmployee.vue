@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-19 08:45:38
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-19 14:27:52
+ * @LastEditTime: 2024-04-19 16:32:33
  * @Description: 角色关联员工
 -->
 <template>
@@ -16,7 +16,6 @@
         :total="rows"
         v-model:currentPage="queryModel.pageNum"
         v-model:pageSize="queryModel.pageSize"
-        :showSearchButton="false"
     >
         <template #tableTop>
             <el-tabs v-model="relationStatusCode" @tab-click="handleTabClick">
