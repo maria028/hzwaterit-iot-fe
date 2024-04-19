@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 11:42:36
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-19 14:44:58
+ * @LastEditTime: 2024-04-19 14:58:19
  * @Description: 查询表格通用组件
 -->
 <template>
@@ -16,20 +16,18 @@
         <!-- 分割线 随搜索框显示 -->
         <el-divider v-if="hasSearchSlot" />
         <!-- 表格上方 单行显示  标题、按钮等 -->
-        <div ref="tableMenuRef">
-            <el-row v-if="$slots.tableLeft || $slots.tableRight" align="middle" justify="space-between" style="margin-bottom: 16px">
-                <!-- 左侧 -->
-                <el-col :span="10">
+        <div v-if="$slots.tableLeft || $slots.tableRight" ref="tableMenuRef" style="margin-bottom: 16px">
+            <div style="display: flex; align-items: start; justify-content: space-between; flex-wrap: wrap">
+                <div>
                     <span v-if="tableName" class="label-title">{{ tableName }}</span>
                     <slot name="tableLeft"></slot>
-                </el-col>
-                <!-- 右侧 -->
-                <el-col :span="14">
+                </div>
+                <div>
                     <slot name="tableRight"></slot>
-                </el-col>
-            </el-row>
+                </div>
+            </div>
         </div>
-        <!-- 表格上方 其他块dom内容  自定义 -->
+        <!-- 表格上方 其他块级内容  自定义 -->
         <div ref="tableDesRef">
             <slot name="tableDes"></slot>
         </div>
