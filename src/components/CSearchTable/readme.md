@@ -27,8 +27,8 @@ install(Vue: App) {
 - @clear：重置事件
 - #search：搜索栏插槽
   填写内容请使用`<CSearchBarItem label="xxx">这里填写想要的输入框内容</CSearchBarItem>`
-- #tableLeft：表格左上插槽，自定义内容，建议一行显示
-- #tableRight：表格左上插槽，自定义内容，建议一行显示
+- #tableMenuLeft：表格左上插槽，自定义内容，建议一行显示
+- #tableMenuRight：表格左上插槽，自定义内容，建议一行显示
 - #columns：表格字段插槽，同 table 的使用方法
 
 其他属性和方法赋予 CSearchTable 后可透传；
@@ -50,10 +50,10 @@ install(Vue: App) {
           <el-input  />
         </CSearchBarItem>
       </template>
-      <template #tableLeft>
+      <template #tableMenuLeft>
 
       </template>
-      <template #tableRight>
+      <template #tableMenuRight>
 
       </template>
       <template #columns>

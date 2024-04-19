@@ -33,8 +33,8 @@
                 </el-select>
             </CSearchBarItem>
         </template>
-        <template #tableLeft> </template>
-        <template #tableRight>
+        <template #tableMenuLeft> </template>
+        <template #tableMenuRight>
             <el-button v-permission="'DELETE/login-log'" type="danger" @click="handleBatchDelete" :disabled="buttonStatus">批量删除</el-button>
             <el-button v-permission="'DELETE/login-log-empty'" type="danger" @click="handleEmpty">清空</el-button>
         </template>

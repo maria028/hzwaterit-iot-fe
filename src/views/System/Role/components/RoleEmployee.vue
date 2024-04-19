@@ -18,13 +18,13 @@
         v-model:pageSize="queryModel.pageSize"
         :showSearchButton="false"
     >
-        <template #tableDes>
+        <template #tableTop>
             <el-tabs v-model="relationStatusCode" @tab-click="handleTabClick">
                 <el-tab-pane label="已关联" name="1" />
                 <el-tab-pane label="未关联" name="0" />
             </el-tabs>
         </template>
-        <template #tableRight>
+        <template #tableMenuRight>
             <el-space>
                 <CSelectInput
                     v-model="queryModel"

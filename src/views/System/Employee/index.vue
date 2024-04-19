@@ -25,8 +25,8 @@
                 </el-select>
             </CSearchBarItem>
         </template>
-        <template #tableLeft> </template>
-        <template #tableRight>
+        <template #tableMenuLeft> </template>
+        <template #tableMenuRight>
             <el-button v-permission="'POST/employee'" type="primary" @click="handleAdd">新增</el-button>
         </template>
         <template #columns>

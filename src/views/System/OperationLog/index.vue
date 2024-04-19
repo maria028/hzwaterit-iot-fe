@@ -41,8 +41,8 @@
                 <el-date-picker v-model="queryModel.createGmt" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期" value-format="YYYY-MM-DD HH:mm:ss" />
             </CSearchBarItem>
         </template>
-        <template #tableLeft> </template>
-        <template #tableRight>
+        <template #tableMenuLeft> </template>
+        <template #tableMenuRight>
             <el-button v-permission="'DELETE/operation-log'" type="danger" @click="handleBatchDelete" :disabled="buttonStatus">批量删除</el-button>
             <el-button v-permission="'DELETE/operation-log-empty'" type="danger" @click="handleEmpty">清空</el-button>
         </template>

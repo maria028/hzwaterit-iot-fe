@@ -16,8 +16,8 @@
         v-model:currentPage="queryModel.pageNum"
         v-model:pageSize="queryModel.pageSize"
     >
-        <template #tableLeft> </template>
-        <template #tableRight>
+        <template #tableMenuLeft> </template>
+        <template #tableMenuRight>
             <el-space>
                 <!-- 编码  queryModel.code -->
                 <el-input v-model="queryModel.name" placeholder="请输入名称" maxlength="30" clearable>

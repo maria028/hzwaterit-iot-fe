@@ -9,8 +9,8 @@
         v-model:currentPage="queryModel.pageNum"
         v-model:pageSize="queryModel.pageSize"
     >
-        <template #tableLeft> </template>
-        <template #tableRight>
+        <template #tableMenuLeft> </template>
+        <template #tableMenuRight>
             <el-space>
                 <el-input v-model="queryModel.name" clearable maxlength="30" placeholder="请输入名称" @clear="getTableData">
                     <template #append>

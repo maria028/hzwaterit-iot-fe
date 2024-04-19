@@ -2,54 +2,49 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 10:11:50
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-18 17:35:15
+ * @LastEditTime: 2024-04-19 16:23:41
  * @Description: 部门列表
 -->
 <template>
-    <el-row :gutter="16" style="height: 100%">
-        <el-col :span="4" style="height: 100%">
-            <el-card>
+    <CSearchTable
+        tableName="部门列表"
+        :data="tableData"
+        @search="getTableData"
+        @clear="reset"
+        :loading="loading"
+        :total="rows"
+        v-model:currentPage="queryModel.pageNum"
+        v-model:pageSize="queryModel.pageSize"
+    >
+        <template #search>
+            <CSearchBarItem label="名称">
+                <el-input v-model="queryModel.name" clearable maxlength="30" placeholder="请输入名称" />
+            </CSearchBarItem>
+        </template>
+        <template #tableMenuRight>
+            <el-button v-permission="'POST/department'" type="primary" @click="handleAdd">新增</el-button>
+        </template>
+        <template #tableLeft>
+            <div style="margin-right: 16px; width: 200px">
                 <CTree :data="treeData" defaultKey="0" default-expand-all @nodeClick="handlerNodeClick" />
-            </el-card>
-        </el-col>
-        <el-col :span="20" style="height: 100%">
-            <CSearchTable
-                tableName="部门列表"
-                :data="tableData"
-                @search="getTableData"
-                @clear="reset"
-                :loading="loading"
-                :total="rows"
-                v-model:currentPage="queryModel.pageNum"
-                v-model:pageSize="queryModel.pageSize"
-            >
-                <template #search>
-                    <CSearchBarItem label="名称">
-                        <el-input v-model="queryModel.name" clearable maxlength="30" placeholder="请输入名称" />
-                    </CSearchBarItem>
+            </div>
+        </template>
+        <template #columns>
+            <el-table-column type="index" label="序号" width="80" />
+            <el-table-column label="名称" prop="name" width="200" />
+            <el-table-column label="创建时间" prop="createGmt" width="200" />
+            <el-table-column label="修改时间" prop="modifiedGmt" width="200" />
+            <el-table-column label="操作" fixed="right" min-width="300">
+                <template #default="scope">
+                    <el-button v-permission="'PUT/department'" type="primary" text @click="handleEdit(scope.row.id)"> 修改 </el-button>
+                    <el-button v-permission="'PUT/department-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 1)"> 上移 </el-button>
+                    <el-button v-permission="'PUT/department-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 2)"> 下移 </el-button>
+                    <el-button v-permission="'DELETE/department/{id}'" type="danger" text @click="handleDelete(scope.row.id)"> 删除 </el-button>
+                    <el-button v-permission="'GET/department-employee'" type="primary" text @click="handleRelationEmployee(scope.row.id)"> 关联员工 </el-button>
                 </template>
-                <template #tableLeft> </template>
-                <template #tableRight>
-                    <el-button v-permission="'POST/department'" type="primary" @click="handleAdd">新增</el-button>
-                </template>
-                <template #columns>
-                    <el-table-column type="index" label="序号" width="80" />
-                    <el-table-column label="名称" prop="name" width="200" />
-                    <el-table-column label="创建时间" prop="createGmt" width="200" />
-                    <el-table-column label="修改时间" prop="modifiedGmt" width="200" />
-                    <el-table-column label="操作" fixed="right" min-width="300">
-                        <template #default="scope">
-                            <el-button v-permission="'PUT/department'" type="primary" text @click="handleEdit(scope.row.id)"> 修改 </el-button>
-                            <el-button v-permission="'PUT/department-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 1)"> 上移 </el-button>
-                            <el-button v-permission="'PUT/department-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 2)"> 下移 </el-button>
-                            <el-button v-permission="'DELETE/department/{id}'" type="danger" text @click="handleDelete(scope.row.id)"> 删除 </el-button>
-                            <el-button v-permission="'GET/department-employee'" type="primary" text @click="handleRelationEmployee(scope.row.id)"> 关联员工 </el-button>
-                        </template>
-                    </el-table-column>
-                </template>
-            </CSearchTable>
-        </el-col>
-    </el-row>
+            </el-table-column>
+        </template>
+    </CSearchTable>
     <DepartmentForm v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" @confirm="confirmEmployeeForm" />
 </template>
 <script lang="ts" setup>

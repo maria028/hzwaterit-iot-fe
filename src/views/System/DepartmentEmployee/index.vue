@@ -26,13 +26,13 @@
                 <el-input v-model="queryModel.phoneNumber" clearable maxlength="11" placeholder="请输入手机号码" />
             </CSearchBarItem>
         </template>
-        <template #tableLeft>
+        <template #tableMenuLeft>
             <el-tabs v-model="relationStatusCode" @tab-click="handleTabClick">
                 <el-tab-pane label="已关联" name="1" />
                 <el-tab-pane label="未关联" name="0" />
             </el-tabs>
         </template>
-        <template #tableRight>
+        <template #tableMenuRight>
             <el-button v-permission="'POST/department-employee'" type="primary" @click="handleBatchRelation" :disabled="buttonStatus" v-if="relationStatusCode == '0'"
                 >批量关联</el-button
             >

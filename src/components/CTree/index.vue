@@ -2,11 +2,12 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-18 14:12:59
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-18 17:47:55
- * @Description: 自定义树形控件，个性化样式
+ * @LastEditTime: 2024-04-19 16:20:34
+ * @Description: 自定义树形控件，可过滤关键字，个性化样式
 -->
 <template>
     <div>
+        <el-input v-model="filterText" placeholder="搜索关键字" :prefix-icon="Search" style="margin-bottom: 16px" />
         <el-tree
             v-bind="$attrs"
             class="mytree"
@@ -17,20 +18,20 @@
             highlight-current
             accordion
             ref="treeRef"
+            :filter-node-method="filterNode"
             @node-click="handlerNodeClick"
         >
             <template #default="{ node, data }">
-                <span>
-                    <span style="padding-left: 4px">{{ node.label }}</span>
-                </span>
+                <el-tooltip effect="dark" :content="node.label" placement="top-start">
+                    <el-text truncated> {{ node.label }} </el-text>
+                </el-tooltip>
             </template>
         </el-tree>
     </div>
-    <!-- <el-tree :data="data" :props="{ children: 'children', label: 'name' }" node-key="id" :indent="0" highlight-current accordion ref="treeRef" @node-click="handlerNodeClick" /> -->
 </template>
 <script lang="ts" setup>
-import { onMounted, ref } from "vue"
-
+import { onMounted, ref, watch } from "vue"
+import { Search } from "@element-plus/icons-vue"
 const props = defineProps({
     data: Array, //树形数据
     defaultKey: [Number, String] //默认节点
@@ -38,6 +39,8 @@ const props = defineProps({
 const emit = defineEmits(["nodeClick"])
 
 const treeRef = ref()
+// 过滤关键字
+const filterText = ref("")
 
 onMounted(async () => {
     // 设置节点
@@ -49,31 +52,54 @@ const handlerNodeClick = () => {
     // 向父组件传递当前点击节点
     emit("nodeClick", treeRef.value.getCurrentKey())
 }
+// 过滤关键字start
+interface Tree {
+    [key: string]: any
+}
+const filterNode = (value: string, data: Tree) => {
+    if (!value) return true
+    return data.name.includes(value)
+}
+watch(filterText, (val) => {
+    treeRef.value!.filter(val)
+})
+// 过滤关键字end
 </script>
 <style lang="scss" scoped>
 :deep(.mytree) {
-    // overflow-y: auto;
-    // --el-tree-node-content-height: 40px;
+    //行高调整 默认26px
+    --el-tree-node-content-height: 32px;
+
+    // 竖线横线的位置  以转折点为参照
+    --line-position-justify: -5px; //水平
+
+    //相邻级节点间的水平缩进  默认16px
+    --indent-padding: 16px;
+
+    // 线条宽度
+    --line-width: 2px;
+
     &.el-tree > .el-tree-node:after {
         border-top: none;
     }
     &.el-tree > .el-tree-node {
         padding-left: 0px;
     }
+    // 相邻级节点间的水平缩进  默认16px
     .el-tree-node {
         position: relative;
-        padding-left: 16px;
+        padding-left: var(--indent-padding);
+    }
+    .el-tree-node__children {
+        padding-left: var(--indent-padding);
     }
     //节点有间隙，隐藏掉展开按钮就好了,如果觉得空隙没事可以删掉
     .el-tree-node__expand-icon.is-leaf {
         display: none;
     }
-    .el-tree-node__children {
-        padding-left: 16px;
-    }
 
     .el-tree-node :last-child:before {
-        height: 38px;
+        height: calc(var(--el-tree-node-content-height) * 1.5);
     }
 
     &.el-tree > .el-tree-node:before {
@@ -86,60 +112,37 @@ const handlerNodeClick = () => {
 
     .el-tree-node:before {
         content: "";
-        left: -4px;
+        left: var(--line-position-justify);
         position: absolute;
         right: auto;
-        border-width: 1px;
+        border-width: var(--line-width);
     }
 
     .el-tree-node:after {
         content: "";
-        left: -4px;
+        left: var(--line-position-justify);
         position: absolute;
         right: auto;
-        border-width: 1px;
+        border-width: var(--line-width);
     }
 
     .el-tree-node:before {
-        border-left: 2px solid var(--el-color-primary);
-        border-radius: 1px;
+        border-left: var(--line-width) solid var(--el-color-primary);
         opacity: 0.5;
         bottom: 0px;
         height: 100%;
-        top: -26px;
-        width: 1px;
+        top: calc(0px - var(--el-tree-node-content-height));
     }
 
     .el-tree-node:after {
-        border-top: 2px solid var(--el-color-primary);
-        border-radius: 1px;
+        border-top: var(--line-width) solid var(--el-color-primary);
         opacity: 0.5;
-        height: 20px;
-        top: 12px;
-        width: 18px;
+        top: calc(var(--el-tree-node-content-height) / 2 - var(--line-width) / 2);
+        width: calc(var(--indent-padding) + var(--line-width));
     }
-    .el-tree .el-tree-node__expand-icon.expanded {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    .el-tree .el-icon-caret-right:before {
-        content: "\e723";
-        font-size: 16px;
-        color: var(--el-color-primary);
-        position: absolute;
-        left: -20px;
-        top: -8px;
-    }
-    .el-tree .el-tree-node__expand-icon.expanded.el-icon-caret-right:before {
-        content: "\e722";
-        font-size: 16px;
-        color: var(--el-color-primary);
-        position: absolute;
-        left: -20px;
-        top: -8px;
-    }
+    //箭头图标  padding
     .el-tree-node__content > .el-tree-node__expand-icon {
-        padding: 0;
+        // padding: 0;
     }
 }
 </style>

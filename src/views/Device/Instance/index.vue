@@ -22,8 +22,8 @@
                 <el-input v-model="queryModel.name" clearable maxlength="30" placeholder="请输入名称" />
             </CSearchBarItem>
         </template>
-        <template #tableLeft> </template>
-        <template #tableRight>
+        <template #tableMenuLeft> </template>
+        <template #tableMenuRight>
             <el-button v-permission="'POST/position'" type="primary" @click="handleAdd">新增</el-button>
         </template>
         <template #columns>

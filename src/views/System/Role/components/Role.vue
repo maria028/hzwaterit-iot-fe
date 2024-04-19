@@ -16,8 +16,8 @@
         v-model:currentPage="queryModel.pageNum"
         v-model:pageSize="queryModel.pageSize"
     >
-        <template #tableLeft> </template>
-        <template #tableRight>
+        <template #tableMenuLeft> </template>
+        <template #tableMenuRight>
             <el-space>
                 <CSelectInput
                     v-model="queryModel"

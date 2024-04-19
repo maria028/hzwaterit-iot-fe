@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 11:42:36
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-19 14:58:19
+ * @LastEditTime: 2024-04-19 16:15:03
  * @Description: 查询表格通用组件
 -->
 <template>
@@ -16,28 +16,35 @@
         <!-- 分割线 随搜索框显示 -->
         <el-divider v-if="hasSearchSlot" />
         <!-- 表格上方 单行显示  标题、按钮等 -->
-        <div v-if="$slots.tableLeft || $slots.tableRight" ref="tableMenuRef" style="margin-bottom: 16px">
+        <div v-if="$slots.tableMenuLeft || $slots.tableMenuRight" ref="tableMenuRef" style="margin-bottom: 16px">
             <div style="display: flex; align-items: start; justify-content: space-between; flex-wrap: wrap">
                 <div>
                     <span v-if="tableName" class="label-title">{{ tableName }}</span>
-                    <slot name="tableLeft"></slot>
+                    <slot name="tableMenuLeft"></slot>
                 </div>
                 <div>
-                    <slot name="tableRight"></slot>
+                    <slot name="tableMenuRight"></slot>
                 </div>
             </div>
         </div>
         <!-- 表格上方 其他块级内容  自定义 -->
-        <div ref="tableDesRef">
-            <slot name="tableDes"></slot>
+        <div v-if="$slots.tableTop" ref="tableTopRef">
+            <slot name="tableTop"></slot>
         </div>
+
         <!-- table -->
         <div :style="{ height: tableHeight }">
-            <el-table v-bind="$attrs" v-loading="loading" stripe height="100%">
-                <template #default>
-                    <slot name="columns"></slot>
-                </template>
-            </el-table>
+            <div style="display: flex; align-items: start">
+                <!-- 表格左侧 块级内容  自定义 -->
+                <div v-if="$slots.tableLeft" ref="tableLeftRef" style="width: fit-content">
+                    <slot name="tableLeft"></slot>
+                </div>
+                <el-table v-bind="$attrs" v-loading="loading" stripe height="100%">
+                    <template #default>
+                        <slot name="columns"></slot>
+                    </template>
+                </el-table>
+            </div>
         </div>
         <!-- 分页 随table显示 -->
         <div style="margin-top: 16px; display: flex; justify-content: end">
@@ -62,10 +69,12 @@ const emit = defineEmits(["update:pageSize", "update:currentPage"])
 const { onSearch, onClear } = useAttrs() as { onSearch: () => void; onClear: () => void }
 const slots = useSlots()
 const hasSearchSlot = ref(false)
+const hasTableTopSlot = ref(false)
+
 const paginationRef = ref()
 const searchBarRef = ref()
 const tableMenuRef = ref()
-const tableDesRef = ref()
+const tableTopRef = ref()
 
 const tableHeight = ref("100%")
 onMounted(async () => {
@@ -76,6 +85,9 @@ onMounted(async () => {
 
     if (slots["search"]) {
         hasSearchSlot.value = true
+    }
+    if (slots["tableTop"]) {
+        hasTableTopSlot.value = true
     }
 })
 const search = () => {
@@ -101,7 +113,10 @@ const setTableHeight = async () => {
         height += 16 // 分割线
     }
     height += tableMenuRef.value.offsetHeight
-    height += tableDesRef.value.offsetHeight
+
+    if (hasTableTopSlot.value) {
+        height += tableTopRef.value.offsetHeight
+    }
 
     height += 32 + 16 + 40 // 32分页 + 16分页margin + 40Card  padding
     height += 16 // 留余
