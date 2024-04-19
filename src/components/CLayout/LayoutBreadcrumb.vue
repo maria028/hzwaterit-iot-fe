@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-18 09:57:24
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-18 11:26:23
+ * @LastEditTime: 2024-04-19 14:33:53
  * @Description: 面包屑
 -->
 <template>
@@ -40,7 +40,6 @@ onMounted(() => {
     //#region 子页面 path 与面包屑对应关系
     breadcrumbItemMap.set("/profile", "个人中心")
     // todo  下面几个不需要这样手动加
-    breadcrumbItemMap.set("/position-employee", breadcrumbItemMap.get("/position") + ",关联员工")
     breadcrumbItemMap.set("/department-employee", breadcrumbItemMap.get("/department") + ",关联员工")
     //#endregion
 })

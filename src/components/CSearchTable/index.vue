@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-29 11:42:36
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-19 12:04:51
+ * @LastEditTime: 2024-04-19 14:44:58
  * @Description: 查询表格通用组件
 -->
 <template>
@@ -17,14 +17,14 @@
         <el-divider v-if="hasSearchSlot" />
         <!-- 表格上方 单行显示  标题、按钮等 -->
         <div ref="tableMenuRef">
-            <el-row v-if="$slots.tableLeft || $slots.tableRight" justify="space-between" style="margin-bottom: 16px">
+            <el-row v-if="$slots.tableLeft || $slots.tableRight" align="middle" justify="space-between" style="margin-bottom: 16px">
                 <!-- 左侧 -->
-                <el-col :span="12" style="text-align: left">
+                <el-col :span="10">
                     <span v-if="tableName" class="label-title">{{ tableName }}</span>
                     <slot name="tableLeft"></slot>
                 </el-col>
                 <!-- 右侧 -->
-                <el-col :span="12" style="text-align: right">
+                <el-col :span="14">
                     <slot name="tableRight"></slot>
                 </el-col>
             </el-row>

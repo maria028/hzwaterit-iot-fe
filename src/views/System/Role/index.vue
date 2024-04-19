@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-19 11:43:10
+ * @LastEditTime: 2024-04-19 14:08:22
  * @Description: 左侧角色列表  右侧角色关联员工
 -->
 <template>
@@ -16,7 +16,7 @@
     </el-row>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref, reactive } from "vue"
+import { onMounted, ref } from "vue"
 import Role from "./components/Role.vue"
 import RoleEmployee from "./components/RoleEmployee.vue"
 import { hasPermission } from "@/directives/permission"

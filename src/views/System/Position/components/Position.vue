@@ -1,13 +1,6 @@
-<!--
- * @Author: pzy 1012839072@qq.com
- * @Date: 2024-04-01 15:28:20
- * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-19 14:28:49
- * @Description: 角色列表
--->
 <template>
     <CSearchTable
-        tableName="角色列表"
+        tableName="职位列表"
         :data="tableData"
         @search="getTableData"
         @clear="reset"
@@ -19,59 +12,49 @@
         <template #tableLeft> </template>
         <template #tableRight>
             <el-space>
-                <CSelectInput
-                    v-model="queryModel"
-                    :option="[
-                        {
-                            label: '编码',
-                            value: 'code'
-                        },
-                        {
-                            label: '名称',
-                            value: 'name'
-                        }
-                    ]"
-                    @search="getTableData"
-                />
-                <el-button v-permission="'POST/role'" type="primary" @click="handleAdd">新增</el-button>
+                <el-input v-model="queryModel.name" clearable maxlength="30" placeholder="请输入名称" @clear="getTableData">
+                    <template #append>
+                        <el-icon style="vertical-align: middle" @click="getTableData">
+                            <Search />
+                        </el-icon>
+                    </template>
+                </el-input>
+
+                <el-button v-permission="'POST/position'" type="primary" @click="handleAdd">新增</el-button>
             </el-space>
         </template>
         <template #columns>
-            <el-table-column type="index" label="序号" min-width="50" />
-            <el-table-column label="编码" prop="code" min-width="100" />
+            <el-table-column type="index" label="序号" min-width="80" />
             <el-table-column label="名称" prop="name" min-width="100" />
             <!-- <el-table-column label="创建时间" prop="createGmt" min-width="120" /> -->
             <!-- <el-table-column label="修改时间" prop="modifiedGmt" min-width="120" /> -->
-            <el-table-column label="操作" fixed="right" min-width="200">
+            <el-table-column label="操作" fixed="right" min-width="160">
                 <template #default="scope">
-                    <el-button v-permission="'PUT/role'" type="primary" text @click="handleEdit(scope.row.id)">修改</el-button>
-                    <el-button v-permission="'PUT/role-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 1)">上移</el-button>
-                    <el-button v-permission="'PUT/role-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 2)">下移</el-button>
-                    <el-button v-permission="'DELETE/role/{id}'" type="danger" text @click="handleDelete(scope.row.id)" :disabled="scope.row.id <= 3">删除</el-button>
-                    <el-button v-permission="'GET/role-employee'" type="primary" text @click="handleRelationEmployee(scope.row)">关联员工</el-button>
+                    <el-button v-permission="'PUT/position'" type="primary" text @click="handleEdit(scope.row.id)">修改</el-button>
+                    <el-button v-permission="'PUT/position-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 1)">上移</el-button>
+                    <el-button v-permission="'PUT/position-sort'" type="primary" text @click="handlerUpdateSort(scope.row.id, 2)">下移</el-button>
+                    <el-button v-permission="'DELETE/position/{id}'" type="danger" text @click="handleDelete(scope.row.id)">删除</el-button>
+                    <el-button v-permission="'GET/position-employee'" type="primary" text @click="handleRelationEmployee(scope.row)">关联员工</el-button>
                 </template>
             </el-table-column>
         </template>
     </CSearchTable>
-    <RoleForm v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" @confirm="confirmEmployeeForm" />
+    <PositionForm v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" @confirm="confirmEmployeeForm" />
 </template>
 <script lang="ts" setup>
-import { ref } from "vue"
-import { RoleBO, RoleDTO } from "@/types/system"
+import { ref, onMounted } from "vue"
+import { PositionBO, PositionDTO } from "@/types/system"
 import { Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
-import { addRole, deleteRoleById, getRole, getRoleById, setRoleSort, updateRole } from "@/service/system/role"
-import CSelectInput from "@/components/CSelectInput/index.vue"
-import RoleForm from "./RoleForm.vue"
-
-const emit = defineEmits(["roleChange"])
+import PositionForm from "./PositionForm.vue"
+import { addPosition, deletePositionById, getPosition, getPositionById, setPositionSort, updatePosition } from "@/service/system/position"
+const emit = defineEmits(["positionChange"])
 
 const loading = ref(false)
 // 查询条件
 const initQueryModel = {
     pageNum: 1,
     pageSize: 10,
-    code: null,
     name: null
 }
 const queryModel = ref(initQueryModel)
@@ -79,28 +62,35 @@ const queryModel = ref(initQueryModel)
 // 总行数
 const rows = ref(0)
 // 表格数据
-const tableData = ref<RoleBO[]>([])
+const tableData = ref<PositionBO[]>([])
 
+// 对话框标题
+const dialogTitle = ref("")
 // 对话框是否显示
 const dialogVisible = ref(false)
+
 // 对话框数据
-const dialogData = ref<RoleDTO>({
+const dialogData = ref<PositionDTO>({
     id: 0,
-    code: "",
-    name: "",
-    resourceIds: []
+    name: ""
 })
+// 对话框校验
+const dialogRules = {
+    name: [{ required: true, message: "请输入名称", trigger: "blur" }]
+}
+
+onMounted(() => {})
 
 // 搜索
 const getTableData = () => {
     loading.value = true
-    getRole(queryModel.value)
-        .then((response: Result<RoleBO[]>) => {
+    getPosition(queryModel.value)
+        .then((response: Result<PositionBO[]>) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data
             // 默认显示列表第一项关联员工  有无权限父级判断，此处无影响
-            tableData.value.length > 0 && emit("roleChange", tableData.value[0])
+            tableData.value.length > 0 && emit("positionChange", tableData.value[0])
         })
         .finally(() => {
             loading.value = false
@@ -114,12 +104,14 @@ const reset = () => {
 }
 // 新增
 const handleAdd = () => {
+    dialogTitle.value = "新增"
     dialogVisible.value = true
 }
 // 修改
 const handleEdit = (id: number) => {
+    dialogTitle.value = "修改"
     dialogVisible.value = true
-    getRoleById(id).then((response: Result<RoleDTO>) => {
+    getPositionById(id).then((response: Result<PositionDTO>) => {
         dialogData.value = response.data
     })
 }
@@ -132,7 +124,7 @@ const handleDelete = (id: number) => {
         type: "warning"
     })
         .then(() => {
-            deleteRoleById(id).then(() => {
+            deletePositionById(id).then(() => {
                 ElMessage.success("操作成功！")
                 getTableData()
             })
@@ -144,7 +136,7 @@ const handleDelete = (id: number) => {
 
 // 修改排序
 const handlerUpdateSort = (id: number, moveTypeCode: number) => {
-    setRoleSort({
+    setPositionSort({
         id: id,
         moveTypeCode: moveTypeCode
     }).then(() => {
@@ -159,8 +151,8 @@ const closeEmployeeForm = () => {
     dialogData.value.id = 0
 }
 // 对话框确定
-const confirmEmployeeForm = (formData: RoleDTO) => {
-    const request = formData.id == 0 ? addRole(formData) : updateRole(formData)
+const confirmEmployeeForm = (formData: PositionDTO) => {
+    const request = formData.id == 0 ? addPosition(formData) : updatePosition(formData)
     request.then(() => {
         ElMessage.success("操作成功！")
         getTableData()
@@ -169,7 +161,7 @@ const confirmEmployeeForm = (formData: RoleDTO) => {
 }
 
 //  关联员工
-const handleRelationEmployee = (role: RoleBO) => {
-    emit("roleChange", role)
+const handleRelationEmployee = (position: PositionBO) => {
+    emit("positionChange", position)
 }
 </script>
