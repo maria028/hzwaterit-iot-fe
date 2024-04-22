@@ -2,12 +2,12 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 18:13:14
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-09 17:02:04
+ * @LastEditTime: 2024-04-22 10:42:03
  * @Description:
  */
 import request from "../index"
 /**
- * @description: 获取资源
+ * @description: 获取属性
  * @param {any} params
  * @return {*}
  */
@@ -16,7 +16,7 @@ export const getProperty = (params: any): any => {
 }
 
 /**
- * @description: 资源详情
+ * @description: 属性详情
  * @param {string} id
  * @return {*}
  */
@@ -25,7 +25,7 @@ export const getPropertyById = (id: string | number): any => {
 }
 
 /**
- * @description: 资源新增
+ * @description: 属性新增
  * @param {any} data
  * @return {*}
  */
@@ -33,7 +33,7 @@ export const addProperty = (data: any): any => {
     return request.post("/property", data)
 }
 /**
- * @description: 资源编辑
+ * @description: 属性编辑
  * @param {any} data
  * @return {*}
  */
@@ -41,7 +41,7 @@ export const updateProperty = (data: any): any => {
     return request.put("/property", data)
 }
 /**
- * @description: 资源删除
+ * @description: 属性删除
  * @param {string} id
  * @return {*}
  */
