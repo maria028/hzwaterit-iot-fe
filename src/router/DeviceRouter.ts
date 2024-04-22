@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-09 14:24:10
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-22 09:36:20
+ * @LastEditTime: 2024-04-22 11:07:56
  * @Description:
  */
 import type { RouteRecordRaw } from "vue-router"
@@ -19,6 +19,12 @@ const DeviceRouter: RouteRecordRaw[] = [
         path: "/category",
         name: "Category",
         component: () => import(/* webpackChunkName: "system-router" */ "@/views/Device/Category/index.vue")
+    },
+    // 产品分类
+    {
+        path: "/product",
+        name: "Product",
+        component: () => import(/* webpackChunkName: "system-router" */ "@/views/Device/Product/index.vue")
     }
 ]
 

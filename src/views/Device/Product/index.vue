@@ -2,12 +2,12 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-22 11:07:19
- * @Description: 产品分类
+ * @LastEditTime: 2024-04-22 11:17:50
+ * @Description: 产品列表
 -->
 <template>
     <CSearchTable
-        tableName="产品分类"
+        tableName="产品列表"
         :data="tableData"
         @search="getTableData"
         @clear="reset"
@@ -38,15 +38,15 @@
             </el-table-column>
         </template>
     </CSearchTable>
-    <CategoryForm v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" @confirm="confirmEmployeeForm" />
+    <ProductForm v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeEmployeeForm" @confirm="confirmEmployeeForm" />
 </template>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue"
-import { CategoryBO, CategoryDTO } from "@/types/device"
+import { ProductBO, ProductDTO } from "@/types/device"
 import { Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
-import CategoryForm from "./components/CategoryForm.vue"
-import { addCategory, deleteCategoryById, getCategory, getCategoryById, updateCategory } from "@/service/device/category"
+import ProductForm from "./components/ProductForm.vue"
+import { addProduct, deleteProductById, getProduct, getProductById, updateProduct } from "@/service/device/product"
 
 const loading = ref(false)
 // 查询条件
@@ -60,13 +60,13 @@ const queryModel = ref(initQueryModel)
 // 总行数
 const rows = ref(0)
 // 表格数据
-const tableData = ref<CategoryBO[]>([])
+const tableData = ref<ProductBO[]>([])
 
 // 对话框是否显示
 const dialogVisible = ref(false)
 
 // 对话框数据
-const dialogData = ref<CategoryDTO>({
+const dialogData = ref<ProductDTO>({
     id: 0,
     name: "",
     description: ""
@@ -77,8 +77,8 @@ onMounted(() => {})
 // 搜索
 const getTableData = () => {
     loading.value = true
-    getCategory(queryModel.value)
-        .then((response: Result<CategoryBO[]>) => {
+    getProduct(queryModel.value)
+        .then((response: Result<ProductBO[]>) => {
             const result = response
             rows.value = result.rows
             tableData.value = result.data
@@ -100,7 +100,7 @@ const handleAdd = () => {
 // 修改
 const handleEdit = (id: number) => {
     dialogVisible.value = true
-    getCategoryById(id).then((response: Result<CategoryDTO>) => {
+    getProductById(id).then((response: Result<ProductDTO>) => {
         dialogData.value = response.data
     })
 }
@@ -113,7 +113,7 @@ const handleDelete = (id: number) => {
         type: "warning"
     })
         .then(() => {
-            deleteCategoryById(id).then(() => {
+            deleteProductById(id).then(() => {
                 ElMessage.success("操作成功！")
                 getTableData()
             })
@@ -129,8 +129,8 @@ const closeEmployeeForm = () => {
     dialogData.value.id = 0
 }
 // 对话框确定
-const confirmEmployeeForm = (formData: CategoryDTO) => {
-    const request = formData.id == 0 ? addCategory(formData) : updateCategory(formData)
+const confirmEmployeeForm = (formData: ProductDTO) => {
+    const request = formData.id == 0 ? addProduct(formData) : updateProduct(formData)
     request.then(() => {
         ElMessage.success("操作成功！")
         getTableData()

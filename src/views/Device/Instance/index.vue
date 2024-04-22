@@ -2,13 +2,13 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-09 14:26:33
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-17 10:51:41
- * @Description: 设备档案
+ * @LastEditTime: 2024-04-22 11:07:14
+ * @Description: 设备列表
 -->
 
 <template>
     <CSearchTable
-        tableName="设备档案"
+        tableName="设备列表"
         :data="tableData"
         @search="getTableData"
         @clear="reset"

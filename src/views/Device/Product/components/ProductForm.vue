@@ -2,8 +2,8 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-17 15:45:11
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-22 11:19:22
- * @Description: 类别表单弹框
+ * @LastEditTime: 2024-04-22 11:19:34
+ * @Description: 产品表单弹框
 -->
 <template>
     <el-dialog :title="dialogTitle" v-model="dialogVisible" width="30%" :before-close="dialogClose" append-to-body>
@@ -29,7 +29,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, computed, watch } from "vue"
-import { CategoryDTO } from "@/types/device"
+import { ProductDTO } from "@/types/device"
 
 // 对话框是否显示
 const dialogVisible = defineModel("dialogVisible", { required: true, default: false })
@@ -45,7 +45,7 @@ const dialogTitle = computed(() => {
 const dialogFormRef = ref()
 
 // 复制 dialogData 到一个可变的变量中
-const formData = ref<CategoryDTO>(props.dialogData)
+const formData = ref<ProductDTO>(props.dialogData)
 
 // 监听 props.dialogData 的变化，并更新 formData
 watch(
