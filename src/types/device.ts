@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-22 10:37:17
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-22 11:18:09
+ * @LastEditTime: 2024-04-24 10:25:15
  * @Description:设备相关数据结构
  */
 /**
@@ -34,6 +34,7 @@ export interface CategoryDTO {
 export interface ProductBO {
     id: number //id
     name: string // 名称
+    category: string //产品分类
     description: string //说明
     createGmt: string // 创建时间
     modifiedGmt: string // 修改时间
@@ -46,5 +47,6 @@ export interface ProductBO {
 export interface ProductDTO {
     id?: number //id
     name: string //属性名
+    category: string //产品分类
     description: string //说明
 }

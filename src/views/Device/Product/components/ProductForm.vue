@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-17 15:45:11
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-22 11:19:34
+ * @LastEditTime: 2024-04-24 10:01:19
  * @Description: 产品表单弹框
 -->
 <template>
@@ -12,6 +12,13 @@
                 <el-col :span="24">
                     <el-form-item label="名称" prop="name">
                         <el-input v-model="dialogData.name" placeholder="请输入名称" maxlength="30" />
+                    </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                    <el-form-item label="产品分类" prop="category">
+                        <el-select v-model="dialogData.category" placeholder="请选择产品分类">
+                            <el-option v-for="item in categorys || []" :key="item.value" :label="item.label" :value="item.value" />
+                        </el-select>
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">

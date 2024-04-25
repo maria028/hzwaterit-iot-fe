@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-22 11:07:19
+ * @LastEditTime: 2024-04-22 11:36:53
  * @Description: 产品分类
 -->
 <template>
@@ -23,7 +23,7 @@
         </template>
         <template #tableMenuLeft> </template>
         <template #tableMenuRight>
-            <el-button v-permission="'POST/property'" type="primary" @click="handleAdd">新增</el-button>
+            <el-button v-permission="'POST/category'" type="primary" @click="handleAdd">新增</el-button>
         </template>
         <template #columns>
             <el-table-column type="index" label="序号" min-width="80" />
@@ -32,8 +32,8 @@
 
             <el-table-column label="操作" fixed="right" min-width="200">
                 <template #default="scope">
-                    <el-button v-permission="'PUT/property'" type="primary" text @click="handleEdit(scope.row.id)">修改</el-button>
-                    <el-button v-permission="'DELETE/property/{id}'" type="danger" text @click="handleDelete(scope.row.id)">删除</el-button>
+                    <el-button v-permission="'PUT/category'" type="primary" text @click="handleEdit(scope.row.id)">修改</el-button>
+                    <el-button v-permission="'DELETE/category/{id}'" type="danger" text @click="handleDelete(scope.row.id)">删除</el-button>
                 </template>
             </el-table-column>
         </template>

@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-01 15:28:20
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-22 11:17:50
+ * @LastEditTime: 2024-04-24 14:57:21
  * @Description: 产品列表
 -->
 <template>
@@ -23,7 +23,7 @@
         </template>
         <template #tableMenuLeft> </template>
         <template #tableMenuRight>
-            <el-button v-permission="'POST/property'" type="primary" @click="handleAdd">新增</el-button>
+            <el-button v-permission="'POST/product'" type="primary" @click="handleAdd">新增</el-button>
         </template>
         <template #columns>
             <el-table-column type="index" label="序号" min-width="80" />
@@ -32,8 +32,9 @@
 
             <el-table-column label="操作" fixed="right" min-width="200">
                 <template #default="scope">
-                    <el-button v-permission="'PUT/property'" type="primary" text @click="handleEdit(scope.row.id)">修改</el-button>
-                    <el-button v-permission="'DELETE/property/{id}'" type="danger" text @click="handleDelete(scope.row.id)">删除</el-button>
+                    <el-button v-permission="'PUT/product'" type="primary" text @click="handleEdit(scope.row.id)">修改</el-button>
+                    <el-button v-permission="'GET/product/{id}'" type="primary" text @click="handleDetail(scope.row.id)">详情</el-button>
+                    <el-button v-permission="'DELETE/product/{id}'" type="danger" text @click="handleDelete(scope.row.id)">删除</el-button>
                 </template>
             </el-table-column>
         </template>
@@ -47,6 +48,8 @@ import { Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
 import ProductForm from "./components/ProductForm.vue"
 import { addProduct, deleteProductById, getProduct, getProductById, updateProduct } from "@/service/device/product"
+import { useRouter } from "vue-router"
+const router = useRouter()
 
 const loading = ref(false)
 // 查询条件
@@ -69,7 +72,8 @@ const dialogVisible = ref(false)
 const dialogData = ref<ProductDTO>({
     id: 0,
     name: "",
-    description: ""
+    description: "",
+    category: ""
 })
 
 onMounted(() => {})
@@ -85,6 +89,16 @@ const getTableData = () => {
         })
         .finally(() => {
             loading.value = false
+            tableData.value = [
+                {
+                    id: 0,
+                    name: "",
+                    description: "",
+                    createGmt: "",
+                    modifiedGmt: "",
+                    category: ""
+                }
+            ]
         })
 }
 
@@ -102,6 +116,14 @@ const handleEdit = (id: number) => {
     dialogVisible.value = true
     getProductById(id).then((response: Result<ProductDTO>) => {
         dialogData.value = response.data
+    })
+}
+
+// 详情
+const handleDetail = (id: number) => {
+    router.push({
+        path: "/product/detail",
+        query: { id }
     })
 }
 
