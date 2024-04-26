@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-25 11:34:35
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-25 17:07:00
+ * @LastEditTime: 2024-04-26 09:38:10
  * @Description:产品物模型 常量
  */
 export default class metadataConstant {
@@ -33,8 +33,8 @@ export default class metadataConstant {
             label: "string(字符串)"
         },
         {
-            value: "boolean",
-            label: "boolean(布尔型)"
+            value: "bool",
+            label: "bool(布尔型)"
         },
         {
             value: "timestamp",

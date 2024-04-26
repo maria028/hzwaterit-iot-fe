@@ -1,124 +1,106 @@
+/*
+ * @Author: pzy 1012839072@qq.com
+ * @Date: 2024-04-24 11:10:57
+ * @LastEditors: pzy 1012839072@qq.com
+ * @LastEditTime: 2024-04-26 15:33:07
+ * @Description:
+ */
 export default {
-    events: [
-        {
-            id: "alarmWater",
-            name: "液位告警",
-            expands: { level: "ordinary" },
-            valueType: { type: "int", unit: "centimeter" }
-        },
-        {
-            id: "alarmBat",
-            name: "电量报警",
-            expands: { level: "ordinary" },
-            valueType: { type: "int", unit: "percent" }
-        },
-        {
-            id: "alarmSensor",
-            name: "传感器报警",
-            expands: { level: "ordinary" },
-            valueType: { type: "string", expands: {} }
-        },
-        {
-            id: "alarmNet",
-            name: "网络报警",
-            expands: { level: "ordinary" },
-            valueType: { type: "string", expands: {} }
-        }
-    ],
     properties: [
         {
-            id: "no",
-            name: "设备编号",
-            valueType: { type: "string", expands: {} },
-            expands: { readOnly: "true", source: "device" }
-        },
-        {
-            id: "batSource",
-            name: "供电来源",
-            valueType: { type: "string", expands: {} },
-            expands: { readOnly: "true", source: "device" },
-            description: "0-电池，1-外供电"
-        },
-        {
-            id: "batType",
-            name: "供电方式",
-            valueType: { type: "string", expands: {} },
-            expands: { readOnly: "true", source: "device" },
-            description: "00 双供电，01-单电池供电，10-单外供电，"
-        },
-        {
-            id: "batV5per",
-            name: "电量百分比",
-            valueType: { type: "int", unit: "percent" },
-            expands: { readOnly: "true", source: "device" }
-        },
-        {
-            id: "signalDbm",
-            name: "信号强度",
-            valueType: { type: "int", unit: "" },
-            expands: { readOnly: "true", source: "device" }
-        },
-        {
-            id: "recStepSec",
-            name: "数据记录间隔秒",
-            valueType: { type: "string", expands: {} },
-            expands: { readOnly: "true", source: "device" }
-        },
-        {
-            id: "recCnt",
-            name: "数据记录条数",
-            valueType: { type: "string", expands: {} },
-            expands: { readOnly: "true", source: "device" }
-        },
-        {
-            id: "recType",
-            name: "设备类型代码",
-            valueType: { type: "string", expands: {} },
-            expands: { readOnly: "true", source: "device" }
-        },
-        {
-            id: "curCfg1",
-            name: "报警液位下限厘米",
-            valueType: { type: "int", unit: "centimeter" },
-            expands: { readOnly: "false", source: "device" }
-        },
-        {
-            id: "curCfg2",
-            name: "报警液位上限厘米",
-            valueType: { type: "int", unit: "centimeter" },
-            expands: { readOnly: "false", source: "device" }
-        },
-        {
-            id: "curCM",
-            name: "当前液位厘米",
-            valueType: { type: "int", unit: "centimeter" },
-            expands: { readOnly: "true", source: "device" }
-        },
-        {
-            id: "time",
-            name: "设备时间",
-            valueType: { type: "date", format: "yyyy-MM-dd HH:mm:ss" },
-            expands: { readOnly: "true", source: "device" }
-        },
-        {
-            id: "cachData",
-            name: "缓存记录",
             valueType: {
                 type: "object",
+                expands: {},
                 properties: [
-                    { id: "count", name: "数量", valueType: { type: "int" } },
-                    { id: "interval", name: "间隔", valueType: { type: "int" } },
-                    {
-                        id: "startTime",
-                        name: "开始时间",
-                        valueType: { type: "date", format: "yyyy-MM-dd HH:mm:ss" }
-                    },
-                    { id: "records", name: "记录数组", valueType: { type: "object" } }
+                    { valueType: { expands: {}, type: "int" }, id: "q", name: "QQQQ" },
+                    { valueType: { expands: { maxLength: 9 }, type: "string" }, id: "w", name: "WWWW" }
                 ]
             },
-            expands: { readOnly: "true", source: "device" }
+            expands: { source: "device", type: ["report"], metrics: [] },
+            name: "object",
+            id: "object",
+            sortsIndex: 9
+        },
+        {
+            valueType: {
+                type: "array",
+                expands: {},
+                elementType: "int"
+            },
+            expands: { source: "device", type: ["report"], metrics: [] },
+            id: "array",
+            name: "array",
+            sortsIndex: 8
+        },
+        {
+            valueType: {
+                type: "enum",
+                expands: {},
+                elements: [
+                    { value: "a", text: "AAAA" },
+                    { value: "b", text: "BBB" }
+                ]
+            },
+            expands: { source: "device", type: ["report"], metrics: [] },
+            name: "enum",
+            id: "enum",
+            sortsIndex: 7
+        },
+        {
+            valueType: { type: "timestamp", expands: {} },
+            expands: { source: "device", type: ["report"], metrics: [] },
+            id: "date",
+            name: "date",
+            sortsIndex: 6
+        },
+        {
+            valueType: {
+                type: "boolean",
+                expands: {},
+                trueText: "是",
+                trueValue: true,
+                falseText: "否",
+                falseValue: false
+            },
+            expands: { source: "device", type: ["report"], metrics: [] },
+            name: "boolean",
+            id: "boolean",
+            sortsIndex: 5
+        },
+        {
+            valueType: { type: "string", expands: { maxLength: 12 } },
+            expands: { source: "device", type: ["report"], metrics: [] },
+            id: "text",
+            name: "text",
+            sortsIndex: 4
+        },
+        {
+            valueType: { type: "double", expands: {}, scale: 2, unit: "micron" },
+            expands: { source: "device", type: ["report"], metrics: [] },
+            id: "double",
+            name: "double",
+            sortsIndex: 3
+        },
+        {
+            valueType: { type: "float", expands: {}, scale: 2, unit: "nanometer" },
+            expands: { source: "device", type: ["report"], metrics: [] },
+            id: "float",
+            name: "float",
+            sortsIndex: 2
+        },
+        {
+            valueType: { type: "long", expands: {}, unit: "nanometer" },
+            expands: { source: "device", type: ["report"], metrics: [] },
+            name: "long",
+            id: "long",
+            sortsIndex: 1
+        },
+        {
+            valueType: { type: "int", expands: {}, unit: "count" },
+            expands: { source: "device", type: ["report"], metrics: [] },
+            id: "int",
+            name: "int",
+            sortsIndex: 0
         }
-    ],
-    functions: [],
-    tags: []
+    ]
 }
