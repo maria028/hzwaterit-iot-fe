@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-24 15:50:12
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-25 16:52:43
+ * @LastEditTime: 2024-04-29 12:30:27
  * @Description: 物模型属性table
 -->
 <template>
@@ -47,7 +47,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue"
 import { ProductBO, ProductDTO } from "@/types/device"
-import { PropertiesBO } from "@/types/metadata"
+import { PropertiesBO, initPropertiesData } from "@/types/metadata"
 import { Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { Search } from "@element-plus/icons-vue"
@@ -75,10 +75,7 @@ const tableDataTotal = ref<PropertiesBO[]>([])
 const dialogVisible = ref(false)
 
 // 对话框数据
-const dialogData = ref<PropertiesBO>({
-    id: "",
-    name: ""
-})
+const dialogData = ref<PropertiesBO>(initPropertiesData)
 
 onMounted(() => {
     getMetadata()
@@ -92,12 +89,12 @@ const getMetadata = () => {
             // rows.value = result.rows
             // tableData.value = result.data
         })
-        .finally(() => {
-            // 假数据
-            const properties = metadataMock.properties
-            tableDataTotal.value = properties
-            rows.value = tableDataTotal.value.length
-        })
+        .finally(() => {})
+
+    // 假数据
+    const properties = metadataMock.properties
+    tableDataTotal.value = properties
+    rows.value = tableDataTotal.value.length
 }
 // 手动截取数组  分页
 const getTableData = () => {
@@ -134,10 +131,7 @@ const searchClearHandel = () => {
 // 新增
 const handleAdd = () => {
     dialogVisible.value = true
-    dialogData.value = {
-        id: "",
-        name: ""
-    }
+    dialogData.value = initPropertiesData
 }
 // 修改
 const handleEdit = (propertie: PropertiesBO) => {
@@ -161,10 +155,7 @@ const handleDelete = (propertie: PropertiesBO) => {
 // 对话框关闭
 const closePropertiesEdit = () => {
     dialogVisible.value = false
-    dialogData.value = {
-        id: "",
-        name: ""
-    }
+    dialogData.value = initPropertiesData
 }
 // 对话框确定
 const confirmPropertiesEdit = (formData: PropertiesBO) => {

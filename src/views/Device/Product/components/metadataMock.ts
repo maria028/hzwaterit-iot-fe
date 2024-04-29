@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-24 11:10:57
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-26 15:33:07
+ * @LastEditTime: 2024-04-29 14:35:29
  * @Description:
  */
 export default {
@@ -55,16 +55,16 @@ export default {
         },
         {
             valueType: {
-                type: "boolean",
+                type: "bool",
                 expands: {},
-                trueText: "是",
-                trueValue: true,
-                falseText: "否",
-                falseValue: false
+                elements: [
+                    { value: "true", text: "是" },
+                    { value: "false", text: "否" }
+                ]
             },
             expands: { source: "device", type: ["report"], metrics: [] },
-            name: "boolean",
-            id: "boolean",
+            name: "bool",
+            id: "bool",
             sortsIndex: 5
         },
         {

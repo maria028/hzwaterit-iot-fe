@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-03-27 15:26:28
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-16 15:25:43
+ * @LastEditTime: 2024-04-29 11:30:46
  * @Description:
  */
 import { defineConfig } from "vite"
@@ -14,7 +14,8 @@ export default defineConfig({
     plugins: [vue()],
     resolve: {
         alias: {
-            "@": resolve("src")
+            "@": resolve("src"),
+            lodash: "lodash-es"
         }
     },
     server: {
