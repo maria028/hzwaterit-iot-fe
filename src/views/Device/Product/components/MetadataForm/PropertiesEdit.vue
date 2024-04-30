@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-24 15:50:12
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-29 14:17:38
+ * @LastEditTime: 2024-04-30 16:55:17
  * @Description: 物模型属性表单
 -->
 <template>
@@ -21,9 +21,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from "vue"
+import { ref, computed, inject, isRef } from "vue"
 import PropertiesForm from "./PropertiesForm.vue"
 import { PropertiesBO } from "@/types/metadata"
+
+const metadataType = inject<String>("metadataType")
 
 // 对话框是否显示
 const dialogVisible = defineModel("dialogVisible", { required: true, default: false })
@@ -47,7 +49,8 @@ const dialogClose = () => {
 // 对话框确定
 const dialogConfirm = async () => {
     dialogFormRef.value.validate((res: any) => {
-        console.log(res)
+        console.log(JSON.stringify(res))
+
         emit("close")
     })
 }

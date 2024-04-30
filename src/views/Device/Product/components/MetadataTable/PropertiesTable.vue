@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-24 15:50:12
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-29 12:30:27
+ * @LastEditTime: 2024-04-30 15:30:41
  * @Description: 物模型属性table
 -->
 <template>
@@ -24,16 +24,18 @@
             <el-button type="primary" @click="handleAdd">新增</el-button>
         </template>
         <template #columns>
-            <el-table-column prop="id" label="属性标识" show-overflow-tooltip />
-            <el-table-column prop="name" label="属性名称" show-overflow-tooltip />
-            <el-table-column prop="valueType.type" label="数据类型" />
-            <el-table-column prop="expands.source" label="属性值来源" />
-            <el-table-column prop="expands.readOnly" label="是否只读">
-                <template #default="scope">
-                    {{ scope.row.expands.readOnly == "true" ? "是" : "否" }}
+            <el-table-column
+                v-for="column in dynamicColumns"
+                :key="column.prop"
+                :prop="column.prop"
+                :label="column.label"
+                :show-overflow-tooltip="column.showOverflowTooltip"
+            >
+                <template v-if="column.template" v-slot:default="scope">
+                    {{ column.template(scope) }}
                 </template>
             </el-table-column>
-            <el-table-column prop="description" label="说明" />
+
             <el-table-column label="操作" fixed="right">
                 <template #default="scope">
                     <el-button type="primary" text @click="handleEdit(scope.row)">修改</el-button>
@@ -45,16 +47,54 @@
     <PropertiesEdit v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closePropertiesEdit" @confirm="confirmPropertiesEdit" />
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from "vue"
-import { ProductBO, ProductDTO } from "@/types/device"
-import { PropertiesBO, initPropertiesData } from "@/types/metadata"
+import { ref, onMounted, provide } from "vue"
+import { MetadataColumnBO, createInitData } from "@/types/metadata"
 import { Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { Search } from "@element-plus/icons-vue"
 import { addProduct, getProduct, updateProduct } from "@/service/device/product"
 import metadataMock from "../metadataMock"
 import PropertiesEdit from "../MetadataForm/PropertiesEdit.vue"
+// props
+const props = defineProps({
+    type: {
+        type: String,
+        required: true
+    }
+})
+const metadataType: string = props.type
+provide("metadataType", metadataType)
+
+// 根据 props 中的 type 属性获取对应的 ColumnBO
+type ColumnBO = MetadataColumnBO<typeof metadataType>
+const initColumnData = createInitData(metadataType)
+
+// 表格列字段
+const MetadataMappingColumns = new Map<string, any>()
+MetadataMappingColumns.set("properties", [
+    { prop: "id", label: "属性标识", showOverflowTooltip: true },
+    { prop: "name", label: "属性名称", showOverflowTooltip: true },
+    { prop: "valueType.type", label: "数据类型" },
+    { prop: "expands.source", label: "属性值来源" },
+    { prop: "expands.readOnly", label: "是否只读", template: (scope: any) => (scope.row.expands.readOnly === "true" ? "是" : "否") },
+    { prop: "description", label: "说明" }
+])
+MetadataMappingColumns.set("functions", [
+    { prop: "id", label: "标识", showOverflowTooltip: true },
+    { prop: "name", label: "名称", showOverflowTooltip: true },
+    { prop: "description", label: "说明" },
+    { prop: "async", label: "是否异步", template: (scope: any) => (scope.row.async ? "是" : "否") }
+])
+MetadataMappingColumns.set("tags", [
+    { prop: "id", label: "标识", showOverflowTooltip: true },
+    { prop: "name", label: "名称", showOverflowTooltip: true },
+    { prop: "description", label: "说明" },
+    { prop: "valueType", label: "数据类型", template: (scope: any) => scope.row.valueType.type }
+])
+const dynamicColumns = MetadataMappingColumns.get(metadataType)
+
 const loading = ref(false)
+
 // 查询条件
 const initQueryModel = {
     pageNum: 1,
@@ -66,16 +106,16 @@ const queryModel = ref(initQueryModel)
 // 总行数
 const rows = ref(0)
 // 表格数据
-const tableData = ref<PropertiesBO[]>([])
+const tableData = ref<ColumnBO[]>([])
 
 //总数据  没有分页需要手动分页
-const tableDataTotal = ref<PropertiesBO[]>([])
+const tableDataTotal = ref<ColumnBO[]>([])
 
 // 对话框是否显示
 const dialogVisible = ref(false)
 
 // 对话框数据
-const dialogData = ref<PropertiesBO>(initPropertiesData)
+const dialogData = ref<ColumnBO>(initColumnData)
 
 onMounted(() => {
     getMetadata()
@@ -83,17 +123,16 @@ onMounted(() => {
 
 // 获取数据
 const getMetadata = () => {
-    getProduct(queryModel.value)
-        .then((response: Result<ProductBO[]>) => {
-            const result = response
-            // rows.value = result.rows
-            // tableData.value = result.data
-        })
-        .finally(() => {})
+    // getProduct(queryModel.value)
+    //     .then((response: Result<ProductBO[]>) => {
+    //         const result = response
+    //         // rows.value = result.rows
+    //         // tableData.value = result.data
+    //     })
+    //     .finally(() => {})
 
     // 假数据
-    const properties = metadataMock.properties
-    tableDataTotal.value = properties
+    tableDataTotal.value = metadataMock[metadataType]
     rows.value = tableDataTotal.value.length
 }
 // 手动截取数组  分页
@@ -131,16 +170,16 @@ const searchClearHandel = () => {
 // 新增
 const handleAdd = () => {
     dialogVisible.value = true
-    dialogData.value = initPropertiesData
+    dialogData.value = initColumnData
 }
 // 修改
-const handleEdit = (propertie: PropertiesBO) => {
+const handleEdit = (row: ColumnBO) => {
     dialogVisible.value = true
-    dialogData.value = propertie
+    dialogData.value = row
 }
 
 // 删除
-const handleDelete = (propertie: PropertiesBO) => {
+const handleDelete = (row: ColumnBO) => {
     ElMessageBox.confirm("确定删除?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -155,10 +194,10 @@ const handleDelete = (propertie: PropertiesBO) => {
 // 对话框关闭
 const closePropertiesEdit = () => {
     dialogVisible.value = false
-    dialogData.value = initPropertiesData
+    dialogData.value = initColumnData
 }
 // 对话框确定
-const confirmPropertiesEdit = (formData: PropertiesBO) => {
+const confirmPropertiesEdit = (formData: ColumnBO) => {
     ElMessage.success("操作成功！")
     getTableData()
     closePropertiesEdit()

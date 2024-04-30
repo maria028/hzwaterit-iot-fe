@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-24 11:10:57
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-29 14:35:29
+ * @LastEditTime: 2024-04-30 15:04:16
  * @Description:
  */
 export default {
@@ -101,6 +101,53 @@ export default {
             id: "int",
             name: "int",
             sortsIndex: 0
+        }
+    ],
+    functions: [
+        {
+            inputs: [{ valueType: { expands: {}, type: "string" }, id: "id", name: "ID" }],
+            output: {
+                type: "object",
+                expands: {},
+                properties: [{ valueType: { expands: {}, type: "string" }, id: "id", name: "ID" }]
+            },
+            id: "read",
+            name: "读取",
+            async: true,
+            description: "说明说明说明说明",
+            sortsIndex: 0
+        },
+        {
+            inputs: [],
+            output: { type: null, expands: {} },
+            id: "write",
+            name: "写",
+            async: false,
+            sortsIndex: 1
+        }
+    ],
+    tags: [
+        {
+            id: "longitude",
+            name: "经度",
+            valueType: {
+                type: "string",
+                expands: {}
+            },
+            expands: {
+                readOnly: "false"
+            }
+        },
+        {
+            id: "latitude",
+            name: "纬度",
+            valueType: {
+                type: "string",
+                expands: {}
+            },
+            expands: {
+                readOnly: "false"
+            }
         }
     ]
 }

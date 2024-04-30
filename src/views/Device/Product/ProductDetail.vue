@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-22 11:41:13
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-25 09:05:25
+ * @LastEditTime: 2024-04-30 11:29:39
  * @Description: 产品详情页
 -->
 <template>
@@ -20,10 +20,14 @@
         <span class="label-title" style="margin-bottom: 16px">物模型配置</span>
         <el-tabs type="card">
             <el-tab-pane label="属性定义">
-                <PropertiesTable />
+                <PropertiesTable type="properties" />
             </el-tab-pane>
-            <el-tab-pane label="指令定义">指令定义</el-tab-pane>
-            <el-tab-pane label="标签定义">标签定义</el-tab-pane>
+            <el-tab-pane label="指令定义">
+                <PropertiesTable type="functions" />
+            </el-tab-pane>
+            <el-tab-pane label="标签定义">
+                <PropertiesTable type="tags" />
+            </el-tab-pane>
         </el-tabs>
     </el-card>
 </template>

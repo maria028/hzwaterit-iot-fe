@@ -4,7 +4,7 @@ import { ValueTypeBO } from "@/types/metadata"
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-29 14:50:56
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-29 14:53:50
+ * @LastEditTime: 2024-04-30 17:01:06
  * @Description:物模型相关工具方法
  */
 export default class metadataUtils {
@@ -13,7 +13,7 @@ export default class metadataUtils {
      * @param type 数据类型
      */
     static valueTypeInitData(type: string): ValueTypeBO {
-        let valueType = {}
+        let valueType: ValueTypeBO = { type }
         switch (type) {
             case "int":
             case "long":
@@ -50,6 +50,7 @@ export default class metadataUtils {
                 valueType = { type, expands: {}, properties: [] }
                 break
             default:
+                valueType = { type, expands: {} }
                 break
         }
         return valueType
