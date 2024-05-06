@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-24 11:10:57
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-30 15:04:16
+ * @LastEditTime: 2024-05-06 12:01:26
  * @Description:
  */
 export default {
@@ -105,11 +105,11 @@ export default {
     ],
     functions: [
         {
-            inputs: [{ valueType: { expands: {}, type: "string" }, id: "id", name: "ID" }],
+            inputs: [{ valueType: { expands: {}, type: "string" }, id: "id2", name: "ID2" }],
             output: {
                 type: "object",
                 expands: {},
-                properties: [{ valueType: { expands: {}, type: "string" }, id: "id", name: "ID" }]
+                properties: [{ valueType: { expands: {}, type: "int" }, id: "id1", name: "ID1" }]
             },
             id: "read",
             name: "读取",

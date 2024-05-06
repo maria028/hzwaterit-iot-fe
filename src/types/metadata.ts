@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-24 10:24:16
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-30 14:37:47
+ * @LastEditTime: 2024-05-06 10:11:37
  * @Description:产品物模型数据结构
  */
 
@@ -83,7 +83,12 @@ export const initPropertiesData: PropertiesBO = {
 export interface FunctionsBO extends MetadataBasicBO {
     async: boolean // 是否异步
     inputs: MetadataBasicBO[] // 输入参数
-    // 输入参数
+    inputsCopy?: {
+        type: string
+        expands: object
+        properties: MetadataBasicBO[]
+    } //仅表单填写参数
+    // 输出参数
     output: {
         type: string
         expands: object
@@ -104,6 +109,11 @@ export const initFunctionsData: FunctionsBO = {
     },
     async: false,
     inputs: [],
+    inputsCopy: {
+        type: "object",
+        expands: {},
+        properties: []
+    },
     output: {
         type: "",
         expands: {},
@@ -115,12 +125,18 @@ export const initFunctionsData: FunctionsBO = {
  * @description: 物模型标签
  * @return {*}
  */
-export interface TagsBO {}
+export interface TagsBO extends MetadataBasicBO {}
 /**
  * @description: 物模型属性初始化数据结构
  * @return {*}
  */
-export const initTagsData: TagsBO = {}
+export const initTagsData: TagsBO = {
+    id: "",
+    name: "",
+    valueType: {
+        type: ""
+    }
+}
 
 /**
  * @description: 根据 type 初始化数据对象的映射

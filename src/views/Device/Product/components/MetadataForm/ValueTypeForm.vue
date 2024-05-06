@@ -2,12 +2,17 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-30 16:28:24
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-30 17:28:46
+ * @LastEditTime: 2024-05-06 14:38:48
  * @Description: ValueType 结构表单  ：嵌套在上层form中，valueType绑定父级， 不可单独使用
 -->
 <template>
     <!-- 数据类型 -->
-    <el-form-item label="数据类型" :prop="`${propPath}.type`" :rules="[{ required: true, message: '请选择数据类型' }]">
+    <el-form-item
+        v-if="propPath != 'inputsCopy'"
+        :label="propPath == 'output' ? '输出参数' : '数据类型'"
+        :prop="`${propPath}.type`"
+        :rules="propPath == 'valueType' ? [{ required: true, message: '请选择数据类型' }] : []"
+    >
         <!-- :disabled="false"    todo  -->
         <el-select v-model="valueType.type" :disabled="false" @change="valueTypeChangeHandel">
             <el-option v-for="item in valueTypes" :key="item.value" :label="item.label" :value="item.value" />
@@ -90,9 +95,9 @@
     <!-- 子对象  嵌套 -->
     <el-form-item
         v-if="valueType.type === 'object' || (valueType.type === 'array' && valueType.elementType === 'object')"
-        label="JSON对象"
-        prop="valueType.properties"
-        :rules="[{ validator: validatorProperties }]"
+        :label="propPath == 'inputsCopy' ? '输入参数' : 'JSON对象'"
+        :prop="`${propPath}.properties`"
+        :rules="propPath == 'valueType' ? [{ required: true, message: '请填写JSON对象', trigger: 'blur' }, { validator: validatorProperties }] : []"
     >
         <div v-for="(item, index) in valueType.properties" :key="item.id" style="width: 100%" class="object-list">
             <!-- 避免自动关闭  使用visible -->
@@ -126,7 +131,7 @@
                 <el-icon><Delete /></el-icon>
             </el-button>
         </div>
-        <el-button :icon="Plus" @click="addPropertiesHandel" style="width: 100%"> 添加参数 </el-button>
+        <el-button :icon="Plus" @click="addPropertiesHandel" style="width: 100%"> 添加参数</el-button>
     </el-form-item>
 </template>
 <script lang="ts" setup>
@@ -142,6 +147,8 @@ const valueType = defineModel({ type: Object as () => ValueTypeBO, required: tru
 // props
 const props = defineProps(["propPath"])
 
+const metadataType = inject<string>("metadataType") || ""
+
 const formRef = inject("formRef", ref())
 
 // 最大长度修改时 只可改大，不可改小
@@ -150,10 +157,10 @@ const maxlength = ref(0)
 watch(
     valueType,
     () => {
+        // console.log("valueTypeForm组件收到的值：", valueType.value)
         maxlength.value = valueType.value.expands?.maxLength || 0
-        console.log("valueType", valueType.value)
     },
-    { deep: true }
+    { deep: true, immediate: true }
 )
 
 // 数据类型枚举值
@@ -180,13 +187,16 @@ const removeElementsHandel = (index: number) => {
     valueType.value.elements!.splice(index, 1)
 }
 // valueType.elements 变化时检验
-watch(
-    () => valueType.value.elements,
-    () => {
-        if (formRef.value) checkElements()
-    },
-    { deep: true }
-)
+if (valueType.value?.elements) {
+    watch(
+        () => valueType.value.elements,
+        () => {
+            if (formRef.value) checkElements()
+        },
+        { deep: true }
+    )
+}
+
 // 枚举项检验
 const checkElements = () => {
     if (valueType.value.elements) {
@@ -226,7 +236,7 @@ const setPropertiesFormRefs = (el: any, index: number) => {
 const addPropertiesHandel = () => {
     // 默认项
     const propertiesItem: MetadataBasicBO = {
-        id: "",
+        id: "propertiesItem",
         name: "",
         valueType: {
             type: ""

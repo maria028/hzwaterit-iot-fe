@@ -15,50 +15,66 @@
         <el-form-item label="名称" prop="name" :rules="[{ required: true, message: '请输入名称', trigger: 'blur' }]">
             <el-input v-model="form.name" maxlength="30" />
         </el-form-item>
-        <!-- 是否异步 默认否-->
-        <el-form-item label="是否异步" prop="async">
-            <el-radio-group v-model="(form as FunctionsBO).async">
-                <el-radio :value="true">是</el-radio>
-                <el-radio :value="false">否</el-radio>
-            </el-radio-group>
-        </el-form-item>
 
         <!-- valueType 结构 -->
         <template v-if="metadataType == 'properties'">
             <ValueTypeForm v-model="form.valueType" propPath="valueType" />
-        </template>
-
-        <div v-if="!isChildJSON && metadataType == 'properties'">
             <!-- 来源 -->
-            <el-form-item label="来源" prop="expands.source" :rules="[{ required: true, message: '请选择来源' }]">
+            <el-form-item v-if="!isChildJSON" label="来源" prop="expands.source" :rules="[{ required: true, message: '请选择来源' }]">
                 <el-select v-model="(form as PropertiesBO).expands.source">
                     <el-option label="设备" value="device" />
                 </el-select>
             </el-form-item>
             <!-- 是否只读 默认是-->
-            <el-form-item label="是否只读" prop="expands.readOnly">
+            <el-form-item v-if="!isChildJSON" label="是否只读" prop="expands.readOnly">
                 <el-radio-group v-model="(form as PropertiesBO).expands.readOnly">
                     <el-radio value="true">是</el-radio>
                     <el-radio value="false">否</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <!-- 说明 -->
-            <el-form-item label="说明" prop="description">
-                <el-input v-model="(form as PropertiesBO).description" type="textarea" maxlength="200" show-word-limit />
+        </template>
+        <template v-else-if="metadataType == 'functions'">
+            <!-- 是否异步 默认否-->
+            <el-form-item v-if="!isChildJSON" label="是否异步" prop="async">
+                <el-radio-group v-model="(form as FunctionsBO).async">
+                    <el-radio :value="true">是</el-radio>
+                    <el-radio :value="false">否</el-radio>
+                </el-radio-group>
             </el-form-item>
-        </div>
+            <!-- 输入参数 -->
+            <ValueTypeForm v-if="(form as FunctionsBO).inputsCopy && !isChildJSON" v-model="(form as FunctionsBO).inputsCopy" propPath="inputsCopy" />
+            <!-- 输出参数 -->
+            <ValueTypeForm v-if="(form as FunctionsBO).output && !isChildJSON" v-model="(form as FunctionsBO).output" propPath="output" />
+            <!-- 子级 -->
+            <ValueTypeForm v-if="isChildJSON" v-model="form.valueType" propPath="valueType" />
+        </template>
+        <template v-else-if="metadataType == 'tags'">
+            <ValueTypeForm v-model="form.valueType" propPath="valueType" />
+            <!-- 是否只读 默认是-->
+            <el-form-item v-if="!isChildJSON" label="是否只读" prop="expands.readOnly">
+                <el-radio-group v-model="(form as PropertiesBO).expands.readOnly">
+                    <el-radio value="true">是</el-radio>
+                    <el-radio value="false">否</el-radio>
+                </el-radio-group>
+            </el-form-item>
+        </template>
+
+        <!-- 说明 -->
+        <el-form-item label="说明" prop="description">
+            <el-input v-model="(form as PropertiesBO).description" type="textarea" maxlength="200" show-word-limit />
+        </el-form-item>
     </el-form>
 </template>
 <script lang="ts" setup>
 import { ref, watch, inject, provide } from "vue"
-import { PropertiesBO, MetadataBasicBO, createInitData, MetadataColumnBO, FunctionsBO } from "@/types/metadata"
+import { PropertiesBO, MetadataBasicBO, createInitData, MetadataColumnBO, FunctionsBO, TagsBO } from "@/types/metadata"
 import { cloneDeep } from "lodash"
 import ValueTypeForm from "./ValueTypeForm.vue"
 
 // props
 const props = defineProps({
     formData: {
-        type: Object as () => PropertiesBO | MetadataBasicBO,
+        type: Object as () => PropertiesBO | FunctionsBO | TagsBO | MetadataBasicBO,
         required: true
     },
     visible: Boolean,
@@ -84,8 +100,6 @@ watch(
     (val) => {
         if (val) {
             const data = cloneDeep(props.formData)
-            console.log("data", data)
-
             // todo  根据不同类型  赋值默认值
             if (metadataType == "properties") {
                 form.value = {
@@ -98,11 +112,14 @@ watch(
                 }
             } else if (metadataType == "functions") {
                 form.value = {
-                    ...data
+                    ...data,
+                    inputsCopy: {
+                        type: "object",
+                        expands: {},
+                        properties: data.inputs
+                    }
                 }
             }
-            console.log("form", form.value)
-
             disableId.value = props.isChildJSON ? false : props.formData.id ? true : false
         }
     },
@@ -111,7 +128,6 @@ watch(
         immediate: true
     }
 )
-
 // 检验表单
 const validate = (callback: (res: any) => void) => {
     formRef.value.validate((valid: boolean) => {
@@ -124,6 +140,7 @@ const validate = (callback: (res: any) => void) => {
 }
 // 清空表单
 const resetFields = () => {
+    console.log("resetFields")
     formRef.value.resetFields() // 数据结构复杂，需要再手动重置数据
     form.value = initFormData
 }

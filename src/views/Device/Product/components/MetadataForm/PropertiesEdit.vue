@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-24 15:50:12
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-30 16:55:17
+ * @LastEditTime: 2024-05-06 14:47:38
  * @Description: 物模型属性表单
 -->
 <template>
@@ -49,9 +49,16 @@ const dialogClose = () => {
 // 对话框确定
 const dialogConfirm = async () => {
     dialogFormRef.value.validate((res: any) => {
-        console.log(JSON.stringify(res))
-
-        emit("close")
+        let result = res
+        // todo  根据不同类型
+        if (metadataType == "properties") {
+        } else if (metadataType == "functions") {
+            result.inputs = result.inputsCopy.properties
+            // 删除对象中inputsCopy
+            delete result.inputsCopy
+        } else if (metadataType == "tags") {
+        }
+        emit("confirm", result)
     })
 }
 </script>

@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-24 15:50:12
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-04-30 15:30:41
+ * @LastEditTime: 2024-05-06 14:46:26
  * @Description: 物模型属性table
 -->
 <template>
@@ -198,6 +198,8 @@ const closePropertiesEdit = () => {
 }
 // 对话框确定
 const confirmPropertiesEdit = (formData: ColumnBO) => {
+    console.log(formData)
+
     ElMessage.success("操作成功！")
     getTableData()
     closePropertiesEdit()
