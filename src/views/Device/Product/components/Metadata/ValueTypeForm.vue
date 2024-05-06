@@ -125,7 +125,7 @@
                         <el-icon><Close /></el-icon>
                     </el-button>
                 </div>
-                <PropertiesForm :ref="(el: any) => setPropertiesFormRefs(el, index)" :formData="item" isChildJSON />
+                <MetadataForm :ref="(el: any) => setMetadataFormRefs(el, index)" :formData="item" isChildJSON />
             </el-popover>
             <el-button text @click.stop="removePropertiesHandel(index)">
                 <el-icon><Delete /></el-icon>
@@ -140,7 +140,7 @@ import metadataConstant from "@/constant/metadataConstant"
 import { MetadataBasicBO, ValueTypeBO } from "@/types/metadata"
 import metadataUtils from "@/utils/metadataUtils"
 import { Plus, Edit, Close } from "@element-plus/icons-vue"
-import PropertiesForm from "./PropertiesForm.vue"
+import MetadataForm from "./MetadataForm.vue"
 
 //绑定的valueType
 const valueType = defineModel({ type: Object as () => ValueTypeBO, required: true })
@@ -229,7 +229,7 @@ const validatorElements = (rule: any, elements: any, callback: any) => {
 const propertiesFormVisibleFlag = ref<number>(-1)
 //子对象弹框循环ref
 const propertiesFormRefList: Ref<any>[] = []
-const setPropertiesFormRefs = (el: any, index: number) => {
+const setMetadataFormRefs = (el: any, index: number) => {
     propertiesFormRefList[index] = ref(el)
 }
 // 添加子对象

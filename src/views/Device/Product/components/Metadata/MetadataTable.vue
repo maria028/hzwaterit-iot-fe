@@ -2,7 +2,7 @@
  * @Author: pzy 1012839072@qq.com
  * @Date: 2024-04-24 15:50:12
  * @LastEditors: pzy 1012839072@qq.com
- * @LastEditTime: 2024-05-06 14:46:26
+ * @LastEditTime: 2024-05-06 15:48:31
  * @Description: 物模型属性table
 -->
 <template>
@@ -44,17 +44,15 @@
             </el-table-column>
         </template>
     </CSearchTable>
-    <PropertiesEdit v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closePropertiesEdit" @confirm="confirmPropertiesEdit" />
+    <MetadataEdit v-model:dialogVisible="dialogVisible" :dialogData="dialogData" @close="closeMetadataEdit" @confirm="confirmMetadataEdit" />
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, provide } from "vue"
 import { MetadataColumnBO, createInitData } from "@/types/metadata"
-import { Result } from "@/types/common"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { Search } from "@element-plus/icons-vue"
-import { addProduct, getProduct, updateProduct } from "@/service/device/product"
 import metadataMock from "../metadataMock"
-import PropertiesEdit from "../MetadataForm/PropertiesEdit.vue"
+import MetadataEdit from "../Metadata/MetadataEdit.vue"
 // props
 const props = defineProps({
     type: {
@@ -192,16 +190,16 @@ const handleDelete = (row: ColumnBO) => {
 }
 
 // 对话框关闭
-const closePropertiesEdit = () => {
+const closeMetadataEdit = () => {
     dialogVisible.value = false
     dialogData.value = initColumnData
 }
 // 对话框确定
-const confirmPropertiesEdit = (formData: ColumnBO) => {
-    console.log(formData)
+const confirmMetadataEdit = (formData: ColumnBO) => {
+    console.log("表单修改结构，需要整合Metadata：", formData)
 
     ElMessage.success("操作成功！")
     getTableData()
-    closePropertiesEdit()
+    closeMetadataEdit()
 }
 </script>

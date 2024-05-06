@@ -15,14 +15,14 @@
                 <h4 :id="titleId" :class="titleClass">{{ dialogTitle }}</h4>
                 <el-button type="primary" @click="dialogConfirm"> 保存 </el-button>
             </template>
-            <PropertiesForm ref="dialogFormRef" :formData="dialogData" :visible="dialogVisible" />
+            <MetadataForm ref="dialogFormRef" :formData="dialogData" :visible="dialogVisible" />
         </el-drawer>
     </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed, inject, isRef } from "vue"
-import PropertiesForm from "./PropertiesForm.vue"
+import MetadataForm from "./MetadataForm.vue"
 import { PropertiesBO } from "@/types/metadata"
 
 const metadataType = inject<String>("metadataType")
